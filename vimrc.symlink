@@ -154,6 +154,7 @@ map <Leader>m <esc>:tabnext<CR>
 " TODO: make filetype (py) dependency
 nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
 "autocmd BufRead *.py nmap <F5> :!python %<CR>
+autocmd BufRead *.jsx nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
 autocmd BufRead *.js nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
 " NERDTree map
 map <Leader>y :NERDTree<CR>
@@ -240,10 +241,10 @@ set tm=500
 "Enable syntax hl
 syntax on
 
-colorscheme slate
+"colorscheme slate
 "colorscheme solarized
 "colorscheme gruvbox
-"colorscheme wombat256mod
+colorscheme wombat256mod
 "set background=dark
 
 " set extra options when runnung in GUI Mode
@@ -397,6 +398,6 @@ vnoremap <silent> gv :call VisualSelection('gv')<CR>
 " Javascript
 "
 " JSHint
-let jshint2_save=1    
-    
-    
+let jshint2_save=1
+
+
