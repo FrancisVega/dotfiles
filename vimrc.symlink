@@ -1,0 +1,402 @@
+
+" VAM Setup
+
+set nocompatible | filetype indent plugin on | syn on
+
+fun! EnsureVamIsOnDisk(plugin_root_dir)
+  " windows users may want to use http://mawercer.de/~marc/vam/index.php
+  " to fetch VAM, VAM-known-repositories and the listed plugins
+  " without having to install curl, 7-zip and git tools first
+  " -> BUG [4] (git-less installation)
+  let vam_autoload_dir = a:plugin_root_dir.'/vim-addon-manager/autoload'
+  if isdirectory(vam_autoload_dir)
+    return 1
+  else
+    if 1 == confirm("Clone VAM into ".a:plugin_root_dir."?","&Y\n&N")
+      " I'm sorry having to add this reminder. Eventually it'll pay off.
+      call confirm("Remind yourself that most plugins ship with ".
+                  \"documentation (README*, doc/*.txt). It is your ".
+                  \"first source of knowledge. If you can't find ".
+                  \"the info you're looking for in reasonable ".
+                  \"time ask maintainers to improve documentation")
+      call mkdir(a:plugin_root_dir, 'p')
+      execute '!git clone --depth=1 git://github.com/MarcWeber/vim-addon-manager '.
+                  \       shellescape(a:plugin_root_dir, 1).'/vim-addon-manager'
+      " VAM runs helptags automatically when you install or update
+      " plugins
+      exec 'helptags '.fnameescape(a:plugin_root_dir.'/vim-addon-manager/doc')
+    endif
+    return isdirectory(vam_autoload_dir)
+  endif
+endfun
+
+fun! SetupVAM()
+  " Set advanced options like this:
+  " let g:vim_addon_manager = {}
+  " let g:vim_addon_manager.key = value
+  "     Pipe all output into a buffer which gets written to disk
+  " let g:vim_addon_manager.log_to_buf =1
+
+  " Example: drop git sources unless git is in PATH. Same plugins can
+  " be installed from www.vim.org. Lookup MergeSources to get more control
+  " let g:vim_addon_manager.drop_git_sources = !executable('git')
+  " let g:vim_addon_manager.debug_activation = 1
+
+  " VAM install location:
+  let c = get(g:, 'vim_addon_manager', {})
+  let g:vim_addon_manager = c
+  let c.plugin_root_dir = expand('$HOME/.vim/vim-addons', 1)
+  if !EnsureVamIsOnDisk(c.plugin_root_dir)
+    echohl ErrorMsg | echomsg "No VAM found!" | echohl NONE
+    return
+  endif
+  let &rtp.=(empty(&rtp)?'':',').c.plugin_root_dir.'/vim-addon-manager'
+
+  " Tell VAM which plugins to fetch & load:
+  call vam#ActivateAddons([], {'auto_install' : 0})
+  call vam#ActivateAddons(['The_NERD_tree'], {'auto_install' : 0})
+  call vam#ActivateAddons(['SlateDark', 'jsruntime', 'jshint2','vim-multiple-cursors','wombat256', 'auto-pairs-gentle', 'The_NERD_Commenter', 'vim-airline','UltiSnips','gruvbox', 'vim-snippets', 'Solarized'], {'auto_install' : 0})
+  " Also See "plugins-per-line" below
+
+  " Addons are put into plugin_root_dir/plugin-name directory
+  " unless those directories exist. Then they are activated.
+  " Activating means adding addon dirs to rtp and do some additional
+  " magic
+
+  " How to find addon names?
+  " - look up source from pool
+  " - (<c-x><c-p> complete plugin names):
+  " You can use name rewritings to point to sources:
+  "    ..ActivateAddons(["github:foo", .. => github://foo/vim-addon-foo
+  "    ..ActivateAddons(["github:user/repo", .. => github://user/repo
+  "call vam#ActivateAddons([{"type": "git", "url": "https://github.com/SirVer/ultisnips"}])
+  " Also see section "2.2. names of addons and addon sources" in VAM's documentation
+endfun
+call SetupVAM()
+" experimental [E1]: load plugins lazily depending on filetype, See
+" NOTES
+" experimental [E2]: run after gui has been started (gvim) [3]
+" option1:  au VimEnter * call SetupVAM()
+" option2:  au GUIEnter * call SetupVAM()
+" See BUGS sections below [*]
+" Vim 7.0 users see BUGS section [3]
+
+
+" UltiSnips
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+"
+" General
+"
+
+" set utf8 as standar econding and en_US as the stardar language
+set encoding=utf8
+
+" Use Unix as the standar file type
+set ffs=unix,dos,mac
+
+
+
+" Reload .vimrc
+autocmd! bufwritepost .vimrc source %
+
+" Leader key
+let mapleader = ","
+let g:mapleader = ","
+
+" No Arrow keys
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
+" Hide Toolbar in MacVim
+set guioptions=egmrt
+
+" Line numbers
+set number
+
+" Font
+set guifont=Monaco:h12
+
+" Always shows status bar
+set laststatus=2
+
+" Better copy & paste
+set pastetoggle=<F2>
+set clipboard=unnamed
+
+" Mouse and backspace
+set mouse=a
+set bs=2
+
+" Remove hightlight for the last search
+noremap <Leader>, :nohl<CR>
+vnoremap <Leader>, :nohl<CR>
+inoremap <Leader>, :nohl<CR>
+
+" Easier move between tabs
+map <Leader>n <esc>:tabprevious<CR>
+map <Leader>m <esc>:tabnext<CR>
+
+" Python execute
+" TODO: make filetype (py) dependency
+nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
+"autocmd BufRead *.py nmap <F5> :!python %<CR>
+autocmd BufRead *.js nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
+" NERDTree map
+map <Leader>y :NERDTree<CR>
+
+
+"
+" General
+"
+
+" history
+set history=700
+
+" set auto read when a file is changed from the outside
+set autoread
+
+" fast saving
+nmap <leader>w :w!<cr>
+map <leader>e :e ~/.vimrc<cr>
+imap jj <Esc>
+
+" Hitting F5 will clean out all trailing whitespace or tabs
+nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>:retab<CR>
+
+"
+" vim ui
+"
+
+" set 7 lines to the cursor - when moving vertocally using j/k
+set so=7
+
+" turn on the wild menu
+set wildmenu
+
+" ignore compiled files
+set wildignore=*.o,*~,*.pyc
+
+" always show current position
+set ruler
+
+" height of command bar
+set cmdheight=2
+
+" buffer become hidden when abandoned
+"set hid
+
+" Configure backspace so it acts as it shoud at
+set backspace=eol,start,indent
+"set whichwrap+=<,>,h,1
+
+" Ignore case when searching
+set ignorecase
+
+" when searching try to be smart about cases
+set smartcase
+
+" Hightlight search results
+set hlsearch
+
+" makes search act like search in moder browser
+set incsearch
+
+" Dont redraw when executing macros (good performance)
+set lazyredraw
+
+" For reg turn magic on
+set magic
+
+" matching brackets
+set showmatch
+
+" how many tenths of a secnod to blink when matching brackets
+set mat=2
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+"
+" Color
+"
+
+"Enable syntax hl
+syntax on
+
+colorscheme slate
+"colorscheme solarized
+"colorscheme gruvbox
+"colorscheme wombat256mod
+"set background=dark
+
+" set extra options when runnung in GUI Mode
+if has("gui_running")
+    set guioptions-=T
+    set guioptions+=e
+    set t_Co=256
+    set guitablabel=%M\ %t
+endif
+
+
+"
+" => Files
+"
+set nobackup
+set nowb
+set noswapfile
+
+
+"
+" => Text, tab and indent related
+"
+
+" Use spaces instead of tabs
+set expandtab
+
+" Be smrt when using tabs
+set smarttab
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+" linebreak on 500 characters
+set lbr
+set tw=500
+
+set ai "Auto indent
+set si "Samrt indent
+set wrap "Wrap lines
+
+"
+" => Visual mode related
+"
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
+
+"
+" => Moving around, tabs, windows and buffers
+"
+map j gj
+map k gk
+
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+map <space> /
+map <c-space> ?
+
+" Disable hightlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+
+" Smart way to move between windows
+map <C-j> <c-w>j
+map <C-k> <c-w>k
+map <C-h> <c-w>h
+map <C-l> <c-w>l
+
+" Close the current buffer
+map <leader>bd :Bclose<cr>
+
+" Close all the buffers
+map <leader>ba :1,1000 bd!<cr>
+
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+" Switch CWD to the directory of the open buffer
+"map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Specify the behavior when switching between buffers
+try
+    set switchbuf=useopen,usetab,newtab
+    set stal=2
+catch
+endtry
+
+" Return to last edit position when opening files
+autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
+" Remember info about open buffers on close
+set viminfo^=%
+
+"
+" => Status line
+"
+" Always show the status line
+set laststatus=2
+
+" Format the status line
+"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+
+"
+" => Editing mappings
+"
+" Remap 0 to first non-blank character
+map 0 ^
+
+" Move a line of text using ALT+[jk] or Command+[jk] on mac
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+if has("mac") || has("macunix")
+    nmap <D-j> <M-j>
+    nmap <D-k> <M-k>
+    vmap <D-j> <M-j>
+    vmap <D-k> <M-k>
+endif
+
+" Delete trailing white spcae on save, useful for Pyhton and CoffeScript
+func! DeleteTrailingWS()
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
+endfunc
+autocmd BufWrite *.py :call DeleteTrailingWS()
+
+"
+" => vimgrep searching and cope displaying
+"
+" When you press gv you vimgrep after the selected text
+vnoremap <silent> gv :call VisualSelection('gv')<CR>
+
+" Open vimgrep and put the cursor in the right position
+
+
+" Javascript
+"
+" JSHint
+let jshint2_save=1    
+    
+    
