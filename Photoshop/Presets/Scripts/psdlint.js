@@ -8,6 +8,7 @@
  * Molaría:
  * - distancia mínima entre capas
  * - distancia "rara" entre capas
+ * - Nombres "defaults" tipo "Layer01" o "HeaderCopy"
  */
 
 var psd = function () {
@@ -63,7 +64,7 @@ psdlint.prototype.isFloat = function(textLayer) {
         return true;
     } else {
         return false;
-    } 
+    }
 };
 
 psdlint.prototype.rgbaSum = function (color1, color2) {
@@ -103,10 +104,10 @@ psdlint.prototype.rgbaSum = function(color1, color2){
 
 psd.prototype.getVisibleTextLayers = function(root, layersArray) {
     var lenLayers = root.layers.length;
-    
+
     for (var i=0; i<lenLayers; i++) {
         var theLayer = root.layers[i];
-        
+
         if (theLayer.visible) {
             if (theLayer.typename == "LayerSet") {
                 this.getVisibleLayers(theLayer, layersArray);
@@ -142,9 +143,8 @@ for (var i=0; i<len; i++) {
     //alert(psdlint.isFloat(TheLayers[i]));
 
     var textLayer = TheLayers[i];
-    
+
     if (psdlint.isSmall(textLayer)) {
         alert("WARN: Small Text : " + textLayer.name);
     }
-    
 }

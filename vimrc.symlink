@@ -128,8 +128,8 @@ set guioptions=egmrt
 set number
 
 " Font
-set guifont=Monaco:h12
-
+set guifont=Monaco:h15
+"set guifont=Inconsolata:h17
 " Always shows status bar
 set laststatus=2
 
@@ -245,7 +245,7 @@ syntax on
 "colorscheme solarized
 "colorscheme gruvbox
 colorscheme wombat256mod
-"set background=dark
+set background=dark
 
 " set extra options when runnung in GUI Mode
 if has("gui_running")
