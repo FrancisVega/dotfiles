@@ -59,11 +59,11 @@ psdlint.prototype.isSmall = function(textLayer) {
 };
 
 psdlint.prototype.isFloat = function(textLayer) {
-    if (this.numberIsFloat(textLayer.textItem.size)) {
+    if (this.numberIsFloat(textLayer.textItem.size.value) === true) {
         return true;
     } else {
         return false;
-    } 
+    }
 };
 
 psdlint.prototype.rgbaSum = function (color1, color2) {
@@ -103,13 +103,13 @@ psdlint.prototype.rgbaSum = function(color1, color2){
 
 psd.prototype.getVisibleTextLayers = function(root, layersArray) {
     var lenLayers = root.layers.length;
-    
+
     for (var i=0; i<lenLayers; i++) {
         var theLayer = root.layers[i];
-        
+
         if (theLayer.visible) {
             if (theLayer.typename == "LayerSet") {
-                this.getVisibleLayers(theLayer, layersArray);
+                this.getVisibleTextLayers(theLayer, layersArray);
             } else if (this.isTextLayer(theLayer)) {
                 layersArray.push(theLayer);
             }
@@ -137,14 +137,22 @@ psd.getVisibleTextLayers(Doc, TheLayers);
 
 // Pasamos por las text layers para ver los warnings
 var len = TheLayers.length;
-for (var i=0; i<len; i++) {
-    //alert(psdlint.isSmall(TheLayers[i]));
-    //alert(psdlint.isFloat(TheLayers[i]));
+var msg = "PDSLint";
 
+msg += "\nSmall Size " + psdlint.lint.typo.min_size;
+for (var i=0; i<len; i++) {
     var textLayer = TheLayers[i];
-    
     if (psdlint.isSmall(textLayer)) {
-        alert("WARN: Small Text : " + textLayer.name);
+        msg = msg + "\n  - " + textLayer.name + " " + textLayer.textItem.size;
     }
-    
 }
+
+msg += "\n\nFloat Size";
+for (var i=0; i<len; i++) {
+    var textLayer = TheLayers[i];
+    if (psdlint.isFloat(textLayer)) {
+        msg += "\n - " + textLayer.name + " " + textLayer.textItem.size;
+    }
+}
+
+alert(msg);
