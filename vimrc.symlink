@@ -1,4 +1,5 @@
 
+
 " VAM Setup
 
 set nocompatible | filetype indent plugin on | syn on
@@ -128,8 +129,8 @@ set guioptions=egmrt
 set number
 
 " Font
-set guifont=Monaco:h15
-"set guifont=Inconsolata:h17
+set guifont=Monaco:h12
+
 " Always shows status bar
 set laststatus=2
 
@@ -260,13 +261,8 @@ syntax on
 
 "colorscheme slate
 "colorscheme solarized
-<<<<<<< HEAD
-"colorscheme gruvbox
-colorscheme wombat256mod
-=======
 colorscheme gruvbox
 "colorscheme wombat256mod
->>>>>>> 1341e6722bbdcdbed8a4597040df1a253e8a6029
 set background=dark
 
 " set extra options when runnung in GUI Mode
@@ -421,5 +417,4 @@ vnoremap <silent> gv :call VisualSelection('gv')<CR>
 "
 " JSHint
 let jshint2_save=1
-
 
