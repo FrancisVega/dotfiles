@@ -112,14 +112,14 @@ let mapleader = ","
 let g:mapleader = ","
 
 " No Arrow keys
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
+"map <"up> <nop>
+"map <down> <nop>
+"map <left> <nop>
+"map <right> <nop>
+"imap <up> <nop>
+"imap <down> <nop>
+"imap <left> <nop>
+"imap <right> <nop>
 
 " Hide Toolbar in MacVim
 set guioptions=egmrt
@@ -160,9 +160,26 @@ autocmd BufRead *.js nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
 map <Leader>y :NERDTree<CR>
 
 
+" Ruby
+autocmd BufRead *.rb nmap <Leader>r :exec '!ruby' shellescape(@%, 1)<CR>
+
 "
 " General
 "
+
+" Window size
+if bufwinnr(1)
+  map + <C-W>+
+  map - <C-W>-
+endif
+
+
+" Cursor to move between windows
+" cycle
+map <left> <c-w>w
+map <down> <c-w>w
+map <right> <c-w>W
+map <up> <c-w>W
 
 " history
 set history=700
@@ -243,8 +260,13 @@ syntax on
 
 "colorscheme slate
 "colorscheme solarized
+<<<<<<< HEAD
 "colorscheme gruvbox
 colorscheme wombat256mod
+=======
+colorscheme gruvbox
+"colorscheme wombat256mod
+>>>>>>> 1341e6722bbdcdbed8a4597040df1a253e8a6029
 set background=dark
 
 " set extra options when runnung in GUI Mode
