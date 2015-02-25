@@ -56,7 +56,7 @@ fun! SetupVAM()
   " Tell VAM which plugins to fetch & load:
   call vam#ActivateAddons([], {'auto_install' : 0})
   call vam#ActivateAddons(['The_NERD_tree'], {'auto_install' : 0})
-  call vam#ActivateAddons(['SlateDark', 'jsruntime', 'jshint2','vim-multiple-cursors','wombat256', 'auto-pairs-gentle', 'The_NERD_Commenter', 'vim-airline','UltiSnips','gruvbox', 'vim-snippets', 'Solarized'], {'auto_install' : 0})
+  call vam#ActivateAddons(['SlateDark', 'Xoria256m', 'jsruntime', 'jshint2','vim-multiple-cursors','wombat256', 'auto-pairs-gentle', 'The_NERD_Commenter', 'vim-airline', 'UltiSnips','gruvbox','EasyMotion', 'mango', 'vim-snippets', 'Solarized'], {'auto_install' : 0})
   " Also See "plugins-per-line" below
 
   " Addons are put into plugin_root_dir/plugin-name directory
@@ -258,12 +258,13 @@ set tm=500
 
 "Enable syntax hl
 syntax on
-
+set background=dark
+color xoria256m
+"color mango
 "colorscheme slate
 "colorscheme solarized
-colorscheme gruvbox
+"colorscheme gruvbox
 "colorscheme wombat256mod
-set background=dark
 
 " set extra options when runnung in GUI Mode
 if has("gui_running")
@@ -417,4 +418,3 @@ vnoremap <silent> gv :call VisualSelection('gv')<CR>
 "
 " JSHint
 let jshint2_save=1
-
