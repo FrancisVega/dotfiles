@@ -76,21 +76,22 @@ Plug 'https://github.com/tomtom/tlib_vim'
 Plug 'https://github.com/kien/ctrlp.vim'
 Plug 'https://github.com/flazz/vim-colorschemes'
 Plug 'https://github.com/terryma/vim-multiple-cursors'
+Plug 'https://github.com/AndrewRadev/splitjoin.vim'
 call plug#end()
 
 " ------------------------------
 " Color & Font
 " ------------------------------
 syntax on
-set guifont=Monaco:h14 " Font
+set guifont=Monaco:h16 " Font
 set background=dark
-"colorsheme gruvbox
-"colorscheme flatcolor
+"colorscheme gruvbox
+colorscheme flatcolor
 "colorscheme slate
 "colorscheme solarized
 "colorscheme wombat256mod
 "colorscheme desert
-colorscheme desertEx
+"colorscheme desertEx
 
 " ------------------------------
 " General
