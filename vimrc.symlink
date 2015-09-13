@@ -1,3 +1,31 @@
+set nocompatible
+filetype off
+
+" ------------------------------
+" Vundle Start
+" ------------------------------
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'tpope/vim-sensible'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'bling/vim-airline'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'honza/vim-snippets'
+Plugin 'garbas/vim-snipmate'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tomtom/tlib_vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'AndrewRadev/splitjoin.vim'
+Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+call vundle#end()
+filetype plugin indent on
+" ------------------------------
+" Vundle End
+" ------------------------------
+
 " ------------------------------
 " Leader key
 " ------------------------------
@@ -9,11 +37,8 @@ let g:mapleader = ","
 " ------------------------------
 nmap <leader>V :%s/show/false/g<cr>:w<cr>:nohl<cr>
 nmap <leader>C :%s/false/show/g<cr>:w<cr>:nohl<cr>
-nmap <leader>cc /{<cr>v%J0:nohl<cr>
-nmap <leader>co :s/{ /{\r/g<cr>:s/}/\r}/g<cr>k>>:s/; /;\r\t/g<cr>dd%0:nohl<cr>
-nmap <leader>cñ jvi{:sort /\S/ r<cr>k0:echo "Sorted CSS"<cr>
-nmap <leader>ck vi{<esc>j%0
-nmap <leader>ññ :source /Users/hisco/Desktop/folding.vim<cr>:call Folding()<cr>
+nmap <leader>,o gS
+nmap <leader>,p gJ
 
 " ------------------------------
 " Mapeos
@@ -61,36 +86,19 @@ imap <left> <nop>
 imap <right> <nop>
 
 " ------------------------------
-" PLUG.vim setup
-" ------------------------------
-call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-sensible'
-Plug 'https://github.com/scrooloose/nerdcommenter'
-Plug 'https://github.com/bling/vim-airline'
-Plug 'https://github.com/jiangmiao/auto-pairs'
-Plug 'https://github.com/MarcWeber/vim-addon-mw-utils'
-Plug 'https://github.com/honza/vim-snippets'
-Plug 'https://github.com/garbas/vim-snipmate'
-Plug 'https://github.com/scrooloose/nerdtree'
-Plug 'https://github.com/tomtom/tlib_vim'
-Plug 'https://github.com/kien/ctrlp.vim'
-Plug 'https://github.com/flazz/vim-colorschemes'
-Plug 'https://github.com/terryma/vim-multiple-cursors'
-Plug 'https://github.com/AndrewRadev/splitjoin.vim'
-call plug#end()
-
-" ------------------------------
 " Color & Font
 " ------------------------------
 syntax on
 set guifont=Monaco:h16 " Font
 set background=dark
 "colorscheme gruvbox
-colorscheme flatcolor
+"colorscheme flatcolor
 "colorscheme slate
 "colorscheme solarized
 "colorscheme wombat256mod
 "colorscheme desert
+colorscheme molokai
+colorscheme Dracula
 "colorscheme desertEx
 
 " ------------------------------
@@ -100,7 +108,6 @@ set encoding=utf8 " utf8
 set ffs=unix,dos,mac " Filesystem
 set nrformats-=octal
 
-"Atajos (tipo emacs) para la línea de comandos de vim
 :cnoremap <C-a>  <Home>
 :cnoremap <C-b>  <Left>
 :cnoremap <C-f>  <Right>
