@@ -37,8 +37,12 @@ let g:mapleader = ","
 " ------------------------------
 nmap <leader>V :%s/show/false/g<cr>:w<cr>:nohl<cr>
 nmap <leader>C :%s/false/show/g<cr>:w<cr>:nohl<cr>
-nmap <leader>,o gS
-nmap <leader>,p gJ
+"nmap <leader>m gS
+"nmap <leader>n gJ
+nmap <leader>m :s/{ /{\r\t/g<cr>:s/; /;\r\t/g<cr><<%0:nohl<cr>
+nmap <leader>n V%J0:nohl<cr>
+nmap <leader>s jV}k:!sort<cr>k0
+imap  \
 
 " ------------------------------
 " Mapeos
@@ -54,6 +58,15 @@ noremap <bs> `
 " Mueve el cursor de línea en línea aunque sea un párrafo 'wrapeado'
 map j gj
 map k gk
+" Centra el cursor en la pantalla
+nmap G Gzz
+nmap n nzz
+nmap N Nzz
+nmap { {zz
+nmap } }zz
+" Crear lineas sin entrar en insert
+nmap g<c-o> o<esc>k
+nmap gO O<esc>j
 
 " Remove hightlight
 noremap <Leader>, :nohl<CR>
@@ -89,7 +102,7 @@ imap <right> <nop>
 " Color & Font
 " ------------------------------
 syntax on
-set guifont=Monaco:h16 " Font
+set guifont=Monaco:h14 " Font
 set background=dark
 "colorscheme gruvbox
 "colorscheme flatcolor
@@ -98,7 +111,7 @@ set background=dark
 "colorscheme wombat256mod
 "colorscheme desert
 colorscheme molokai
-colorscheme Dracula
+"colorscheme Dracula
 "colorscheme desertEx
 
 " ------------------------------

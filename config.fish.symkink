@@ -1,11 +1,12 @@
 #Super alias
-alias vim=mvim
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias cls=clear
-alias ..="cd .."
-alias cd..="cd .."
+alias vim "nvim"
+alias ta "tmux attach-session"
+alias ll 'ls -alF'
+alias la 'ls -A'
+alias l 'ls -CF'
+alias cls "clear"
+alias .. "cd .."
+alias cd.. "cd .."
 
 set -g -x PATH /usr/local/bin $PATH
 set -g -x fish_greeting ''
