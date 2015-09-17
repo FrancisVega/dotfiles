@@ -86,5 +86,11 @@ setw -g window-status-current-format '#[fg=colour235,bg=colour238,nobold,nounder
 # set -g @plugin 'git@github.com/user/plugin'
 # set -g @plugin 'git@bitbucket.com/user/plugin'
 
+#Sessions
+new -s default
+neww -n vim
+neww -n terminal
+selectw -t 1
+
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
