@@ -1,3 +1,8 @@
+tmux start-server
+if [[ -z "$TMUX" ]]
+then
+    exec tmux attach -d -t default
+fi
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
