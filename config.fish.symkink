@@ -1,5 +1,5 @@
 #Super alias
-alias vim "nvim"
+alias vim "/usr/local/Cellar/macvim/7.4-76/MacVim.app/Contents/MacOS/Vim"
 alias ta "tmux attach-session"
 alias ll 'ls -alF'
 alias la 'ls -A'
