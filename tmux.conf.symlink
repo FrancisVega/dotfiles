@@ -87,7 +87,7 @@ setw -g window-status-current-format '#[fg=colour235,bg=colour238,nobold,nounder
 # set -g @plugin 'git@bitbucket.com/user/plugin'
 
 #Sessions
-new -s default
+new -s Lorien
 neww -n vim
 neww -n terminal
 selectw -t 1
