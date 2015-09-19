@@ -43,7 +43,9 @@ nmap <leader>m :s/{ /{\r\t/g<cr>:s/; /;\r\t/g<cr><<%0:nohl<cr>
 nmap <leader>n V%J0:nohl<cr>
 nmap <leader>s jV}k:!sort<cr>k0
 imap  \
-
+cmap  \
+iabbr ture true
+iabbr flase false
 " ------------------------------
 " Mapeos
 " ------------------------------
