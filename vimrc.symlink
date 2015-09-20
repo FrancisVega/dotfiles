@@ -20,6 +20,7 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+Plugin 'gregsexton/MatchTag'
 call vundle#end()
 filetype plugin indent on
 " ------------------------------
@@ -35,40 +36,49 @@ let g:mapleader = ","
 " ------------------------------
 " css/sass experimental mappings
 " ------------------------------
-nmap <leader>V :%s/show/false/g<cr>:w<cr>:nohl<cr>
-nmap <leader>C :%s/false/show/g<cr>:w<cr>:nohl<cr>
-"nmap <leader>m gS
-"nmap <leader>n gJ
-nmap <leader>m :s/{ /{\r\t/g<cr>:s/; /;\r\t/g<cr><<%0:nohl<cr>
-nmap <leader>n V%J0:nohl<cr>
-nmap <leader>s jV}k:!sort<cr>k0
-imap  \
-cmap  \
+nnoremap <leader>V :%s/show/false/g<cr>:w<cr>:nohl<cr>
+nnoremap <leader>C :%s/false/show/g<cr>:w<cr>:nohl<cr>
+"nnoremap <leader>m gS
+"nnoremap <leader>n gJ
+"nnoremap <leader>m :s/{ /{\r\t/g<cr>:s/; /;\r\t/g<cr><<%0:nohl<cr>
+"nnoremap <leader>n V%J0:nohl<cr>
+"nnoremap <leader>s jV}k:!sort<cr>k0
+inoremap  \
+cnoremap  \
 iabbr ture true
 iabbr flase false
+
+" ------------------------------
+" Mapeos ejercicios
+" ------------------------------
+inoremap <c-u> <esc>viwU<esc>A
+nnoremap L $
+nnoremap H ^
+
 " ------------------------------
 " Mapeos
 " ------------------------------
-map <Leader>y :NERDTreeToggle<CR>
-nmap <leader>w :w!<cr>
-map <leader>e :e ~/.vimrc<cr>
+nnoremap <leader>n :vsplit $HOME/repos/herwiki/wiki.txt<cr>
+noremap <Leader>y :NERDTreeToggle<CR>
+nnoremap <leader>w :w!<cr>
+noremap <leader>e :vsplit $MYVIMRC<cr>
 inoremap jj <Esc>
-map <space> /
-map <c-space> ?
+noremap <space> /
+noremap <c-space> ?
 " Facilita ir a marcas
 noremap <bs> `
 " Mueve el cursor de línea en línea aunque sea un párrafo 'wrapeado'
-map j gj
-map k gk
+noremap j gj
+noremap k gk
 " Centra el cursor en la pantalla
-nmap G Gzz
-nmap n nzz
-nmap N Nzz
-nmap { {zz
-nmap } }zz
+nnoremap G Gzz
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap { {zz
+nnoremap } }zz
 " Crear lineas sin entrar en insert
-nmap g<c-o> o<esc>k
-nmap gO O<esc>j
+nnoremap g<c-o> o<esc>k
+nnoremap gO O<esc>j
 
 " Remove hightlight
 noremap <Leader>, :nohl<CR>
@@ -76,29 +86,36 @@ vnoremap <Leader>, :nohl<CR>
 inoremap <Leader>, :nohl<CR>
 
 " Switch CWD to the directory of the open buffer
-map <leader>cd :cd<space>%:h<cr>:pwd<cr>
+noremap <leader>cd :cd<space>%:h<cr>:pwd<cr>
 
 " Smart way to move between windows
-map <C-j> <c-w>j
-map <C-k> <c-w>k
-map <C-h> <c-w>h
-map <C-l> <c-w>l
+noremap <C-j> <c-w>j
+noremap <C-k> <c-w>k
+noremap <C-h> <c-w>h
+noremap <C-l> <c-w>l
 
 " Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
+noremap <leader>tn :tabnew<cr>
+noremap <leader>to :tabonly<cr>
+noremap <leader>tc :tabclose<cr>
+noremap <leader>tm :tabmove
 
 " No Arrow keys
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
+noremap <up> <nop>
+noremap <down> <nop>
+noremap <left> <nop>
+noremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" ------------------------------
+" CSS Related
+" ------------------------------
+autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
+autocmd FileType scss nnoremap <buffer> <tab> za
+autocmd FileType scss nnoremap <buffer> <S-tab> zO 
 
 " ------------------------------
 " Color & Font
@@ -230,7 +247,7 @@ set wrap "Wrap lines
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+noremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " Specify the behavior when switching between buffers
 try
@@ -262,19 +279,20 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 
 " Python execute
 " TODO: make filetype (py) dependency
-nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
+"nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
+nnoremap <F9> :exec '!python' shellescape(@%, 1)<cr>
 "autocmd BufRead *.py nmap <F5> :!python %<CR>
-autocmd BufRead *.jsx nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
-autocmd BufRead *.js nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
+"autocmd BufRead *.jsx nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
+"autocmd BufRead *.js nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
 
 " Mapea la tecla 0 para que haga lo mismo que ^ (ir al primer caracter -no espacio- de la línea)
-map 0 ^
+noremap 0 ^
 
 " Move a line of text using ALT+[jk] or Command+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+nnoremap <M-j> mz:m+<cr>`z
+nnoremap <M-k> mz:m-2<cr>`z
+vnoremap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vnoremap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 if has("mac") || has("macunix")
     nmap <D-j> <M-j>
