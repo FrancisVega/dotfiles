@@ -195,6 +195,9 @@ set smartcase
 set hlsearch
 set incsearch
 
+"NerdTree ignore
+let NERDTreeIgnore=['node_modules', 'bower_components']
+
 " ignore compiled files
 set wildignore+=*.o,*~,*.pyc,*.a
 set wildignore+=*.bpm,*.gif,*.ico,*.jpg,*.png
