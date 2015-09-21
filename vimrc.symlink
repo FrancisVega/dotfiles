@@ -1,9 +1,10 @@
+" .vimrc
+" Author: Francis Vega <hisconer@gmail.com>
+" Source: https://github.com/FrancisVega/dotfiles/blob/master/vimrc.symlink
+"
+" Vundle Start ------------------------------------------------------------- {{{
 set nocompatible
 filetype off
-
-" ------------------------------
-" Vundle Start
-" ------------------------------
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'tpope/vim-sensible'
@@ -23,19 +24,15 @@ Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plugin 'gregsexton/MatchTag'
 call vundle#end()
 filetype plugin indent on
-" ------------------------------
-" Vundle End
-" ------------------------------
-
-" ------------------------------
-" Leader key
-" ------------------------------
+" }}}
+" Leader key --------------------------------------------------------------- {{{
 let mapleader = ","
 let g:mapleader = ","
-
-" ------------------------------
-" css/sass experimental mappings
-" ------------------------------
+" }}}
+" Folding ------------------------------------------------------------------ {{{
+set foldmethod=marker
+" }}}
+" css/sass experimental mappings ------------------------------------------- {{{
 nnoremap <leader>V :%s/show/false/g<cr>:w<cr>:nohl<cr>
 nnoremap <leader>C :%s/false/show/g<cr>:w<cr>:nohl<cr>
 "nnoremap <leader>m gS
@@ -47,17 +44,13 @@ inoremap  \
 cnoremap  \
 iabbr ture true
 iabbr flase false
-
-" ------------------------------
-" Mapeos ejercicios
-" ------------------------------
+" }}}
+" Mapeos ejercicios -------------------------------------------------------- {{{
 inoremap <c-u> <esc>viwU<esc>A
 nnoremap L $
 nnoremap H ^
-
-" ------------------------------
-" Mapeos
-" ------------------------------
+" }}}
+" Mapeos ------------------------------------------------------------------- {{{
 nnoremap <leader>n :vsplit $HOME/repos/herwiki/wiki.txt<cr>
 noremap <Leader>y :NERDTreeToggle<CR>
 nnoremap <leader>w :w!<cr>
@@ -109,17 +102,13 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
-
-" ------------------------------
-" CSS Related
-" ------------------------------
+" }}}
+" CSS Related -------------------------------------------------------------- {{{
 autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
 autocmd FileType scss nnoremap <buffer> <tab> za
 autocmd FileType scss nnoremap <buffer> <S-tab> zO 
-
-" ------------------------------
-" Color & Font
-" ------------------------------
+" }}}
+" Color & Font ------------------------------------------------------------- {{{
 syntax on
 set guifont=Monaco:h14 " Font
 set background=dark
@@ -132,13 +121,13 @@ set background=dark
 colorscheme molokai
 "colorscheme Dracula
 "colorscheme desertEx
-
-" ------------------------------
-" General
-" ------------------------------
+" }}}
+" General ------------------------------------------------------------------ {{{
 set encoding=utf8 " utf8
 set ffs=unix,dos,mac " Filesystem
 set nrformats-=octal
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
 
 :cnoremap <C-a>  <Home>
 :cnoremap <C-b>  <Left>
@@ -165,19 +154,14 @@ set clipboard=unnamed
 " Mouse and backspace
 set mouse=a
 set bs=2
-
-" ------------------------------
-" CtrlP
-" ------------------------------
+" }}}
+" CtrlP -------------------------------------------------------------------- {{{
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = 'a'
-
-" ------------------------------
-" General
-" ------------------------------
+" }}}
+" General ------------------------------------------------------------------ {{{
 set history=700 " history
 set autoread " set auto read when a file is changed from the outside
-
 " Reload .vimrc
 autocmd! bufwritepost .vimrc source %
 
@@ -268,10 +252,8 @@ autocmd BufReadPost *
 set viminfo^=% " Remember info about open buffers on close
 set laststatus=2 " Always show the status line
 
-" ------------------------------
-" Utils
-" ------------------------------
-
+" }}}
+" Utils -------------------------------------------------------------------- {{{
 " Delete trailing white spcae on save, useful for Pyhton and CoffeScript
 func! DeleteTrailingWS()
     exe "normal mz"
@@ -303,3 +285,4 @@ if has("mac") || has("macunix")
     vmap <D-j> <M-j>
     vmap <D-k> <M-k>
 endif
+" }}}
