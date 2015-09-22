@@ -76,7 +76,7 @@ nnoremap gO O<esc>j
 " Remove hightlight
 noremap <Leader>, :nohl<CR>
 vnoremap <Leader>, :nohl<CR>
-inoremap <Leader>, :nohl<CR>
+"inoremap <Leader>, :nohl<CR>
 
 " Switch CWD to the directory of the open buffer
 noremap <leader>cd :cd<space>%:h<cr>:pwd<cr>
@@ -110,7 +110,7 @@ autocmd FileType scss nnoremap <buffer> <S-tab> zO
 " }}}
 " Color & Font ------------------------------------------------------------- {{{
 syntax on
-set guifont=Monaco:h14 " Font
+set guifont=Inconsolata:h16 " Font
 set background=dark
 "colorscheme gruvbox
 "colorscheme flatcolor
@@ -119,6 +119,7 @@ set background=dark
 "colorscheme wombat256mod
 "colorscheme desert
 colorscheme molokai
+"colorscheme badwolf
 "colorscheme Dracula
 "colorscheme desertEx
 " }}}
