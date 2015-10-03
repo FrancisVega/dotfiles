@@ -22,9 +22,18 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plugin 'gregsexton/MatchTag'
+<<<<<<< HEAD
 "Vim markdown
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+=======
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'ervandew/supertab'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'moll/vim-node'
+Plugin 'https://github.com/vim-scripts/ZoomWin'
+Plugin 'https://github.com/rstacruz/sparkup'
 call vundle#end()
 filetype plugin indent on
 " }}}
@@ -40,50 +49,44 @@ let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_no_default_key_mappings=1
 " }}}
 " css/sass experimental mappings ------------------------------------------- {{{
-nnoremap <leader>V :%s/show/false/g<cr>:w<cr>:nohl<cr>
-nnoremap <leader>C :%s/false/show/g<cr>:w<cr>:nohl<cr>
-"nnoremap <leader>m gS
-"nnoremap <leader>n gJ
-"nnoremap <leader>m :s/{ /{\r\t/g<cr>:s/; /;\r\t/g<cr><<%0:nohl<cr>
-"nnoremap <leader>n V%J0:nohl<cr>
-"nnoremap <leader>s jV}k:!sort<cr>k0
 inoremap  \
 cnoremap  \
 iabbr ture true
 iabbr flase false
 " }}}
-" Mapeos ejercicios -------------------------------------------------------- {{{
-inoremap <c-u> <esc>viwU<esc>A
-nnoremap L $
-nnoremap H ^
-" }}}
 " Mapeos ------------------------------------------------------------------- {{{
+
+" --- testing maps
+inoremap <c-u> <esc>viwU<esc>A
+nnoremap 0 ^
+" copy word
+nnoremap vy mmviwy`m
+" replace a word with default register
+nnoremap vp viwp 
+" --- testing maps
+
 nnoremap <leader>n :vsplit $HOME/repos/herwiki/wiki.txt<cr>
 noremap <Leader>y :NERDTreeToggle<CR>
 nnoremap <leader>w :w!<cr>
 noremap <leader>e :vsplit $MYVIMRC<cr>
-inoremap jj <Esc>
 noremap <space> /
 noremap <c-space> ?
-" Facilita ir a marcas
-noremap <bs> `
+
 " Mueve el cursor de línea en línea aunque sea un párrafo 'wrapeado'
 noremap j gj
 noremap k gk
+
 " Centra el cursor en la pantalla
 nnoremap G Gzz
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap { {zz
 nnoremap } }zz
-" Crear lineas sin entrar en insert
-nnoremap g<c-o> o<esc>k
-nnoremap gO O<esc>j
 
 " Remove hightlight
 noremap <Leader>, :nohl<CR>
 vnoremap <Leader>, :nohl<CR>
-"inoremap <Leader>, :nohl<CR>
+inoremap <Leader>, :nohl<CR>
 
 " Switch CWD to the directory of the open buffer
 noremap <leader>cd :cd<space>%:h<cr>:pwd<cr>
@@ -93,12 +96,6 @@ noremap <C-j> <c-w>j
 noremap <C-k> <c-w>k
 noremap <C-h> <c-w>h
 noremap <C-l> <c-w>l
-
-" Useful mappings for managing tabs
-noremap <leader>tn :tabnew<cr>
-noremap <leader>to :tabonly<cr>
-noremap <leader>tc :tabclose<cr>
-noremap <leader>tm :tabmove
 
 " No Arrow keys
 noremap <up> <nop>
@@ -110,6 +107,11 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 " }}}
+" Markdown ------------------------------------------------------------------{{{
+let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_no_default_key_mappings=1
+let g:vim_markdown_frontmatter=1
+" }}}
 " CSS Related -------------------------------------------------------------- {{{
 autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
 autocmd FileType scss nnoremap <buffer> <tab> za
@@ -117,7 +119,7 @@ autocmd FileType scss nnoremap <buffer> <S-tab> zO
 " }}}
 " Colors ------------------------------------------------------------------- {{{
 syntax on
-set guifont=Inconsolata:h16 " Font
+set guifont=Monaco:h15 " Font
 set background=dark
 "colorscheme gruvbox
 "colorscheme flatcolor
@@ -129,6 +131,14 @@ set background=dark
 colorscheme badwolf
 "colorscheme Dracula
 "colorscheme desertEx
+" }}}
+" CtrlP -------------------------------------------------------------------- {{{
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+let g:ctrlp_working_path_mode = 'a'
+" }}}
+" Supertab ----------------------------------------------------------------- {{{
+" pass
 " }}}
 " General ------------------------------------------------------------------ {{{
 set encoding=utf8 " utf8
@@ -150,6 +160,8 @@ match OverLength /\%81v.\+/
 :cnoremap <C-g>  <C-c>
 
 set guioptions=egmrt " Hide Toolbar in MacVim
+" Relative numbers
+set relativenumber
 
 " Line numbers
 set number
@@ -284,9 +296,6 @@ nnoremap <F9> :exec '!python' shellescape(@%, 1)<cr>
 "autocmd BufRead *.py nmap <F5> :!python %<CR>
 "autocmd BufRead *.jsx nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
 "autocmd BufRead *.js nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
-
-" Mapea la tecla 0 para que haga lo mismo que ^ (ir al primer caracter -no espacio- de la línea)
-noremap 0 ^
 
 " Move a line of text using ALT+[jk] or Command+[jk] on mac
 nnoremap <M-j> mz:m+<cr>`z
