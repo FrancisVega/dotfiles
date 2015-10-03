@@ -22,6 +22,9 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plugin 'gregsexton/MatchTag'
+"Vim markdown
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 call vundle#end()
 filetype plugin indent on
 " }}}
@@ -31,6 +34,10 @@ let g:mapleader = ","
 " }}}
 " Folding ------------------------------------------------------------------ {{{
 set foldmethod=marker
+let g:vim_markdown_folding_disabled=1
+" }}}
+" Markdown ----------------------------------------------------------------- {{{
+let g:vim_markdown_no_default_key_mappings=1
 " }}}
 " css/sass experimental mappings ------------------------------------------- {{{
 nnoremap <leader>V :%s/show/false/g<cr>:w<cr>:nohl<cr>
@@ -108,7 +115,7 @@ autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldma
 autocmd FileType scss nnoremap <buffer> <tab> za
 autocmd FileType scss nnoremap <buffer> <S-tab> zO 
 " }}}
-" Color & Font ------------------------------------------------------------- {{{
+" Colors ------------------------------------------------------------------- {{{
 syntax on
 set guifont=Inconsolata:h16 " Font
 set background=dark
@@ -118,8 +125,8 @@ set background=dark
 "colorscheme solarized
 "colorscheme wombat256mod
 "colorscheme desert
-colorscheme molokai
-"colorscheme badwolf
+"colorscheme molokai
+colorscheme badwolf
 "colorscheme Dracula
 "colorscheme desertEx
 " }}}
@@ -157,8 +164,10 @@ set mouse=a
 set bs=2
 " }}}
 " CtrlP -------------------------------------------------------------------- {{{
+let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_show_hidden = 1
-let g:ctrlp_working_path_mode = 'a'
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_working_path_mode = 0
 " }}}
 " General ------------------------------------------------------------------ {{{
 set history=700 " history
@@ -255,6 +264,11 @@ set laststatus=2 " Always show the status line
 
 " }}}
 " Utils -------------------------------------------------------------------- {{{
+
+"let &t_SI = "\<esc>]50;CursorShape=1\x7"
+let &t_EI = "\<esc>]50;CursorShape=0\x7"
+
+
 " Delete trailing white spcae on save, useful for Pyhton and CoffeScript
 func! DeleteTrailingWS()
     exe "normal mz"
