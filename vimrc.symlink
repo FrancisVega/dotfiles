@@ -27,8 +27,8 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'ervandew/supertab'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'moll/vim-node'
-Plugin 'https://github.com/vim-scripts/ZoomWin'
-Plugin 'https://github.com/rstacruz/sparkup'
+Plugin 'vim-scripts/ZoomWin'
+Plugin 'rstacruz/sparkup'
 call vundle#end()
 filetype plugin indent on
 " }}}
@@ -54,6 +54,8 @@ nnoremap 0 ^
 nnoremap vy mmviwy`m
 " replace a word with default register
 nnoremap vp viwp 
+" Sourrond a word with "
+nnoremap <leader>" mmbi"<esc>ea"<esc>`m
 " --- testing maps
 
 nnoremap <leader>n :vsplit $HOME/repos/herwiki/wiki.txt<cr>
@@ -105,12 +107,10 @@ let g:vim_markdown_frontmatter=1
 " }}}
 " CSS Related -------------------------------------------------------------- {{{
 autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
-autocmd FileType scss nnoremap <buffer> <tab> za
-autocmd FileType scss nnoremap <buffer> <S-tab> zO 
 " }}}
 " Color & Font ------------------------------------------------------------- {{{
 syntax on
-set guifont=Monaco:h15 " Font
+set guifont=Inconsolata:h19 " Font
 set background=dark
 "colorscheme gruvbox
 "colorscheme flatcolor
@@ -119,9 +119,10 @@ set background=dark
 "colorscheme wombat256mod
 "colorscheme desert
 "colorscheme molokai
-colorscheme badwolf
+"colorscheme badwolf
 "colorscheme Dracula
 "colorscheme desertEx
+colorscheme jellybeans
 " }}}
 " CtrlP -------------------------------------------------------------------- {{{
 let g:ctrlp_show_hidden = 1
@@ -132,12 +133,21 @@ let g:ctrlp_working_path_mode = 'a'
 " pass
 " }}}
 " General ------------------------------------------------------------------ {{{
+augroup collumnLimit
+  autocmd!
+  autocmd BufEnter,WinEnter,FileType python
+        \ highlight CollumnLimit ctermbg=DarkGrey guibg=DarkGrey
+  let collumnLimit = 79 " feel free to customize
+  let pattern =
+        \ '\%<' . (collumnLimit+1) . 'v.\%>' . collumnLimit . 'v'
+  autocmd BufEnter,WinEnter,FileType scala,java
+        \ let w:m1=matchadd('CollumnLimit', pattern, -1)
+augroup END
+
+
 set encoding=utf8 " utf8
 set ffs=unix,dos,mac " Filesystem
 set nrformats-=octal
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
-
 :cnoremap <C-a>  <Home>
 :cnoremap <C-b>  <Left>
 :cnoremap <C-f>  <Right>
@@ -272,7 +282,8 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 " Python execute
 " TODO: make filetype (py) dependency
 "nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
-nnoremap <F9> :exec '!python' shellescape(@%, 1)<cr>
+"nnoremap <F9> :exec '!python' shellescape(@%, 1)<cr>
+nnoremap <silent> <F9> :!clear;python %<CR>
 "autocmd BufRead *.py nmap <F5> :!python %<CR>
 "autocmd BufRead *.jsx nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
 "autocmd BufRead *.js nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>

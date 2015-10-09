@@ -22,6 +22,10 @@ alias l='ls -CF'
 
 # git
 alias g=git
+alias gs="git status"
+alias gb="git checkout -b"
+alias gc="git commit"
+alias ga="git add"
 
 # cd ..
 alias ..='cd ..'
