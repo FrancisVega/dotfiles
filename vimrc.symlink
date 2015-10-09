@@ -29,6 +29,7 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'moll/vim-node'
 Plugin 'vim-scripts/ZoomWin'
 Plugin 'rstacruz/sparkup'
+Plugin 'airblade/vim-gitgutter'
 call vundle#end()
 filetype plugin indent on
 " }}}
@@ -37,7 +38,7 @@ let mapleader = ","
 let g:mapleader = ","
 " }}}
 " Folding ------------------------------------------------------------------ {{{
-set foldmethod=marker
+"set foldmethod=marker
 " }}}
 " css/sass experimental mappings ------------------------------------------- {{{
 inoremap  \
@@ -107,9 +108,6 @@ inoremap <right> <nop>
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_no_default_key_mappings=1
 let g:vim_markdown_frontmatter=1
-" }}}
-" CSS Related -------------------------------------------------------------- {{{
-autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
 " }}}
 " Color & Font ------------------------------------------------------------- {{{
 syntax on
