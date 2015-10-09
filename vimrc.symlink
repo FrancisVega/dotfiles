@@ -46,6 +46,9 @@ iabbr ture true
 iabbr flase false
 " }}}
 " Mapeos ------------------------------------------------------------------- {{{
+" Typos
+command! -bang Q q<bang>
+command! -bang W w<bang>
 
 " --- testing maps
 inoremap <c-u> <esc>viwU<esc>A
