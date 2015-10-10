@@ -22,13 +22,6 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plugin 'gregsexton/MatchTag'
-<<<<<<< HEAD
-"Vim markdown
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-=======
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
 Plugin 'ervandew/supertab'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'moll/vim-node'
@@ -144,8 +137,6 @@ let g:ctrlp_working_path_mode = 'a'
 set encoding=utf8 " utf8
 set ffs=unix,dos,mac " Filesystem
 set nrformats-=octal
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
 
 :cnoremap <C-a>  <Home>
 :cnoremap <C-b>  <Left>
