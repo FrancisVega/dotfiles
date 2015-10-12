@@ -27,16 +27,14 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'moll/vim-node'
 Plugin 'https://github.com/vim-scripts/ZoomWin'
 Plugin 'https://github.com/rstacruz/sparkup'
+Plugin 'wincent/terminus'
+Plugin 'airblade/vim-gitgutter'
 call vundle#end()
 filetype plugin indent on
 " }}}
 " Leader key --------------------------------------------------------------- {{{
 let mapleader = ","
 let g:mapleader = ","
-" }}}
-" Folding ------------------------------------------------------------------ {{{
-set foldmethod=marker
-let g:vim_markdown_folding_disabled=1
 " }}}
 " Markdown ----------------------------------------------------------------- {{{
 let g:vim_markdown_no_default_key_mappings=1
@@ -107,11 +105,6 @@ inoremap <right> <nop>
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_no_default_key_mappings=1
 let g:vim_markdown_frontmatter=1
-" }}}
-" CSS Related -------------------------------------------------------------- {{{
-autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
-autocmd FileType scss nnoremap <buffer> <tab> za
-autocmd FileType scss nnoremap <buffer> <S-tab> zO 
 " }}}
 " Colors ------------------------------------------------------------------- {{{
 syntax on
