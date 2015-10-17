@@ -37,6 +37,7 @@ alias cls='clear'
 # alias emacs='/usr/local/Cellar/emacs/HEAD/Emacs.app/Contents/MacOs/Emacs -nw'
 # vim
 alias vimconf='mvim ~/.vimrc'
+alias m='mvim'
 
 # vim related
 alias nt='vim ~/repos/herwiki/notes.txt'
