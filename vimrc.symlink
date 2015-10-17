@@ -7,6 +7,9 @@ set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+" plugins
 Plugin 'tpope/vim-sensible'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'bling/vim-airline'
@@ -18,18 +21,19 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'tomtom/tlib_vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'terryma/vim-multiple-cursors'
+"Plugin 'terryma/vim-multiple-cursors'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plugin 'gregsexton/MatchTag'
 Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+"Plugin 'plasticboy/vim-markdown'
 Plugin 'ervandew/supertab'
-Plugin 'davidhalter/jedi-vim'
+"Plugin 'davidhalter/jedi-vim'
 Plugin 'moll/vim-node'
 Plugin 'vim-scripts/ZoomWin'
-Plugin 'rstacruz/sparkup'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
 call vundle#end()
 filetype plugin indent on
 " }}}
@@ -111,7 +115,7 @@ let g:vim_markdown_frontmatter=1
 " }}}
 " Color & Font ------------------------------------------------------------- {{{
 syntax on
-set guifont=Inconsolata:h19 " Font
+set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h14 " Font
 set background=dark
 "colorscheme gruvbox
 "colorscheme flatcolor
@@ -134,17 +138,13 @@ let g:ctrlp_working_path_mode = 'a'
 " pass
 " }}}
 " General ------------------------------------------------------------------ {{{
-augroup collumnLimit
-  autocmd!
-  autocmd BufEnter,WinEnter,FileType python
-        \ highlight CollumnLimit ctermbg=DarkGrey guibg=DarkGrey
-  let collumnLimit = 79 " feel free to customize
-  let pattern =
-        \ '\%<' . (collumnLimit+1) . 'v.\%>' . collumnLimit . 'v'
-  autocmd BufEnter,WinEnter,FileType scala,java
-        \ let w:m1=matchadd('CollumnLimit', pattern, -1)
-augroup END
 
+" cool fonts
+let g:airline_powerline_fonts = 1
+
+" column max char 79
+highlight ColorColumn ctermbg=magenta guibg=#ff0088
+call matchadd('ColorColumn', '\%81v', 100)
 
 set encoding=utf8 " utf8
 set ffs=unix,dos,mac " Filesystem
@@ -167,7 +167,6 @@ set relativenumber
 
 " Line numbers
 set number
-set laststatus=2 " Always shows status bar
 
 " Better copy & paste
 set pastetoggle=<F2>
