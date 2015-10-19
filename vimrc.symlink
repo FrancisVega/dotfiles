@@ -7,7 +7,9 @@ set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+" plugins
 Plugin 'tpope/vim-sensible'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'bling/vim-airline'
@@ -23,23 +25,15 @@ Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plugin 'gregsexton/MatchTag'
 Plugin 'ervandew/supertab'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'moll/vim-node'
-Plugin 'https://github.com/vim-scripts/ZoomWin'
-Plugin 'https://github.com/rstacruz/sparkup'
 Plugin 'tpope/vim-surround'
-"Plugin 'wincent/terminuvim +PluginInstalls'
-"Plugin 'terryma/vim-multiple-cursors'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
 call vundle#end()
 filetype plugin indent on
 " }}}
 " Leader key --------------------------------------------------------------- {{{
 let mapleader = ","
 let g:mapleader = ","
-" }}}
-" Markdown ----------------------------------------------------------------- {{{
-let g:vim_markdown_no_default_key_mappings=1
 " }}}
 " css/sass experimental mappings ------------------------------------------- {{{
 inoremap  \
@@ -59,8 +53,6 @@ nnoremap 0 ^
 nnoremap vy mmviwy`m
 " replace a word with default register
 nnoremap vp viwp 
-" fast replace
-nnoremap <leader>,r *:%s/<c-r><c-w>/
 " --- testing maps
 
 nnoremap <leader>n :vsplit $HOME/repos/herwiki/wiki.txt<cr>
@@ -105,14 +97,9 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 " }}}
-" Markdown ------------------------------------------------------------------{{{
-let g:vim_markdown_folding_disabled=1
-let g:vim_markdown_no_default_key_mappings=1
-let g:vim_markdown_frontmatter=1
-" }}}
 " Colors ------------------------------------------------------------------- {{{
 syntax on
-set guifont=Monaco:h15 " Font
+set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h14 " Font
 set background=dark
 "colorscheme gruvbox
 "colorscheme flatcolor
@@ -121,9 +108,10 @@ set background=dark
 "colorscheme wombat256mod
 "colorscheme desert
 "colorscheme molokai
-colorscheme badwolf
+"colorscheme badwolf
 "colorscheme Dracula
 "colorscheme desertEx
+colorscheme jellybeans
 " }}}
 " CtrlP -------------------------------------------------------------------- {{{
 let g:ctrlp_show_hidden = 1
@@ -134,6 +122,14 @@ let g:ctrlp_working_path_mode = 'a'
 " pass
 " }}}
 " General ------------------------------------------------------------------ {{{
+
+" cool fonts
+let g:airline_powerline_fonts = 1
+
+" column max char 79
+highlight ColorColumn ctermbg=magenta guibg=#ff0088
+call matchadd('ColorColumn', '\%81v', 100)
+
 set encoding=utf8 " utf8
 set ffs=unix,dos,mac " Filesystem
 set nrformats-=octal
@@ -283,7 +279,8 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 " Python execute
 " TODO: make filetype (py) dependency
 "nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
-nnoremap <F9> :exec '!python' shellescape(@%, 1)<cr>
+"nnoremap <F9> :exec '!python' shellescape(@%, 1)<cr>
+nnoremap <silent> <F9> :!clear;python %<CR>
 "autocmd BufRead *.py nmap <F5> :!python %<CR>
 "autocmd BufRead *.jsx nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
 "autocmd BufRead *.js nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
