@@ -110,11 +110,11 @@ set background=dark
 "colorscheme solarized
 "colorscheme wombat256mod
 "colorscheme desert
-"colorscheme molokai
+colorscheme molokai
 "colorscheme badwolf
 "colorscheme Dracula
 "colorscheme desertEx
-colorscheme jellybeans
+"colorscheme jellybeans
 " }}}
 " CtrlP -------------------------------------------------------------------- {{{
 let g:ctrlp_show_hidden = 1
