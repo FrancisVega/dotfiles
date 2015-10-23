@@ -107,11 +107,11 @@ set background=dark
 "colorscheme solarized
 "colorscheme wombat256mod
 "colorscheme desert
-"colorscheme molokai
+colorscheme molokai
 "colorscheme badwolf
 "colorscheme Dracula
-"colorscheme desertEx
-colorscheme jellybeans
+"colhrscheme desertEx
+"colorscheme jellybeans
 " }}}
 " CtrlP -------------------------------------------------------------------- {{{
 let g:ctrlp_show_hidden = 1
@@ -122,12 +122,13 @@ let g:ctrlp_working_path_mode = 'a'
 " pass
 " }}}
 " General ------------------------------------------------------------------ {{{
+" highlight current line
 augroup CursorLine
-    au!
- au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-    au WinLeave * setlocal nocursorline
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
 augroup END
-  
+
 " cool fonts
 let g:airline_powerline_fonts = 1
 
