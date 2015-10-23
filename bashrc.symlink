@@ -23,9 +23,7 @@ alias l='ls -CF'
 # git
 alias g=git
 alias gs="git status"
-alias gc="git checkout"
-alias ga="git add"
-alias glog="git log --graph --decorate --oneline"
+
 # cd ..
 alias ..='cd ..'
 alias cd..='..'
