@@ -38,6 +38,7 @@ alias cls='clear'
 # vim
 alias vimconf='mvim ~/.vimrc'
 alias m='mvim'
+alias nv="nvim"
 
 # vim related
 alias nt='vim ~/repos/herwiki/notes.txt'
