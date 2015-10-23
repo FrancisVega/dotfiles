@@ -113,7 +113,7 @@ set background=dark
 colorscheme molokai
 "colorscheme badwolf
 "colorscheme Dracula
-"colorscheme desertEx
+"colhrscheme desertEx
 "colorscheme jellybeans
 " }}}
 " CtrlP -------------------------------------------------------------------- {{{
@@ -126,6 +126,12 @@ let g:ctrlp_working_path_mode = 'a'
 " }}}
 " General ------------------------------------------------------------------ {{{
 
+" highlight current line
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+augroup END
 " cool fonts
 let g:airline_powerline_fonts = 1
 
