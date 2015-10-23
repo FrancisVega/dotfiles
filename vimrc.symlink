@@ -122,7 +122,12 @@ let g:ctrlp_working_path_mode = 'a'
 " pass
 " }}}
 " General ------------------------------------------------------------------ {{{
-
+augroup CursorLine
+    au!
+ au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+    au WinLeave * setlocal nocursorline
+augroup END
+  
 " cool fonts
 let g:airline_powerline_fonts = 1
 
