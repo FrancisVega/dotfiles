@@ -23,14 +23,14 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'tomtom/tlib_vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
-"Plugin 'terryma/vim-multiple-cursors'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plugin 'gregsexton/MatchTag'
 Plugin 'ervandew/supertab'
+Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 call vundle#end()
 filetype plugin indent on
 
@@ -56,8 +56,6 @@ nnoremap 0 ^
 nnoremap vy mmviwy`m
 " replace a word with default register
 nnoremap vp viwp 
-" Sourrond a word with "
-nnoremap <leader>" mmbi"<esc>ea"<esc>`m
 " --- testing maps
 
 nnoremap <leader>n :vsplit $HOME/repos/herwiki/wiki.txt<cr>
@@ -122,6 +120,7 @@ colorscheme jellybeans
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 let g:ctrlp_working_path_mode = 'a'
+<<<<<<< HEAD
 
 " General
 " highlight the status bar when in insert mode
@@ -137,6 +136,8 @@ autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
 autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
+" General
 
 " highlight current line
 augroup CursorLine
@@ -169,11 +170,12 @@ set nrformats-=octal
 :cnoremap <C-g>  <C-c>
 
 set guioptions=egmrt " Hide Toolbar in MacVim
-" Relative numbers
-set relativenumber
 
 " Line numbers
 set number
+" Relative numbers
+set relativenumber
+set laststatus=2 " Always shows status bar
 
 " Better copy & paste
 set pastetoggle=<F2>
@@ -211,6 +213,18 @@ set incsearch
 
 "NerdTree ignore
 let NERDTreeIgnore=['node_modules', 'bower_components']
+"let NERDTreeDirArrows=0
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 
 " ignore compiled files
 set wildignore+=*.o,*~,*.pyc,*.a
