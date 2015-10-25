@@ -102,7 +102,7 @@ inoremap <right> <nop>
 
 " Colors
 syntax on
-set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h14 " Font
+set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h16 " Font
 set background=dark
 "colorscheme gruvbox
 "colorscheme flatcolor
