@@ -121,10 +121,20 @@ let g:ctrlp_show_hidden = 1
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 let g:ctrlp_working_path_mode = 'a'
 " }}}
-" Supertab ----------------------------------------------------------------- {{{
-" pass
-" }}}
 " General ------------------------------------------------------------------ {{{
+" highlight the status bar when in insert mode
+if version >= 700
+    au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
+    au InsertEnter * hi StatusLine ctermfg=240 ctermbg=12
+endif
+
+" hightlight trailing spaces in annoying red
+highlight ExtraWhiteSpace ctermbg=1 guibg=red
+match ExtraWhiteSpace /\s\+$/
+autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
+autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 " highlight current line
 augroup CursorLine
