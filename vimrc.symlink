@@ -2,11 +2,13 @@
 " Author: Francis Vega <hisconer@gmail.com>
 " Source: https://github.com/FrancisVega/dotfiles/blob/master/vimrc.symlink
 "
-" Vundle Start ------------------------------------------------------------- {{{
+
+" Vundle Start
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 " plugins
@@ -31,18 +33,18 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 call vundle#end()
 filetype plugin indent on
-" }}}
-" Leader key --------------------------------------------------------------- {{{
+
+" Leader key
 let mapleader = ","
 let g:mapleader = ","
-" }}}
-" css/sass experimental mappings ------------------------------------------- {{{
+
+" css/sass experimental mappings
 inoremap  \
 cnoremap  \
 iabbr ture true
 iabbr flase false
-" }}}
-" Mapeos ------------------------------------------------------------------- {{{
+
+" Mapeos
 " Typos
 command! -bang Q q<bang>
 command! -bang W w<bang>
@@ -99,8 +101,8 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
-" }}}
-" Colors ------------------------------------------------------------------- {{{
+
+" Colors
 syntax on
 set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h14 " Font
 set background=dark
@@ -110,18 +112,18 @@ set background=dark
 "colorscheme solarized
 "colorscheme wombat256mod
 "colorscheme desert
-colorscheme molokai
+"colorscheme molokai
 "colorscheme badwolf
 "colorscheme Dracula
-"colhrscheme desertEx
-"colorscheme jellybeans
-" }}}
-" CtrlP -------------------------------------------------------------------- {{{
+"colorscheme desertEx
+colorscheme jellybeans
+
+" CtrlP
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 let g:ctrlp_working_path_mode = 'a'
-" }}}
-" General ------------------------------------------------------------------ {{{
+
+" General
 " highlight the status bar when in insert mode
 if version >= 700
     au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
@@ -142,6 +144,7 @@ augroup CursorLine
   au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
   au WinLeave * setlocal nocursorline
 augroup END
+
 " cool fonts
 let g:airline_powerline_fonts = 1
 
@@ -179,14 +182,14 @@ set clipboard=unnamed
 " Mouse and backspace
 set mouse=a
 set bs=2
-" }}}
-" CtrlP -------------------------------------------------------------------- {{{
+
+" CtrlP
 let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
-" }}}
-" General ------------------------------------------------------------------ {{{
+
+" General
 set history=700 " history
 set autoread " set auto read when a file is changed from the outside
 " Reload .vimrc
@@ -254,7 +257,6 @@ set shiftwidth=4
 " linebreak on 500 characters
 set lbr
 set tw=500
-
 set ai "Auto indent
 set si "Samrt indent
 set wrap "Wrap lines
@@ -279,12 +281,10 @@ autocmd BufReadPost *
 set viminfo^=% " Remember info about open buffers on close
 set laststatus=2 " Always show the status line
 
-" }}}
-" Utils -------------------------------------------------------------------- {{{
+" Utils
 
 "let &t_SI = "\<esc>]50;CursorShape=1\x7"
 let &t_EI = "\<esc>]50;CursorShape=0\x7"
-
 
 " Delete trailing white spcae on save, useful for Pyhton and CoffeScript
 func! DeleteTrailingWS()
@@ -315,4 +315,4 @@ if has("mac") || has("macunix")
     vmap <D-j> <M-j>
     vmap <D-k> <M-k>
 endif
-" }}}
+
