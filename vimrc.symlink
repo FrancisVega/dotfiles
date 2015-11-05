@@ -1,7 +1,6 @@
 " .vimrc
 " Author: Francis Vega <hisconer@gmail.com>
 " Source: https://github.com/FrancisVega/dotfiles/blob/master/vimrc.symlink
-"
 
 " Vundle Start
 set nocompatible
@@ -30,7 +29,6 @@ Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
 call vundle#end()
 filetype plugin indent on
 
@@ -41,23 +39,13 @@ let g:mapleader = ","
 " css/sass experimental mappings
 inoremap  \
 cnoremap  \
-iabbr ture true
-iabbr flase false
 
 " Mapeos
 " Typos
 command! -bang Q q<bang>
 command! -bang W w<bang>
 
-" --- testing maps
-inoremap <c-u> <esc>viwU<esc>A
 nnoremap 0 ^
-" copy word
-nnoremap vy mmviwy`m
-" replace a word with default register
-nnoremap vp viwp 
-" --- testing maps
-
 nnoremap <leader>n :vsplit $HOME/repos/herwiki/wiki.txt<cr>
 noremap <Leader>y :NERDTreeToggle<CR>
 nnoremap <leader>w :w!<cr>
@@ -84,37 +72,12 @@ inoremap <Leader>, :nohl<CR>
 " Switch CWD to the directory of the open buffer
 noremap <leader>cd :cd<space>%:h<cr>:pwd<cr>
 
-" Smart way to move between windows
-noremap <C-j> <c-w>j
-noremap <C-k> <c-w>k
-noremap <C-h> <c-w>h
-noremap <C-l> <c-w>l
-
-" No Arrow keys
-noremap <up> <nop>
-noremap <down> <nop>
-noremap <left> <nop>
-noremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-
 " Colors
 syntax on
 set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h16 " Font
 set background=dark
-"colorscheme gruvbox
-"colorscheme flatcolor
-"colorscheme slate
-"colorscheme solarized
-"colorscheme wombat256mod
-"colorscheme desert
-"colorscheme molokai
-"colorscheme badwolf
-"colorscheme Dracula
-"colorscheme desertEx
-colorscheme jellybeans
+colorscheme molokai
+colorscheme badwolf
 
 " CtrlP
 let g:ctrlp_show_hidden = 1
@@ -122,7 +85,7 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 let g:ctrlp_working_path_mode = 'a'
 
 " General
-" highlight the status bar when in insert mode
+" Highlight the status bar when in insert mode
 if version >= 700
     au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
     au InsertEnter * hi StatusLine ctermfg=240 ctermbg=12
@@ -137,7 +100,6 @@ autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 " General
-
 " highlight current line
 augroup CursorLine
   au!
@@ -168,7 +130,7 @@ set nrformats-=octal
 :cnoremap <Esc>d <S-right><Delete>
 :cnoremap <C-g>  <C-c>
 
-set guioptions=egmrt " Hide Toolbar in MacVim
+"set guioptions=egmrt " Hide Toolbar in MacVim
 
 " Line numbers
 set number
@@ -176,9 +138,13 @@ set number
 set relativenumber
 set laststatus=2 " Always shows status bar
 
+" set trailing whitespace with · char
+set listchars=trail:·,
+set list
+
 " Better copy & paste
 set pastetoggle=<F2>
-set clipboard=unnamed
+"set clipboard=unnamedplus
 
 " Mouse and backspace
 set mouse=a
@@ -196,9 +162,6 @@ set autoread " set auto read when a file is changed from the outside
 " Reload .vimrc
 autocmd! bufwritepost .vimrc source %
 
-" Hitting F5 will clean out all trailing whitespace or tabs
-nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>:retab<CR>
-
 " vim ui
 
 " set 7 lines to the cursor - when moving vertocally using j/k
@@ -212,18 +175,7 @@ set incsearch
 
 "NerdTree ignore
 let NERDTreeIgnore=['node_modules', 'bower_components']
-"let NERDTreeDirArrows=0
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
-    \ }
+let NERDTreeDirArrows=0
 
 " ignore compiled files
 set wildignore+=*.o,*~,*.pyc,*.a
@@ -231,8 +183,6 @@ set wildignore+=*.bpm,*.gif,*.ico,*.jpg,*.png
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*.swp,*.tmp
 set wildignore+=node_modules,bower_components
-
-"set whichwrap+=<,>,h,1
 set wildmenu " turn on the wild menu
 set ruler " always show current position
 set cmdheight=1 " height of command bar
@@ -273,59 +223,10 @@ set tw=500
 set ai "Auto indent
 set si "Samrt indent
 set wrap "Wrap lines
-
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-noremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-
-" Specify the behavior when switching between buffers
-try
-    set switchbuf=useopen,usetab,newtab
-    set stal=2
-catch
-endtry
-
-" Return to last edit position when opening files
-autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
-
 set viminfo^=% " Remember info about open buffers on close
 set laststatus=2 " Always show the status line
 
 " Utils
 
-"let &t_SI = "\<esc>]50;CursorShape=1\x7"
-let &t_EI = "\<esc>]50;CursorShape=0\x7"
-
-" Delete trailing white spcae on save, useful for Pyhton and CoffeScript
-func! DeleteTrailingWS()
-    exe "normal mz"
-    %s/\s\+$//ge
-    exe "normal `z"
-endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
-
 " Python execute
-" TODO: make filetype (py) dependency
-"nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
-"nnoremap <F9> :exec '!python' shellescape(@%, 1)<cr>
 nnoremap <silent> <F9> :!clear;python %<CR>
-"autocmd BufRead *.py nmap <F5> :!python %<CR>
-"autocmd BufRead *.jsx nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
-"autocmd BufRead *.js nmap <Leader>j :exec '!node' shellescape(@%, 1)<CR>
-
-" Move a line of text using ALT+[jk] or Command+[jk] on mac
-nnoremap <M-j> mz:m+<cr>`z
-nnoremap <M-k> mz:m-2<cr>`z
-vnoremap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vnoremap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-if has("mac") || has("macunix")
-    nmap <D-j> <M-j>
-    nmap <D-k> <M-k>
-    vmap <D-j> <M-j>
-    vmap <D-k> <M-k>
-endif
-
