@@ -2,8 +2,9 @@
 " Author: Francis Vega <hisconer@gmail.com>
 " Source: https://github.com/FrancisVega/dotfiles/blob/master/vimrc.symlink
 
-" Vundle Start
 set nocompatible
+
+" Vundle Start
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -20,72 +21,52 @@ Plugin 'honza/vim-snippets'
 Plugin 'garbas/vim-snipmate'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tomtom/tlib_vim'
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plugin 'gregsexton/MatchTag'
 Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'kana/vim-operator-user'
+Plugin 'Konfekt/vim-operator-surround'
+Plugin 'majutsushi/tagbar'
+Plugin 'tacahiroy/ctrlp-funky'
+" Markdown
+Plugin 'jtratner/vim-flavored-markdown.git'
+Plugin 'nelstrom/vim-markdown-preview'
 call vundle#end()
 filetype plugin indent on
+
+" operator mappings
+map <silent>sa <Plug>(operator-surround-append)
+map <silent>sd <Plug>(operator-surround-delete)
+map <silent>sr <Plug>(operator-surround-replace)
+
+" Shell
+set shell=/bin/bash
 
 " Leader key
 let mapleader = ","
 let g:mapleader = ","
 
-" css/sass experimental mappings
-inoremap  \
-cnoremap  \
-
-" Mapeos
-" Typos
-command! -bang Q q<bang>
-command! -bang W w<bang>
-
-nnoremap 0 ^
-nnoremap <leader>n :vsplit $HOME/repos/herwiki/wiki.txt<cr>
-noremap <Leader>y :NERDTreeToggle<CR>
-nnoremap <leader>w :w!<cr>
-noremap <leader>e :vsplit $MYVIMRC<cr>
-noremap <space> /
-noremap <c-space> ?
-
-" Mueve el cursor de línea en línea aunque sea un párrafo 'wrapeado'
-noremap j gj
-noremap k gk
-
-" Centra el cursor en la pantalla
-nnoremap G Gzz
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap { {zz
-nnoremap } }zz
-
-" Remove hightlight
-noremap <Leader>, :nohl<CR>
-vnoremap <Leader>, :nohl<CR>
-inoremap <Leader>, :nohl<CR>
-
-" Switch CWD to the directory of the open buffer
-noremap <leader>cd :cd<space>%:h<cr>:pwd<cr>
-
 " Colors
 syntax on
 set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h16 " Font
+"set guifont=Monaco:h16 " Font
 set background=dark
-colorscheme molokai
-colorscheme badwolf
-
-" CtrlP
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-let g:ctrlp_working_path_mode = 'a'
+"colorscheme wombat256mod
+"colorscheme molokai
+"colorscheme badwolf
+"colorscheme jellybeans
+"colorscheme radicalgoodspeed
+colorscheme flattr
+"colorscheme whitebox
 
 " General
-" Highlight the status bar when in insert mode
+" highlight the status bar when in insert mode
 if version >= 700
     au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
     au InsertEnter * hi StatusLine ctermfg=240 ctermbg=12
@@ -100,6 +81,7 @@ autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 " General
+
 " highlight current line
 augroup CursorLine
   au!
@@ -112,29 +94,16 @@ let g:airline_powerline_fonts = 1
 
 " column max char 79
 highlight ColorColumn ctermbg=magenta guibg=#ff0088
-call matchadd('ColorColumn', '\%81v', 100)
+call matchadd('ColorColumn', '\%101v', 100)
 
 set encoding=utf8 " utf8
 set ffs=unix,dos,mac " Filesystem
 set nrformats-=octal
 
-:cnoremap <C-a>  <Home>
-:cnoremap <C-b>  <Left>
-:cnoremap <C-f>  <Right>
-:cnoremap <C-d>  <Delete>
-:cnoremap <M-b>  <S-Left>
-:cnoremap <M-f>  <S-Right>
-:cnoremap <M-d>  <S-right><Delete>
-:cnoremap <Esc>b <S-Left>
-:cnoremap <Esc>f <S-Right>
-:cnoremap <Esc>d <S-right><Delete>
-:cnoremap <C-g>  <C-c>
+set guioptions=egmrt " Hide Toolbar in MacVim
 
-"set guioptions=egmrt " Hide Toolbar in MacVim
-
-" Line numbers
-set number
 " Relative numbers
+set number
 set relativenumber
 set laststatus=2 " Always shows status bar
 
@@ -144,17 +113,33 @@ set list
 
 " Better copy & paste
 set pastetoggle=<F2>
-"set clipboard=unnamedplus
+set clipboard=unnamed
 
 " Mouse and backspace
 set mouse=a
 set bs=2
 
 " CtrlP
+let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 0
+let g:ctrlp_open_multiple_files = '99ir'
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+let g:ctrlp_working_path_mode = '0'
+let g:ctrlp_map = '<tab>'
+nnoremap <s-tab> :CtrlPBuffer<cr>
+let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<c-t>'],
+    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
+    \ }
+
+let g:ctrlp_custom_ignore = {
+    \ 'dir': 'html-documentation'
+    \ }
+
+" CtrlPFunky
+let g:ctrlp_funky_syntax_highlight = 1
 
 " General
 set history=700 " history
@@ -164,8 +149,8 @@ autocmd! bufwritepost .vimrc source %
 
 " vim ui
 
-" set 7 lines to the cursor - when moving vertocally using j/k
-set so=7
+" set 3 lines to the cursor - when moving vertocally using j/k
+set so=3
 
 " Search related
 set ignorecase
@@ -175,7 +160,18 @@ set incsearch
 
 "NerdTree ignore
 let NERDTreeIgnore=['node_modules', 'bower_components']
-let NERDTreeDirArrows=0
+"let NERDTreeDirArrows=0
+"let g:NERDTreeIndicatorMapCustom = {
+    "\ "Modified"  : "✹",
+    "\ "Staged"    : "✚",
+    "\ "Untracked" : "✭",
+    "\ "Renamed"   : "➜",
+    "\ "Unmerged"  : "═",
+    "\ "Deleted"   : "✖",
+    "\ "Dirty"     : "✗",
+    "\ "Clean"     : "✔︎",
+    "\ "Unknown"   : "?"
+    "\ }
 
 " ignore compiled files
 set wildignore+=*.o,*~,*.pyc,*.a
@@ -183,6 +179,8 @@ set wildignore+=*.bpm,*.gif,*.ico,*.jpg,*.png
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*.swp,*.tmp
 set wildignore+=node_modules,bower_components
+
+"set whichwrap+=<,>,h,1
 set wildmenu " turn on the wild menu
 set ruler " always show current position
 set cmdheight=1 " height of command bar
@@ -215,7 +213,6 @@ set smarttab " Be smrt when using tabs
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
-set shiftwidth=4
 
 " linebreak on 500 characters
 set lbr
@@ -223,10 +220,121 @@ set tw=500
 set ai "Auto indent
 set si "Samrt indent
 set wrap "Wrap lines
+
+" 2 tabs javascript
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
+
+" Specify the behavior when switching between buffers
+try
+    set switchbuf=useopen,usetab,newtab
+    set stal=2
+catch
+endtry
+
+" Return to last edit position when opening files
+autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
 set viminfo^=% " Remember info about open buffers on close
 set laststatus=2 " Always show the status line
 
 " Utils
+
+"let &t_SI = "\<esc>]50;CursorShape=1\x7"
+let &t_EI = "\<esc>]50;CursorShape=0\x7"
+
+" Delete trailing white spcae on save, useful for Pyhton and CoffeScript
+func! DeleteTrailingWS()
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
+endfunc
+autocmd BufWrite *.py :call DeleteTrailingWS()
+
+" --- testing maps
+inoremap <c-u> <esc>viwU<esc>A
+nnoremap 0 ^
+nnoremap <leader>,b :bd<cr>
+nnoremap <c-j> }
+nnoremap <c-k> {
+" --- testing maps
+
+
+" --- testing maps
+" css/sass experimental mappings
+inoremap  \
+cnoremap  \
+" set window width
+noremap <leader>,w :set columns=104<cr>
+
+"node
+nnoremap <F5> :!node %<cr>
+
+"ctrlpfunky
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+
+" Mapeos
+" Typos
+command! -bang Q q<bang>
+command! -bang W w<bang>
+
+noremap <Leader>y :NERDTreeToggle<CR>
+nnoremap <leader>w :w!<cr>
+noremap <leader>e :e $MYVIMRC<cr>
+noremap <space> /
+noremap <c-space> ?
+
+" Mueve el cursor de línea en línea aunque sea un párrafo 'wrapeado'
+noremap j gj
+noremap k gk
+
+" Centra el cursor en la pantalla
+nnoremap G Gzz
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap { {zz
+nnoremap } }zz
+
+" Remove hightlight
+noremap <Leader>, :nohl<CR>
+vnoremap <Leader>, :nohl<CR>
+inoremap <Leader>, :nohl<CR>
+
+" Switch CWD to the directory of the open buffer
+noremap <leader>cd :cd<space>%:h<cr>:pwd<cr>
+
+" No Arrow keys
+noremap <up> <nop>
+noremap <down> <nop>
+noremap <left> <nop>
+noremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+:cnoremap <C-a>  <Home>
+:cnoremap <C-b>  <Left>
+:cnoremap <C-f>  <Right>
+:cnoremap <C-d>  <Delete>
+:cnoremap <M-b>  <S-Left>
+:cnoremap <M-f>  <S-Right>
+:cnoremap <M-d>  <S-right><Delete>
+:cnoremap <Esc>b <S-Left>
+:cnoremap <Esc>f <S-Right>
+:cnoremap <Esc>d <S-right><Delete>
+:cnoremap <C-g>  <C-c>
+
+" Hitting F5 will clean out all trailing whitespace or tabs
+nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>:retab<CR>
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+noremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " Python execute
 nnoremap <silent> <F9> :!clear;python %<CR>
