@@ -1,15 +1,3 @@
-#print -P ""
-#print -P "                       ██▓   ▓█████ ▄████▄  ██░ ██ █    ██ ▄████▄  ██ ▄█▀"
-#print -P "                      ▓██▒   ▓█   ▀▒██▀ ▀█ ▓██░ ██▒██  ▓██▒██▀ ▀█  ██▄█▒"
-#print -P "                      ▒██░   ▒███  ▒▓█    ▄▒██▀▀██▓██  ▒██▒▓█    ▄▓███▄░"
-#print -P "                      ▒██░   ▒▓█  ▄▒▓▓▄ ▄██░▓█ ░██▓▓█  ░██▒▓▓▄ ▄██▓██ █▄"
-#print -P "                      ░██████░▒████▒ ▓███▀ ░▓█▒░██▒▒█████▓▒ ▓███▀ ▒██▒ █▄"
-#print -P "                      ░ ▒░▓  ░░ ▒░ ░ ░▒ ▒  ░▒ ░░▒░░▒▓▒ ▒ ▒░ ░▒ ▒  ▒ ▒▒ ▓▒"
-#print -P "                      ░ ░ ▒  ░░ ░  ░ ░  ▒   ▒ ░▒░ ░░▒░ ░ ░  ░  ▒  ░ ░▒ ▒░"
-#print -P "                        ░ ░     ░  ░        ░  ░░ ░░░░ ░ ░░       ░ ░░ ░"
-#print -P "                          ░  ░  ░  ░ ░      ░  ░  ░  ░    ░ ░     ░  ░"
-#print -P "                                   ░                      ░"
-
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/hisco/.oh-my-zsh
 
@@ -67,7 +55,7 @@ plugins=(git colored-man colorize pip python brew osx zsh-syntax-highlighting os
 
 # User configuration
 
-export PATH="/usr/local/bin:/Users/hisco/.node/bin:/usr/bin:/usr/local/bin:/bin:/usr/sbin:/sbin:/Volumes/Bucanero/Dropbox/github/nav:/Volumes/Bucanero/Dropbox/github/navzen:/Volumes/Bucanero/Dropbox/github/emma:/Users/hisco/dotfiles:/usr/local/git/bin"
+export PATH="/usr/local/bin:/Users/hisco/.node/bin:/usr/bin:/usr/local/bin:/bin:/usr/sbin:/sbin:/Volumes/Bucanero/Dropbox/github/nav:/personal-dropbox/github/navzen:/Volumes/Bucanero/Dropbox/github/navzen:/Volumes/Bucanero/Dropbox/github/emma:/Users/hisco/dotfiles:/usr/local/git/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -100,3 +88,5 @@ alias gs="git status"
 alias em="emacs -nw"
 alias v="mvim"
 alias gsync='git commit -m "sync"'
+
+export VISUAL="vim"

@@ -17,8 +17,8 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'bling/vim-airline'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'honza/vim-snippets'
-Plugin 'garbas/vim-snipmate'
+"Plugin 'honza/vim-snippets'
+"Plugin 'garbas/vim-snipmate'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tomtom/tlib_vim'
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -36,10 +36,18 @@ Plugin 'majutsushi/tagbar'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'mattn/gist-vim'
 Plugin 'nono/jquery.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-colorscheme-switcher'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'rstacruz/vim-hyperstyle'
+Plugin 'gosukiwi/vim-atom-dark'
+"Plugin 'ternjs/tern_for_vim'
 "Plugin 'bling/vim-bufferline'
 " Markdown
-Plugin 'jtratner/vim-flavored-markdown.git'
-Plugin 'nelstrom/vim-markdown-preview'
+"Plugin 'jtratner/vim-flavored-markdown.git'
+"Plugin 'nelstrom/vim-markdown-preview'
 call vundle#end()
 filetype plugin indent on
 
@@ -62,14 +70,22 @@ set shortmess=I
 syntax on
 set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h15 " Font
 "set guifont=Monaco:h16 " Font
-"set background=dark
+set background=dark
 "colorscheme wombat256mod
-"colorscheme molokai
+"colorscheme monokain
 "colorscheme badwolf
 "colorscheme jellybeans
 "colorscheme radicalgoodspeed
-colorscheme flattr
+"colorscheme flattr
 "colorscheme kellys
+colorscheme chance-of-storm
+"colorscheme atom-dark
+"colorscheme vilight
+"colorscheme paintbox
+
+if ("gui_running" == 0)
+    "colorscheme wombat256mod
+endif
 
 " General
 
@@ -79,8 +95,16 @@ if has('persistent_undo')      "check if your vim version supports it
   set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
   endif
 
-" force javascript sintax to .sketchplugin files
+" force javascript syntax to .sketchplugin files
+au BufRead,BufNewFile *.cocoascript setfiletype javascript
 au BufRead,BufNewFile *.sketchplugin setfiletype javascript
+
+" force html syntax to .nunjucks files
+au BufRead,BufNewFile *.nunjucks setfiletype html
+au BufRead,BufNewFile *.nj setfiletype html
+
+" force scss syntax to css
+au BufRead,BufNewFile *.css set syntax=scss
 
 " highlight the status bar when in insert mode
 if version >= 700
@@ -91,9 +115,10 @@ endif
 "jQuery syntax
 au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
-
 " Set norwap
 nnoremap <leader>W :set nowrap<cr>
+" Fast escape
+inoremap jj <esc>
 
 " hightlight trailing spaces in annoying red
 highlight ExtraWhiteSpace ctermbg=1 guibg=red
@@ -102,6 +127,15 @@ autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
 autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
+" UltiSnip
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 " General
 
@@ -125,7 +159,7 @@ let g:airline#extensions#tabline#fnamemod = 1
 
 " column max char 79
 highlight ColorColumn ctermbg=magenta guibg=#ff0088
-call matchadd('ColorColumn', '\%101v', 100)
+call matchadd('ColorColumn', '\%81v', 100)
 
 set encoding=utf8 " utf8
 set ffs=unix,dos,mac " Filesystem
@@ -139,8 +173,10 @@ set relativenumber
 set laststatus=2 " Always shows status bar
 
 " set trailing whitespace with · char
-set listchars=trail:·,
-set list
+if ("gui_running" == 0)
+    set listchars=trail:·,
+    set list
+endif
 
 " Better copy & paste
 set pastetoggle=<F2>
@@ -251,6 +287,10 @@ set wrap "Wrap lines
 " 2 tabs javascript
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 
+" 2 tabs css, sass
+autocmd Filetype scss setlocal ts=2 sw=2 expandtab
+autocmd Filetype css setlocal ts=2 sw=2 expandtab
+
 " Specify the behavior when switching between buffers
 try
     set switchbuf=useopen,usetab,newtab
@@ -357,7 +397,7 @@ inoremap <right> <nop>
 :cnoremap <C-g>  <C-c>
 
 " Hitting F5 will clean out all trailing whitespace or tabs
-nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>:retab<CR>
+" nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>:retab<CR>
 
 " Python execute
 nnoremap <silent> <F9> :!clear;python %<CR>
