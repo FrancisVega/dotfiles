@@ -43,6 +43,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'rstacruz/vim-hyperstyle'
 Plugin 'gosukiwi/vim-atom-dark'
+Plugin 'atelierbram/vim-colors_duotones'
 "Plugin 'ternjs/tern_for_vim'
 "Plugin 'bling/vim-bufferline'
 " Markdown
@@ -68,8 +69,11 @@ set shortmess=I
 
 " Colors
 syntax on
-set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h15 " Font
-"set guifont=Monaco:h16 " Font
+"set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h16 " Font
+"set guifont=Fira\ Mono\ for\ Powerline:h16
+set guifont=Inconsolata-g\ for\ Powerline:h16
+"set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
+"set guifont=monaco:h16 " Font
 set background=dark
 "colorscheme wombat256mod
 "colorscheme monokain
@@ -78,10 +82,24 @@ set background=dark
 "colorscheme radicalgoodspeed
 "colorscheme flattr
 "colorscheme kellys
-colorscheme chance-of-storm
+"colorscheme chance-of-storm
 "colorscheme atom-dark
 "colorscheme vilight
 "colorscheme paintbox
+
+" Duotone from atom
+ "colorscheme duotone-darkearth
+ "colorscheme duotone-darkforest
+ "colorscheme duotone-darkdesert
+ "colorscheme duotone-darkpark
+ "colorscheme duotone-darkpool
+ "colorscheme duotone-darkmeadow
+"colorscheme duotone-darkcave
+
+"colorscheme duotone-darkheath
+colorscheme duotone-dark
+"colorscheme duotone-darkspace
+"colorscheme duotone-darksea
 
 if ("gui_running" == 0)
     "colorscheme wombat256mod
@@ -92,7 +110,7 @@ endif
 " Persistent undo
 if has('persistent_undo')      "check if your vim version supports it
   set undofile                 "turn on the feature
-  set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
+  set undodir=~/.vim/undo  "directory where the undo files will be stored
   endif
 
 " force javascript syntax to .sketchplugin files
@@ -189,6 +207,7 @@ set bs=2
 " CtrlP
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_max_height = 12
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_open_multiple_files = '99ir'
