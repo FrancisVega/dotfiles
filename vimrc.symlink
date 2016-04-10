@@ -15,6 +15,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-sensible'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 "Plugin 'honza/vim-snippets'
@@ -41,14 +42,11 @@ Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-colorscheme-switcher'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-Plugin 'rstacruz/vim-hyperstyle'
+"Plugin 'rstacruz/vim-hyperstyle'
 Plugin 'gosukiwi/vim-atom-dark'
 Plugin 'atelierbram/vim-colors_duotones'
-"Plugin 'ternjs/tern_for_vim'
-"Plugin 'bling/vim-bufferline'
-" Markdown
-"Plugin 'jtratner/vim-flavored-markdown.git'
-"Plugin 'nelstrom/vim-markdown-preview'
+Plugin 'dyng/ctrlsf.vim'
+Plugin 'Glench/Vim-Jinja2-Syntax'
 call vundle#end()
 filetype plugin indent on
 
@@ -69,9 +67,9 @@ set shortmess=I
 
 " Colors
 syntax on
-"set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h16 " Font
+set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h16 " Font
 "set guifont=Fira\ Mono\ for\ Powerline:h16
-set guifont=Inconsolata-g\ for\ Powerline:h16
+"set guifont=Inconsolata-g\ for\ Powerline:h18
 "set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
 "set guifont=monaco:h16 " Font
 set background=dark
@@ -83,7 +81,7 @@ set background=dark
 "colorscheme flattr
 "colorscheme kellys
 "colorscheme chance-of-storm
-"colorscheme atom-dark
+colorscheme atom-dark
 "colorscheme vilight
 "colorscheme paintbox
 
@@ -97,7 +95,7 @@ set background=dark
 "colorscheme duotone-darkcave
 
 "colorscheme duotone-darkheath
-colorscheme duotone-dark
+"colorscheme duotone-dark
 "colorscheme duotone-darkspace
 "colorscheme duotone-darksea
 
@@ -122,7 +120,8 @@ au BufRead,BufNewFile *.nunjucks setfiletype html
 au BufRead,BufNewFile *.nj setfiletype html
 
 " force scss syntax to css
-au BufRead,BufNewFile *.css set syntax=scss
+au BufRead,BufNewFile *.css set ft=scss syntax=scss
+au BufRead,BufNewFile *.css set filetype=scss
 
 " highlight the status bar when in insert mode
 if version >= 700
@@ -174,6 +173,8 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 " show just the filenaem
 let g:airline#extensions#tabline#fnamemod = 1
+" airlinetheme
+let g:airline_theme='murmur'
 
 " column max char 79
 highlight ColorColumn ctermbg=magenta guibg=#ff0088
@@ -222,6 +223,9 @@ nnoremap <s-tab> :CtrlPBuffer<cr>
 
 " CtrlPFunky
 let g:ctrlp_funky_syntax_highlight = 1
+
+" CtrlSF (Search and Replace)
+noremap <leader>,r :CtrlSF 
 
 " General
 set history=700 " history
