@@ -88,5 +88,7 @@ alias gs="git status"
 alias em="emacs -nw"
 alias v="mvim"
 alias gsync='git commit -m "sync"'
+alias newblock='sh newblock.sh'
+alias nodenav='node navzen.js'
 
 export VISUAL="vim"

@@ -47,6 +47,8 @@ Plugin 'gosukiwi/vim-atom-dark'
 Plugin 'atelierbram/vim-colors_duotones'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'Glench/Vim-Jinja2-Syntax'
+Plugin 'pangloss/vim-javascript'
+Plugin 'HerringtonDarkholme/yats.vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -197,6 +199,12 @@ if ("gui_running" == 0)
     set list
 endif
 
+" The Silver Searcher
+if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor\ --ignore=node_modules
+endif
+
 " Better copy & paste
 set pastetoggle=<F2>
 set clipboard=unnamed
@@ -208,7 +216,8 @@ set bs=2
 " CtrlP
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_window = 'bottom,order:ttb'
-let g:ctrlp_max_height = 12
+let g:ctrlp_use_caching = 0
+let g:ctrlp_max_height = 18
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_open_multiple_files = '99ir'
@@ -396,6 +405,22 @@ inoremap <Leader>, :nohl<CR>
 
 " Switch CWD to the directory of the open buffer
 noremap <leader>cd :cd<space>%:h<cr>:pwd<cr>
+
+" Jump from html class to file & definition css
+function! JumpToCSS()
+  let id_pos = searchpos("id", "nb", line('.'))[1]
+  let class_pos = searchpos("class", "nb", line('.'))[1]
+
+  if class_pos > 0 || id_pos > 0
+    if class_pos < id_pos
+      execute ":silent vim '#".expand('<cword>')."' **/*.css"
+    elseif class_pos > id_pos
+      execute ":silent vim '.".expand('<cword>')."' **/*.css"
+    endif
+  endif
+endfunction
+" keymap
+nnoremap <leader>c :call JumpToCSS()<cr>
 
 " No Arrow keys
 noremap <up> <nop>
