@@ -11,44 +11,48 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-" plugins
-Plugin 'tpope/vim-sensible'
+
+"Plugin 'rstacruz/vim-hyperstyle'
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-sensible'
+
+"Plugin 'garbas/vim-snipmate'
+"Plugin 'marcweber/vim-addon-mw-utils'
+"Plugin 'tomtom/tlib_vim'
+
+Plugin 'VitaminFarmer/VIM_Themes'
+
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
+Plugin 'pseewald/vim-anyfold'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-"Plugin 'honza/vim-snippets'
-"Plugin 'garbas/vim-snipmate'
 Plugin 'scrooloose/nerdtree'
-Plugin 'tomtom/tlib_vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'gregsexton/MatchTag'
 Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-surround'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'kana/vim-operator-user'
-Plugin 'Konfekt/vim-operator-surround'
-Plugin 'majutsushi/tagbar'
+Plugin 'rhysd/vim-operator-surround'
 Plugin 'tacahiroy/ctrlp-funky'
-Plugin 'mattn/gist-vim'
-Plugin 'nono/jquery.vim'
-Plugin 'davidhalter/jedi-vim'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-colorscheme-switcher'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-"Plugin 'rstacruz/vim-hyperstyle'
 Plugin 'gosukiwi/vim-atom-dark'
 Plugin 'atelierbram/vim-colors_duotones'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'pangloss/vim-javascript'
-Plugin 'HerringtonDarkholme/yats.vim'
+Plugin 'kristijanhusak/vim-hybrid-material'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'isRuslan/vim-es6'
+Plugin 'ElmCast/elm-vim'
+Plugin 'lambdatoast/elm.vim'
+
 call vundle#end()
 filetype plugin indent on
 
@@ -59,6 +63,8 @@ map <silent>sr <Plug>(operator-surround-replace)
 
 " Shell
 set shell=/bin/bash
+" Vim carga el .bash
+set shellcmdflag=-ic
 
 " Leader key
 let mapleader = ","
@@ -69,43 +75,32 @@ set shortmess=I
 
 " Colors
 syntax on
-set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h16 " Font
+"set macligatures
+"set guifont=Fira\ Code:h18
+set guifont=Meslo\ LG\ L\ Regular\ for\ Powerline:h18 " Font
 "set guifont=Fira\ Mono\ for\ Powerline:h16
 "set guifont=Inconsolata-g\ for\ Powerline:h18
-"set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
+"set guifont=Droid\ Sans\ Mono\ for\ Powerline:h18
 "set guifont=monaco:h16 " Font
+
 set background=dark
-"colorscheme wombat256mod
-"colorscheme monokain
-"colorscheme badwolf
-"colorscheme jellybeans
-"colorscheme radicalgoodspeed
-"colorscheme flattr
-"colorscheme kellys
-"colorscheme chance-of-storm
-colorscheme atom-dark
-"colorscheme vilight
-"colorscheme paintbox
+colorscheme Jaeger
 
-" Duotone from atom
- "colorscheme duotone-darkearth
- "colorscheme duotone-darkforest
- "colorscheme duotone-darkdesert
- "colorscheme duotone-darkpark
- "colorscheme duotone-darkpool
- "colorscheme duotone-darkmeadow
-"colorscheme duotone-darkcave
+" --------
+" UltiSnip
+" --------
 
-"colorscheme duotone-darkheath
-"colorscheme duotone-dark
-"colorscheme duotone-darkspace
-"colorscheme duotone-darksea
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-if ("gui_running" == 0)
-    "colorscheme wombat256mod
-endif
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
+" -------
 " General
+" -------
 
 " Persistent undo
 if has('persistent_undo')      "check if your vim version supports it
@@ -118,8 +113,11 @@ au BufRead,BufNewFile *.cocoascript setfiletype javascript
 au BufRead,BufNewFile *.sketchplugin setfiletype javascript
 
 " force html syntax to .nunjucks files
-au BufRead,BufNewFile *.nunjucks setfiletype html
-au BufRead,BufNewFile *.nj setfiletype html
+au BufRead,BufNewFile *.nunjucks setfiletype jinja.html
+au BufRead,BufNewFile *.nunj setfiletype jinja.html
+au BufRead,BufNewFile *.njk setfiletype jinja.html
+au BufRead,BufNewFile *.nj setfiletype jinja.html
+au BufRead,BufNewFile *.nun setfiletype jinja.html
 
 " force scss syntax to css
 au BufRead,BufNewFile *.css set ft=scss syntax=scss
@@ -136,6 +134,7 @@ au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
 " Set norwap
 nnoremap <leader>W :set nowrap<cr>
+
 " Fast escape
 inoremap jj <esc>
 
@@ -146,17 +145,6 @@ autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
 autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
-
-" UltiSnip
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
-" General
 
 " highlight current line
 augroup CursorLine
@@ -171,12 +159,16 @@ noremap <c-h> :bprevious<cr>
 
 " cool fonts
 let g:airline_powerline_fonts = 1
+
 " ebable the linst of buffers
 let g:airline#extensions#tabline#enabled = 1
+
 " show just the filenaem
 let g:airline#extensions#tabline#fnamemod = 1
+
+
 " airlinetheme
-let g:airline_theme='murmur'
+let g:airline_theme='raven'
 
 " column max char 79
 highlight ColorColumn ctermbg=magenta guibg=#ff0088
@@ -213,7 +205,9 @@ set clipboard=unnamed
 set mouse=a
 set bs=2
 
+" ----
 " CtrlP
+" ----
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_use_caching = 0
@@ -242,7 +236,9 @@ set autoread " set auto read when a file is changed from the outside
 " Reload .vimrc
 autocmd! bufwritepost .vimrc source %
 
-" vim ui
+" ------
+" VIM UI
+" ------
 
 " set 3 lines to the cursor - when moving vertocally using j/k
 set so=3
@@ -255,18 +251,6 @@ set incsearch
 
 "NerdTree ignore
 let NERDTreeIgnore=['node_modules', 'bower_components']
-"let NERDTreeDirArrows=0
-"let g:NERDTreeIndicatorMapCustom = {
-    "\ "Modified"  : "✹",
-    "\ "Staged"    : "✚",
-    "\ "Untracked" : "✭",
-    "\ "Renamed"   : "➜",
-    "\ "Unmerged"  : "═",
-    "\ "Deleted"   : "✖",
-    "\ "Dirty"     : "✗",
-    "\ "Clean"     : "✔︎",
-    "\ "Unknown"   : "?"
-    "\ }
 
 " ignore compiled files
 set wildignore+=*.o,*~,*.pyc,*.a
@@ -336,7 +320,7 @@ autocmd BufReadPost *
     \   exe "normal! g`\"" |
     \ endif
 
-set viminfo^=% " Remember info about open buffers on close
+"set viminfo^=% " Remember info about open buffers on close
 set laststatus=2 " Always show the status line
 
 " Utils
@@ -353,13 +337,11 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 
 " --- testing maps
-inoremap <c-u> <esc>viwU<esc>A
 nnoremap 0 ^
 nnoremap <leader>,b :bp\| bd #<cr>
 nnoremap <c-j> }
 nnoremap <c-k> {
 " --- testing maps
-
 
 " --- testing maps
 " css/sass experimental mappings
@@ -367,9 +349,6 @@ inoremap  \
 cnoremap  \
 " set window width
 noremap <leader>,w :set columns=104<cr>
-
-"node
-nnoremap <F5> :!node %<cr>
 
 "ctrlpfunky
 nnoremap <Leader>fu :CtrlPFunky<Cr>
@@ -406,22 +385,6 @@ inoremap <Leader>, :nohl<CR>
 " Switch CWD to the directory of the open buffer
 noremap <leader>cd :cd<space>%:h<cr>:pwd<cr>
 
-" Jump from html class to file & definition css
-function! JumpToCSS()
-  let id_pos = searchpos("id", "nb", line('.'))[1]
-  let class_pos = searchpos("class", "nb", line('.'))[1]
-
-  if class_pos > 0 || id_pos > 0
-    if class_pos < id_pos
-      execute ":silent vim '#".expand('<cword>')."' **/*.css"
-    elseif class_pos > id_pos
-      execute ":silent vim '.".expand('<cword>')."' **/*.css"
-    endif
-  endif
-endfunction
-" keymap
-nnoremap <leader>c :call JumpToCSS()<cr>
-
 " No Arrow keys
 noremap <up> <nop>
 noremap <down> <nop>
@@ -444,15 +407,7 @@ inoremap <right> <nop>
 :cnoremap <Esc>d <S-right><Delete>
 :cnoremap <C-g>  <C-c>
 
-" Hitting F5 will clean out all trailing whitespace or tabs
-" nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>:retab<CR>
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
-" Python execute
-nnoremap <silent> <F9> :!clear;python %<CR>
-
-
-"
-" EXPERIMENTAL
-"
-
-
+let anyfold_activate=1
+set foldlevel=0
