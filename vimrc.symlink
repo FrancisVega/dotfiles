@@ -1,10 +1,15 @@
+
+
 " .vimrc
 " Author: Francis Vega <hisconer@gmail.com>
 " Source: https://github.com/FrancisVega/dotfiles/blob/master/vimrc.symlink
 
-set nocompatible
+" ----------------------------------------------------------------------------
+" Vundle Plugin
+" ----------------------------------------------------------------------------
 
 " Vundle Start
+set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -12,25 +17,18 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+" Quarentena
 "Plugin 'rstacruz/vim-hyperstyle'
-"Plugin 'tpope/vim-fugitive'
-"Plugin 'tpope/vim-sensible'
 
-"Plugin 'garbas/vim-snipmate'
-"Plugin 'marcweber/vim-addon-mw-utils'
-"Plugin 'tomtom/tlib_vim'
-
-Plugin 'VitaminFarmer/VIM_Themes'
-
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-sensible'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-
-Plugin 'pseewald/vim-anyfold'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'gregsexton/MatchTag'
@@ -45,24 +43,35 @@ Plugin 'xolox/vim-colorscheme-switcher'
 Plugin 'gosukiwi/vim-atom-dark'
 Plugin 'atelierbram/vim-colors_duotones'
 Plugin 'dyng/ctrlsf.vim'
-Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'pangloss/vim-javascript'
 Plugin 'kristijanhusak/vim-hybrid-material'
-Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'isRuslan/vim-es6'
-Plugin 'ElmCast/elm-vim'
-Plugin 'lambdatoast/elm.vim'
-
+Plugin 'mxw/vim-jsx'
+Plugin 'Shougo/vimfiler.vim'
+Plugin 'prettier/vim-prettier'
+Plugin 'lepture/vim-jinja'
+Plugin 'nelsyeung/twig.vim'
+Plugin 'alvan/vim-closetag'
+Plugin 'othree/html5.vim'
+"Plugin 'mattn/emmet-vim'
+"Plugin 'Shougo/unite.vim'
 call vundle#end()
-filetype plugin indent on
+"filetype plugin indent on
 
-" operator mappings
-map <silent>sa <Plug>(operator-surround-append)
-map <silent>sd <Plug>(operator-surround-delete)
-map <silent>sr <Plug>(operator-surround-replace)
+
+
+
+" ----------------------------------------------------------------------------
+" General
+" ----------------------------------------------------------------------------
+
+" Bye bye fucking help page
+:nmap <F1> :echo<CR>
+:imap <F1> <C-o>:echo<CR>
 
 " Shell
 set shell=/bin/bash
+
 " Vim carga el .bash
 set shellcmdflag=-ic
 
@@ -70,115 +79,25 @@ set shellcmdflag=-ic
 let mapleader = ","
 let g:mapleader = ","
 
-" Don't show the startup message
-set shortmess=I
-
-" Colors
-syntax on
-"set macligatures
-"set guifont=Fira\ Code:h18
-set guifont=Meslo\ LG\ L\ Regular\ for\ Powerline:h18 " Font
-"set guifont=Fira\ Mono\ for\ Powerline:h16
-"set guifont=Inconsolata-g\ for\ Powerline:h18
-"set guifont=Droid\ Sans\ Mono\ for\ Powerline:h18
-"set guifont=monaco:h16 " Font
-
-set background=dark
-colorscheme Jaeger
-
-" --------
-" UltiSnip
-" --------
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
-" -------
-" General
-" -------
-
 " Persistent undo
 if has('persistent_undo')      "check if your vim version supports it
   set undofile                 "turn on the feature
   set undodir=~/.vim/undo  "directory where the undo files will be stored
   endif
 
-" force javascript syntax to .sketchplugin files
-au BufRead,BufNewFile *.cocoascript setfiletype javascript
-au BufRead,BufNewFile *.sketchplugin setfiletype javascript
-
-" force html syntax to .nunjucks files
-au BufRead,BufNewFile *.nunjucks setfiletype jinja.html
-au BufRead,BufNewFile *.nunj setfiletype jinja.html
-au BufRead,BufNewFile *.njk setfiletype jinja.html
-au BufRead,BufNewFile *.nj setfiletype jinja.html
-au BufRead,BufNewFile *.nun setfiletype jinja.html
-
-" force scss syntax to css
-au BufRead,BufNewFile *.css set ft=scss syntax=scss
-au BufRead,BufNewFile *.css set filetype=scss
-
-" highlight the status bar when in insert mode
-if version >= 700
-    au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
-    au InsertEnter * hi StatusLine ctermfg=240 ctermbg=12
-endif
-
-"jQuery syntax
-au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
-
-" Set norwap
-nnoremap <leader>W :set nowrap<cr>
-
-" Fast escape
-inoremap jj <esc>
-
-" hightlight trailing spaces in annoying red
-highlight ExtraWhiteSpace ctermbg=1 guibg=red
-match ExtraWhiteSpace /\s\+$/
-autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
-autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-
-" highlight current line
-augroup CursorLine
-  au!
-  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  au WinLeave * setlocal nocursorline
-augroup END
-
-"buffer cycle
-noremap <c-l> :bnext<cr>
-noremap <c-h> :bprevious<cr>
-
-" cool fonts
-let g:airline_powerline_fonts = 1
-
-" ebable the linst of buffers
-let g:airline#extensions#tabline#enabled = 1
-
-" show just the filenaem
-let g:airline#extensions#tabline#fnamemod = 1
-
-
-" airlinetheme
-let g:airline_theme='raven'
-
 " column max char 79
 highlight ColorColumn ctermbg=magenta guibg=#ff0088
-call matchadd('ColorColumn', '\%81v', 100)
+call matchadd('ColorColumn', '\%101v', 100)
 
-set encoding=utf8 " utf8
-set ffs=unix,dos,mac " Filesystem
+" utf8
+set encoding=utf8
+
+" Filesystem
+set ffs=unix,dos,mac
 set nrformats-=octal
 
-set guioptions=egmrt " Hide Toolbar in MacVim
+ " Hide Toolbar in MacVim
+set guioptions=egmrt
 
 " Relative numbers
 set number
@@ -191,12 +110,6 @@ if ("gui_running" == 0)
     set list
 endif
 
-" The Silver Searcher
-if executable('ag')
-    " Use ag over grep
-    set grepprg=ag\ --nogroup\ --nocolor\ --ignore=node_modules
-endif
-
 " Better copy & paste
 set pastetoggle=<F2>
 set clipboard=unnamed
@@ -205,40 +118,64 @@ set clipboard=unnamed
 set mouse=a
 set bs=2
 
-" ----
-" CtrlP
-" ----
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_match_window = 'bottom,order:ttb'
-let g:ctrlp_use_caching = 0
-let g:ctrlp_max_height = 18
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_open_multiple_files = '99ir'
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-let g:ctrlp_working_path_mode = '0'
-let g:ctrlp_map = '<tab>'
-nnoremap <s-tab> :CtrlPBuffer<cr>
-"let g:ctrlp_prompt_mappings = {
-    "\ 'AcceptSelection("e")': ['<c-t>'],
-    "\ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
-    "\ }
+" highlight the status bar when in insert mode
+if version >= 700
+    au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
+    au InsertEnter * hi StatusLine ctermfg=240 ctermbg=12
+endif
 
-" CtrlPFunky
-let g:ctrlp_funky_syntax_highlight = 1
+" History
+set history=700
 
-" CtrlSF (Search and Replace)
-noremap <leader>,r :CtrlSF 
+" set auto read when a file is changed from the outside
+set autoread
 
-" General
-set history=700 " history
-set autoread " set auto read when a file is changed from the outside
 " Reload .vimrc
 autocmd! bufwritepost .vimrc source %
 
-" ------
-" VIM UI
-" ------
+" Specify the behavior when switching between buffers
+try
+    set switchbuf=useopen,usetab,newtab
+    set stal=2
+catch
+endtry
+
+" Return to last edit position when opening files
+autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
+"set viminfo^=% " Remember info about open buffers on close
+set laststatus=2 " Always show the status line
+
+" Utils
+let &t_EI = "\<esc>]50;CursorShape=0\x7"
+
+" Delete trailing white spcae on save, useful for Pyhton and CoffeScript
+func! DeleteTrailingWS()
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
+endfunc
+autocmd BufWrite *.py :call DeleteTrailingWS()
+
+" Files
+set nobackup
+set nowb
+set noswapfile
+set expandtab " Use spaces instead of tabs
+set smarttab " Be smrt when using tabs
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+
+" linebreak on 500 characters
+set lbr
+set tw=500
+set ai "Auto indent
+set si "Samrt indent
+set wrap "Wrap lines
 
 " set 3 lines to the cursor - when moving vertocally using j/k
 set so=3
@@ -249,15 +186,6 @@ set smartcase
 set hlsearch
 set incsearch
 
-"NerdTree ignore
-let NERDTreeIgnore=['node_modules', 'bower_components']
-
-" ignore compiled files
-set wildignore+=*.o,*~,*.pyc,*.a
-set wildignore+=*.bpm,*.gif,*.ico,*.jpg,*.png
-set wildignore+=.DS_Store,.git,.hg,.svn
-set wildignore+=*.swp,*.tmp
-set wildignore+=node_modules,bower_components,min/*,doc/*
 
 "set whichwrap+=<,>,h,1
 set wildmenu " turn on the wild menu
@@ -283,22 +211,53 @@ if has("gui_running")
     set guitablabel=%M\ %t
 endif
 
-" Files
-set nobackup
-set nowb
-set noswapfile
-set expandtab " Use spaces instead of tabs
-set smarttab " Be smrt when using tabs
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
 
-" linebreak on 500 characters
-set lbr
-set tw=500
-set ai "Auto indent
-set si "Samrt indent
-set wrap "Wrap lines
+
+
+" ----------------------------------------------------------------------------
+" Syntax, Color and Typography
+" ----------------------------------------------------------------------------
+
+syntax on
+
+"set macligatures
+set guifont=Meslo\ LG\ L\ Regular\ for\ Powerline:h16 " Font
+"set guifont=SauceCodePowerline-Regular:h20
+"set guifont=Fira\ Code:h18
+"set guifont=Fira\ Mono\ for\ Powerline:h18
+"set guifont=Inconsolata-g\ for\ Powerline:h18
+"set guifont=Droid\ Sans\ Mono\ for\ Powerline:h18
+"set guifont=monaco:h16 " Font
+
+set background=dark
+"colorscheme duotone-darksea
+"colorscheme paintbox
+"colorscheme mac_classic
+"colorscheme pw
+"colorscheme mophiadark
+"colorscheme atom-dark-256
+"colorscheme perfect
+colorscheme onedark
+
+" force javascript syntax to .sketchplugin files
+au BufRead,BufNewFile *.cocoascript setfiletype javascript
+au BufRead,BufNewFile *.sketchplugin setfiletype javascript
+
+" force html syntax to .nunjucks files
+au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm,*.twig set ft=jinja.html.css
+au BufRead,BufNewFile *.md setfiletype yaml
+
+autocmd FileType twig.jinja setlocal shiftwidth=2 tabstop=2
+
+" force scss syntax to css
+"au BufRead,BufNewFile *.css set ft=scss syntax=scss
+au BufRead,BufNewFile *.css set syntax=scss
+"au BufRead,BufNewFile *.css set filetype=scss
+
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+
+"jQuery syntax
+au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
 " 2 tabs javascript
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
@@ -307,55 +266,186 @@ autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype scss setlocal ts=2 sw=2 expandtab
 autocmd Filetype css setlocal ts=2 sw=2 expandtab
 
-" Specify the behavior when switching between buffers
-try
-    set switchbuf=useopen,usetab,newtab
-    set stal=2
-catch
-endtry
+" Html, Twig
+autocmd Filetype html setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd Filetype jinja setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd Filetype twig setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
-" Return to last edit position when opening files
-autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
 
-"set viminfo^=% " Remember info about open buffers on close
-set laststatus=2 " Always show the status line
+" ----------------------------------------------------------------------------
+" Ultisnip
+" ----------------------------------------------------------------------------
 
-" Utils
+" Trigger configuration.
+" Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-"let &t_SI = "\<esc>]50;CursorShape=1\x7"
-let &t_EI = "\<esc>]50;CursorShape=0\x7"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
-" Delete trailing white spcae on save, useful for Pyhton and CoffeScript
-func! DeleteTrailingWS()
-    exe "normal mz"
-    %s/\s\+$//ge
-    exe "normal `z"
-endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
+" ----------------------------------------------------------------------------
+" Vim-jsx
+" ----------------------------------------------------------------------------
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+
+" ----------------------------------------------------------------------------
+" NerdTree Plugin
+" ----------------------------------------------------------------------------
+
+"NerdTree ignore
+let NERDTreeIgnore=['node_modules', 'bower_components']
+
+" ignore compiled files
+set wildignore+=*.o,*~,*.pyc,*.a
+set wildignore+=*.bpm,*.gif,*.ico,*.jpg,*.png
+set wildignore+=.DS_Store,.git,.hg,.svn
+set wildignore+=*.swp,*.tmp
+set wildignore+=node_modules,bower_components,min/*,doc/*
+
+" ----------------------------------------------------------------------------
+" VimFilter Plugin
+" ----------------------------------------------------------------------------
+"let g:vimfiler_as_default_explorer = 1
+
+" ----------------------------------------------------------------------------
+" Operator Surround Plugin
+" ----------------------------------------------------------------------------
+
+" operator mappings
+map <silent>sa <Plug>(operator-surround-append)
+map <silent>sd <Plug>(operator-surround-delete)
+map <silent>sr <Plug>(operator-surround-replace)
+
+
+
+
+" ----------------------------------------------------------------------------
+" Mappings
+" ----------------------------------------------------------------------------
+
+" Set norwap
+nnoremap <leader>W :set nowrap<cr>
+
+" Fast escape
+inoremap jj <esc>
+
+" hightlight trailing spaces in annoying red
+highlight ExtraWhiteSpace ctermbg=1 guibg=red
+match ExtraWhiteSpace /\s\+$/
+autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
+autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+" highlight current line
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+augroup END
+
+"buffer cycle
+noremap <c-l> :bnext<cr>
+noremap <c-h> :bprevious<cr>
+
+
+
+
+" ----------------------------------------------------------------------------
+" Airline Plugin
+" ----------------------------------------------------------------------------
+
+" cool fonts
+let g:airline_powerline_fonts = 1
+
+" ebable the linst of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" show just the filenaem
+let g:airline#extensions#tabline#fnamemod = 1
+
+" airlinetheme
+let g:airline_theme='wombat' " Para usar con onedark
+"let g:airline_theme='raven' " Para usar con Jaeger
+
+
+
+
+" ----------------------------------------------------------------------------
+" Ctrl-P Plugin
+" ----------------------------------------------------------------------------
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_use_caching = 0
+let g:ctrlp_max_height = 18
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_open_multiple_files = '99ir'
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+let g:ctrlp_working_path_mode = '0'
+let g:ctrlp_map = '<tab>'
+nnoremap <s-tab> :CtrlPBuffer<cr>
+"let g:ctrlp_prompt_mappings = {
+    "\ 'AcceptSelection("e")': ['<c-t>'],
+    "\ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
+    "\ }
+
+" CtrlPFunky
+let g:ctrlp_funky_syntax_highlight = 1
+
+" CtrlSF (Search and Replace)
+noremap <leader>,r :CtrlSF
+
+
+
+
+" ----------------------------------------------------------------------------
+" Ctrl-P Funky Plugin
+" ----------------------------------------------------------------------------
+
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+
+
+
+
+" ----------------------------------------------------------------------------
+" The Silver Searcher Plugin
+" ----------------------------------------------------------------------------
+
+if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor\ --ignore=node_modules
+endif
+
+
+
+
+" ----------------------------------------------------------------------------
+" Mappings
+" ----------------------------------------------------------------------------
 
 " --- testing maps
 nnoremap 0 ^
 nnoremap <leader>,b :bp\| bd #<cr>
 nnoremap <c-j> }
 nnoremap <c-k> {
-" --- testing maps
+
+" Navega al componente twig
+nnoremap <leader>,c F@lyt':find **/".twig
+
+" Navega al css del componente twig
+nnoremap <leader>,s F@lyt':find **/".css
 
 " --- testing maps
+
 " css/sass experimental mappings
 inoremap  \
 cnoremap  \
 " set window width
-noremap <leader>,w :set columns=104<cr>
-
-"ctrlpfunky
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-
-" Mapeos
+" noremap <leader>,w :set columns=104<cr>
 " Typos
 command! -bang Q q<bang>
 command! -bang W w<bang>
@@ -407,7 +497,43 @@ inoremap <right> <nop>
 :cnoremap <Esc>d <S-right><Delete>
 :cnoremap <C-g>  <C-c>
 
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+" Don't show the startup message
+set shortmess=I
+" Short message to avoid Press Enter to Continue
+:set shortmess=a
 
-let anyfold_activate=1
-set foldlevel=0
+" max line length that prettier will wrap on
+let g:prettier#config#print_width = 10000
+
+" number of spaces per indentation level
+let g:prettier#config#tab_width = 2
+
+" use tabs over spaces
+let g:prettier#config#use_tabs = 'false'
+
+" print semicolons
+let g:prettier#config#semi = 'true'
+
+" single quotes over double quotes
+let g:prettier#config#single_quote = 'false'
+
+" print spaces between brackets
+let g:prettier#config#bracket_spacing = 'true'
+
+" put > on the last line instead of new line
+let g:prettier#config#jsx_bracket_same_line = 'false'
+
+" avoid|always
+let g:prettier#config#arrow_parens = 'always'
+
+" none|es5|all
+let g:prettier#config#trailing_comma = 'none'
+
+" flow|babylon|typescript|css|less|scss|json|graphql|markdown
+let g:prettier#config#parser = 'babylon'
+
+" cli-override|file-override|prefer-file
+let g:prettier#config#config_precedence = 'prefer-file'
+
+" always|never|preserve
+let g:prettier#config#prose_wrap = 'preserve'

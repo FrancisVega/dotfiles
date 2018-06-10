@@ -1,0 +1,20 @@
+snippet ** "JSDoc comment" b
+/**
+ * ${1:description}
+ * @param {${2:type}} ${3:name} - ${4:description}
+ * @returns {${5:type}}
+ */$0
+endsnippet
+
+snippet comp "React component" b
+class ${1:name} extends Component {
+  constructor() {
+    super(props);
+  }
+  render() {
+    return (
+      ${2:<div></div>}
+    );
+  }
+}
+endsnippet

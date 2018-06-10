@@ -3,6 +3,10 @@ snippet div "A simple tag snippet" b
 </div>
 endsnippet
 
+snippet inc "Include" b
+{% include '@$1' %}
+endsnippet
+
 snippet tg "A simple tag snippet" b
 <${1:div}>$2</${1/(\w+).*/$1/}>
 endsnippet
