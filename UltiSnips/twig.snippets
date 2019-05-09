@@ -19,6 +19,10 @@ snippet w
 <$1>${visual:inside text/should/is/g}</$1>
 endsnippet
 
+snippet part "nunjucks partial" b
+{% include 'partials/${1:}.nunjucks' %}
+endsnippet
+
 snippet set "nunjucks set variable" b
 {% set ${1:foo=jarl} %}
 endsnippet

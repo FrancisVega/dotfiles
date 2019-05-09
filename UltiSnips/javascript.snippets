@@ -18,3 +18,45 @@ class ${1:name} extends Component {
   }
 }
 endsnippet
+
+snippet mpr "React component" b
+let ${1:module-name} = ( function() {
+
+	const ${2:private-object} = {
+		// Cache DOM
+		cacheDOM: () => {  },
+		// Events binds
+		bindEvents: () => {  },
+		// Pre-render DOM setup
+		setup: () => {  },
+
+		// Init
+		init: () => {
+			$2.cacheDom();
+			$2.bindEvents();
+			$2.setup();
+		}
+
+		// Public
+		return {
+			setup: $2.setup,
+			init: $2.init
+		}
+	}
+})();
+
+// Export
+module.exports = module;
+endsnippet
+
+snippet mp "React component" b
+let ${1:moduleName} = ( function() {
+
+		// Init
+		init: () => { }
+
+})();
+
+// Export
+$1.init();
+endsnippet

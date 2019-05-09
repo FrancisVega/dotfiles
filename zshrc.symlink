@@ -86,14 +86,34 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+fkill() {
+    lsof -ti :$1 \
+        | xargs kill
+}
+sfkill() {
+    sudo lsof -ti :$1 \
+        | sudo xargs kill
+}
+alias kp="fkill()"
+alias skp="sfkill()"
 alias gs="git status"
+alias c="code ."
 alias kk="ls -la"
 alias devy="npm run dev"
+alias rac="code . & yarn start"
 alias devycss="npm run dev:nojs"
+alias yarny="yarn start"
 alias v="mvim"
 alias gsync='git commit -m "sync"'
 alias wip='git add . && git commit -m "WIP"'
 alias t='python3 /Users/hisco/repos/@hisco/t/t.py --task-dir /googledrive/tasks --list tasks'
+alias st='/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool'
+alias kill3000='kill -kill `lsof -t -i tcp:3000`'
 export VISUAL="vim"
+
+export NVM_DIR="/home/sohan/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+source ~/.nvm/nvm.sh
 
 fpath=(/usr/local/share/zsh-completions $fpath)

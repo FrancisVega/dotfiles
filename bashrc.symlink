@@ -52,3 +52,9 @@ parse_git_branch() {
 }
 
 export PS1="\[\033[0;33m\]\u@\h \[\033[0;36m\]\w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export EDITOR="vim"
