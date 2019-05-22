@@ -53,7 +53,7 @@ ZSH_THEME=kolo
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man colorize pip python brew osx zsh-syntax-highlighting osx gitignore git-open)
+plugins=(git colored-man colorize brew osx zsh-syntax-highlighting gitignore git-open zsh-nvm)
 
 # User configuration
 
@@ -110,9 +110,6 @@ alias t='python3 /Users/hisco/repos/@hisco/t/t.py --task-dir /googledrive/tasks 
 alias st='/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool'
 alias kill3000='kill -kill `lsof -t -i tcp:3000`'
 export VISUAL="vim"
-
-export NVM_DIR="/home/sohan/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 source ~/.nvm/nvm.sh
 

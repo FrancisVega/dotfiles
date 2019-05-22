@@ -56,6 +56,9 @@ Plugin 'styled-components/vim-styled-components'
 Plugin 'hzchirs/vim-material'
 Plugin 'jxnblk/vim-mdx-js'
 Plugin 'chriskempson/base16-vim'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'w0rp/ale'
+Plugin 'kaicataldo/material.vim'
 "Plugin 'mattn/emmet-vim'
 "Plugin 'Shougo/unite.vim'
 call vundle#end()
@@ -71,6 +74,14 @@ call vundle#end()
 " Bye bye fucking help page
 :nmap <F1> :echo<CR>
 :imap <F1> <C-o>:echo<CR>
+
+" move single line of code
+"nmap <C-k> [e
+"nmap <C-j> ]e
+
+" move multiple lines of code
+vmap <C-k> [egv
+vmap <C-j> ]egv
 
 " Shell
 set shell=/bin/bash
@@ -214,7 +225,9 @@ if has("gui_running")
     set guitablabel=%M\ %t
 endif
 
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Keep the error column always visible (jumpy when linter runs on input)
+":set signcolumn=yes
 
 
 " ----------------------------------------------------------------------------
@@ -223,11 +236,12 @@ endif
 
 syntax on
 
+set linespace=5
 "set macligatures
-set guifont=Droid\ Sans\ Mono\ for\ Powerline:h20 " Font
-set guifont=Meslo\ LG\ L\ Regular\ for\ Powerline:h18 " Font
-" set guifont=Space\ Mono:h20
+"set guifont=Droid\ Sans\ Mono\ for\ Powerline:h20 " Font
+set guifont=Meslo\ LG\ L\ Regular\ for\ Powerline:h17 " Font
 "set guifont=SauceCodePowerline-Regular:h20
+"set guifont=Space\ Mono:h20
 "set guifont=Fira\ Code:h18
 "set guifont=Fira\ Mono\ for\ Powerline:h18
 "set guifont=Inconsolata-g\ for\ Powerline:h18
@@ -242,7 +256,9 @@ set background=dark
 "colorscheme atom-dark-256
 "colorscheme perfect
 "colorscheme onedark
-colorscheme duotone-darksea
+"colorscheme duotone-darksea
+"colorscheme materialbox
+colorscheme materialtheme
 
 " force javascript syntax to .sketchplugin files
 au BufRead,BufNewFile *.cocoascript setfiletype javascript
@@ -390,13 +406,15 @@ let g:airline_theme='wombat' " Para usar con onedark
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_use_caching = 0
-let g:ctrlp_max_height = 18
+let g:ctrlp_max_height = 8
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_open_multiple_files = '99ir'
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 let g:ctrlp_working_path_mode = '0'
 let g:ctrlp_map = '<tab>'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 nnoremap <s-tab> :CtrlPBuffer<cr>
 "let g:ctrlp_prompt_mappings = {
     "\ 'AcceptSelection("e")': ['<c-t>'],
@@ -513,13 +531,13 @@ inoremap <right> <nop>
 set shortmess=I
 " Short message to avoid Press Enter to Continue
 :set shortmess=a
-"
+
 " Run prettier asynchronously before saving
 let g:prettier#autoformat=0
 autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md PrettierAsync
 
 " max line length that prettier will wrap on
-let g:prettier#config#print_width = 10000
+let g:prettier#config#print_width = 120
 
 " number of spaces per indentation level
 let g:prettier#config#tab_width = 2
@@ -528,7 +546,7 @@ let g:prettier#config#tab_width = 2
 let g:prettier#config#use_tabs = 'false'
 
 " print semicolons
-let g:prettier#config#semi = 'true'
+let g:prettier#config#semi = 'false'
 
 " single quotes over double quotes
 let g:prettier#config#single_quote = 'false'
@@ -549,7 +567,11 @@ let g:prettier#config#trailing_comma = 'none'
 let g:prettier#config#parser = 'babylon'
 
 " cli-override|file-override|prefer-file
-let g:prettier#config#config_precedence = 'prefer-file'
+"let g:prettier#config#config_precedence = 'prefer-file'
+let g:prettier#config#config_precedence = 'file-override'
 
 " always|never|preserve
 let g:prettier#config#prose_wrap = 'preserve'
+
+
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js"
