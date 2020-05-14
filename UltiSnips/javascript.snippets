@@ -1,62 +1,14 @@
-snippet ** "JSDoc comment" b
-/**
- * ${1:description}
- * @param {${2:type}} ${3:name} - ${4:description}
- * @returns {${5:type}}
- */$0
-endsnippet
-
 snippet comp "React component" b
 class ${1:name} extends Component {
-  constructor() {
-    super(props);
-  }
-  render() {
-    return (
-      ${2:<div></div>}
-    );
-  }
+constructor() {
+super(props);
+}
+render() {
+return (${2:<div></div>};
+}
 }
 endsnippet
 
-snippet mpr "React component" b
-let ${1:module-name} = ( function() {
-
-	const ${2:private-object} = {
-		// Cache DOM
-		cacheDOM: () => {  },
-		// Events binds
-		bindEvents: () => {  },
-		// Pre-render DOM setup
-		setup: () => {  },
-
-		// Init
-		init: () => {
-			$2.cacheDom();
-			$2.bindEvents();
-			$2.setup();
-		}
-
-		// Public
-		return {
-			setup: $2.setup,
-			init: $2.init
-		}
-	}
-})();
-
-// Export
-module.exports = module;
-endsnippet
-
-snippet mp "React component" b
-let ${1:moduleName} = ( function() {
-
-		// Init
-		init: () => { }
-
-})();
-
-// Export
-$1.init();
+snippet jsonpre "React component" b
+<pre>JSON.stringify(${1:x}, null, 2)</pre>
 endsnippet

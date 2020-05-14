@@ -8,8 +8,8 @@ export ZSH=/Users/hisco/.oh-my-zsh
 
 #ZSH_THEME=pygmalion
 #ZSH_THEME=wezm
-#ZSH_THEME=robbyrussell
-ZSH_THEME=kolo
+#ZSH_THEME=kolo
+ZSH_THEME=robbyrussell
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -53,7 +53,7 @@ ZSH_THEME=kolo
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man colorize brew osx zsh-syntax-highlighting gitignore git-open zsh-nvm)
+plugins=(git colorize brew osx gitignore git-open zsh-nvm)
 
 # User configuration
 
@@ -101,6 +101,7 @@ alias c="code ."
 alias kk="ls -la"
 alias devy="npm run dev"
 alias rac="code . & yarn start"
+alias sbk="code . & yarn sb"
 alias devycss="npm run dev:nojs"
 alias yarny="yarn start"
 alias v="mvim"
@@ -109,8 +110,27 @@ alias wip='git add . && git commit -m "WIP"'
 alias t='python3 /Users/hisco/repos/@hisco/t/t.py --task-dir /googledrive/tasks --list tasks'
 alias st='/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool'
 alias kill3000='kill -kill `lsof -t -i tcp:3000`'
+alias ls='exa'
+alias fuckdstore='find . -name ".DS_Store" -type f -delete'
+alias vs='v & yarn sb'
 export VISUAL="vim"
+
+# highlight
+# args: 1: size, 2: lang
+function keycode() {
+  pbpaste | \
+    highlight \
+    	--font Menlo \
+    	--font-size $1 \
+    	--style seashell \
+    	--src-lang $2 \
+    	--out-format rtf | \
+    pbcopy
+}
 
 source ~/.nvm/nvm.sh
 
 fpath=(/usr/local/share/zsh-completions $fpath)
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+

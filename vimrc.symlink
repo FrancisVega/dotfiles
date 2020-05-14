@@ -1,70 +1,200 @@
-
-
 " .vimrc
 " Author: Francis Vega <hisconer@gmail.com>
 " Source: https://github.com/FrancisVega/dotfiles/blob/master/vimrc.symlink
 
-" ----------------------------------------------------------------------------
-" Vundle Plugin
-" ----------------------------------------------------------------------------
-
-" Vundle Start
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" ----------------------------------------------------------------------------
+" coc
+" ----------------------------------------------------------------------------
+set hidden
+set nowritebackup
+set updatetime=300
+set shortmess+=c
 
-" Quarentena
-"Plugin 'rstacruz/vim-hyperstyle'
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-sensible'
-Plugin 'honza/vim-snippets'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'gregsexton/MatchTag'
-Plugin 'ervandew/supertab'
-Plugin 'tpope/vim-surround'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'kana/vim-operator-user'
-Plugin 'rhysd/vim-operator-surround'
-Plugin 'tacahiroy/ctrlp-funky'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-colorscheme-switcher'
-Plugin 'gosukiwi/vim-atom-dark'
-Plugin 'atelierbram/vim-colors_duotones'
-Plugin 'dyng/ctrlsf.vim'
-Plugin 'pangloss/vim-javascript'
-Plugin 'kristijanhusak/vim-hybrid-material'
-Plugin 'isRuslan/vim-es6'
-Plugin 'mxw/vim-jsx'
-Plugin 'Shougo/vimfiler.vim'
-Plugin 'prettier/vim-prettier'
-Plugin 'lepture/vim-jinja'
-Plugin 'nelsyeung/twig.vim'
-Plugin 'alvan/vim-closetag'
-Plugin 'othree/html5.vim'
-Plugin 'styled-components/vim-styled-components'
-Plugin 'hzchirs/vim-material'
-Plugin 'jxnblk/vim-mdx-js'
-Plugin 'chriskempson/base16-vim'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'w0rp/ale'
-Plugin 'kaicataldo/material.vim'
-"Plugin 'mattn/emmet-vim'
-"Plugin 'Shougo/unite.vim'
-call vundle#end()
-"filetype plugin indent on
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
 
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+    inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+    autocmd!
+    " Setup formatexpr specified filetype(s).
+    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    " Update signature help on jump placeholder.
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Introduce function text object
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <TAB> for selections ranges.
+" NOTE: Requires 'textDocument/selectionRange' support from the language server.
+" coc-tsserver, coc-python are the examples of servers that support it.
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings using CoCList:
+" Show all diagnostics.
+"nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent> <c-space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+"nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+" coc extensions
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
+
+" ----------------------------------------------------------------------------
+" Plugins
+" ----------------------------------------------------------------------------
+
+call plug#begin()
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+
+Plug 'ianks/vim-tsx'
+Plug 'leafgarland/typescript-vim'
+Plug 'vim-scripts/utl.vim'
+Plug 'mtth/taglist.vim'
+Plug 'tpope/vim-repeat'
+Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-speeddating'
+Plug 'inkarkat/vim-SyntaxRange'
+Plug 'jremmen/vim-ripgrep'
+Plug 'jiangmiao/auto-pairs'
+Plug 'blueyed/vim-diminactive/'
+
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
+Plug 'honza/vim-snippets'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'jiangmiao/auto-pairs'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'gregsexton/MatchTag'
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'kana/vim-operator-user'
+Plug 'rhysd/vim-operator-surround'
+Plug 'tacahiroy/ctrlp-funky'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-colorscheme-switcher'
+Plug 'gosukiwi/vim-atom-dark'
+Plug 'atelierbram/vim-colors_duotones'
+Plug 'dyng/ctrlsf.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'isRuslan/vim-es6'
+Plug 'mxw/vim-jsx'
+Plug 'Shougo/vimfiler.vim'
+Plug 'prettier/vim-prettier'
+Plug 'alvan/vim-closetag'
+Plug 'othree/html5.vim'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'hzchirs/vim-material'
+Plug 'jxnblk/vim-mdx-js'
+Plug 'chriskempson/base16-vim'
+Plug 'tpope/vim-unimpaired'
+Plug 'kaicataldo/material.vim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-commentary'
+call plug#end()
 
 
 " ----------------------------------------------------------------------------
@@ -95,9 +225,9 @@ let g:mapleader = ","
 
 " Persistent undo
 if has('persistent_undo')      "check if your vim version supports it
-  set undofile                 "turn on the feature
-  set undodir=~/.vim/undo  "directory where the undo files will be stored
-  endif
+    set undofile                 "turn on the feature
+    set undodir=~/.vim/undo  "directory where the undo files will be stored
+endif
 
 " column max char 79
 highlight ColorColumn ctermbg=magenta guibg=#ff0088
@@ -110,7 +240,7 @@ set encoding=utf8
 set ffs=unix,dos,mac
 set nrformats-=octal
 
- " Hide Toolbar in MacVim
+" Hide Toolbar in MacVim
 set guioptions=egmrt
 
 " Relative numbers
@@ -156,17 +286,17 @@ endtry
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \   exe "normal! g`\"" |
+            \ endif
 
 "set viminfo^=% " Remember info about open buffers on close
-set laststatus=2 " Always show the status line
+set laststatus=0 " Always show the status line
 
 " Utils
 let &t_EI = "\<esc>]50;CursorShape=0\x7"
 
-" Delete trailing white spcae on save, useful for Pyhton and CoffeScript
+" Delete trailing white spcae on save
 func! DeleteTrailingWS()
     exe "normal mz"
     %s/\s\+$//ge
@@ -200,11 +330,10 @@ set smartcase
 set hlsearch
 set incsearch
 
-
 "set whichwrap+=<,>,h,1
 set wildmenu " turn on the wild menu
 set ruler " always show current position
-set cmdheight=1 " height of command bar
+set cmdheight=2 " height of command bar
 set backspace=eol,start,indent " Configure backspace so it acts as it shoud at
 set lazyredraw " Dont redraw when executing macros (good performance)
 set magic " For reg turn magic on
@@ -221,6 +350,7 @@ set tm=500
 if has("gui_running")
     set guioptions-=T
     set guioptions+=e
+    set guioptions=
     set t_Co=256
     set guitablabel=%M\ %t
 endif
@@ -236,19 +366,23 @@ endif
 
 syntax on
 
-set linespace=5
-"set macligatures
+set linespace=8
+set macligatures
 "set guifont=Droid\ Sans\ Mono\ for\ Powerline:h20 " Font
-set guifont=Meslo\ LG\ L\ Regular\ for\ Powerline:h17 " Font
+"set guifont=Space\ Mono\ for\ Powerline:h16 " Font
+set guifont=JetBrains\ Mono\ for\ Powerline:h18 " Font
+"set guifont=Source\ Code\ Pro:h17
+"set guifont=JetBrains\ Mono:h17
+"set guifont=Meslo\ LG\ L\ Regular\ for\ Powerline:h17 " Font
 "set guifont=SauceCodePowerline-Regular:h20
-"set guifont=Space\ Mono:h20
+"set guifont=Space\ Mono:h16
 "set guifont=Fira\ Code:h18
 "set guifont=Fira\ Mono\ for\ Powerline:h18
 "set guifont=Inconsolata-g\ for\ Powerline:h18
 "set guifont=Droid\ Sans\ Mono\ for\ Powerline:h18
 "set guifont=monaco:h16 " Font
 
-set background=dark
+"set background=dark
 "colorscheme paintbox
 "colorscheme mac_classic
 "colorscheme pw
@@ -258,7 +392,12 @@ set background=dark
 "colorscheme onedark
 "colorscheme duotone-darksea
 "colorscheme materialbox
-colorscheme materialtheme
+"colorscheme materialtheme
+"colorscheme base16-atelier-plateau
+"let ayucolor="light"  " for light version of theme
+"let ayucolor="mirage" " for mirage version of theme
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
 
 " force javascript syntax to .sketchplugin files
 au BufRead,BufNewFile *.cocoascript setfiletype javascript
@@ -296,19 +435,6 @@ autocmd Filetype html setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype jinja setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype twig setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
-
-" ----------------------------------------------------------------------------
-" Ultisnip
-" ----------------------------------------------------------------------------
-
-" Trigger configuration.
-" Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
 
 " ----------------------------------------------------------------------------
 " Vim-jsx
@@ -387,30 +513,33 @@ noremap <c-h> :bprevious<cr>
 " cool fonts
 let g:airline_powerline_fonts = 1
 
-" ebable the linst of buffers
+" ebable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
 
-" show just the filenaem
+" show just the filename
 let g:airline#extensions#tabline#fnamemod = 1
 
 " airlinetheme
-let g:airline_theme='wombat' " Para usar con onedark
+"let g:airline_theme='wombat' " Para usar con onedark
 "let g:airline_theme='raven' " Para usar con Jaeger
-
-
-
+let g:airline_theme='jellybeans' " Para usar con Jaeger
+"let g:airline_theme='tomorrow' " Para usar con Jaeger
+"let g:airline_theme='ayu' " Para usar con Jaeger
 
 " ----------------------------------------------------------------------------
 " Ctrl-P Plugin
 " ----------------------------------------------------------------------------
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_window = 'bottom,order:ttb'
-let g:ctrlp_use_caching = 0
+let g:ctrlp_use_caching = 1
+let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_height = 8
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_open_multiple_files = '99ir'
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+"let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+set grepprg=rg\ --color=never
+let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
 let g:ctrlp_working_path_mode = '0'
 let g:ctrlp_map = '<tab>'
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
@@ -421,14 +550,17 @@ nnoremap <s-tab> :CtrlPBuffer<cr>
     "\ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
     "\ }
 
+" CTRL-P to use ripgrep
+"if executable('rg')
+  "set grepprg=rg\ --color=never
+  "let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+"endif
+
 " CtrlPFunky
 let g:ctrlp_funky_syntax_highlight = 1
 
 " CtrlSF (Search and Replace)
-noremap <leader>,r :CtrlSF
-
-
-
+noremap <leader>,r :CtrlSF 
 
 " ----------------------------------------------------------------------------
 " Ctrl-P Funky Plugin
@@ -437,9 +569,6 @@ noremap <leader>,r :CtrlSF
 nnoremap <Leader>fu :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-
-
-
 
 " ----------------------------------------------------------------------------
 " The Silver Searcher Plugin
@@ -450,9 +579,6 @@ if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor\ --ignore=node_modules
 endif
 
-
-
-
 " ----------------------------------------------------------------------------
 " Mappings
 " ----------------------------------------------------------------------------
@@ -462,20 +588,10 @@ nnoremap 0 ^
 nnoremap <leader>,b :bp\| bd #<cr>
 nnoremap <c-j> }
 nnoremap <c-k> {
-
-" Navega al componente twig
-nnoremap <leader>,c F@lyt':find **/".twig
-
-" Navega al css del componente twig
-nnoremap <leader>,s F@lyt':find **/".css
-
 " --- testing maps
 
 " css/sass experimental mappings
-inoremap  \
-cnoremap  \
-" set window width
-" noremap <leader>,w :set columns=104<cr>
+
 " Typos
 command! -bang Q q<bang>
 command! -bang W w<bang>
@@ -484,7 +600,7 @@ noremap <Leader>y :NERDTreeToggle<CR>
 nnoremap <leader>w :w!<cr>
 noremap <leader>e :e $MYVIMRC<cr>
 noremap <space> /
-noremap <c-space> ?
+"noremap <c-space> ?
 
 " Mueve el cursor de línea en línea aunque sea un párrafo 'wrapeado'
 noremap j gj
@@ -505,16 +621,6 @@ inoremap <Leader>, :nohl<CR>
 " Switch CWD to the directory of the open buffer
 noremap <leader>cd :cd<space>%:h<cr>:pwd<cr>
 
-" No Arrow keys
-noremap <up> <nop>
-noremap <down> <nop>
-noremap <left> <nop>
-noremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-
 :cnoremap <C-a>  <Home>
 :cnoremap <C-b>  <Left>
 :cnoremap <C-f>  <Right>
@@ -529,49 +635,54 @@ inoremap <right> <nop>
 
 " Don't show the startup message
 set shortmess=I
+
 " Short message to avoid Press Enter to Continue
 :set shortmess=a
 
-" Run prettier asynchronously before saving
-let g:prettier#autoformat=0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md PrettierAsync
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
-" max line length that prettier will wrap on
-let g:prettier#config#print_width = 120
+" Use <C-l> for trigger snippet expand.
+imap <C-0> <Plug>(coc-snippets-expand)
 
-" number of spaces per indentation level
-let g:prettier#config#tab_width = 2
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
 
-" use tabs over spaces
-let g:prettier#config#use_tabs = 'false'
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
 
-" print semicolons
-let g:prettier#config#semi = 'false'
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
 
-" single quotes over double quotes
-let g:prettier#config#single_quote = 'false'
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
 
-" print spaces between brackets
-let g:prettier#config#bracket_spacing = 'true'
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
 
-" put > on the last line instead of new line
-let g:prettier#config#jsx_bracket_same_line = 'false'
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-" avoid|always
-let g:prettier#config#arrow_parens = 'always'
+let g:coc_snippet_next = '<tab>'
 
-" none|es5|all
-let g:prettier#config#trailing_comma = 'none'
+" Local vimrc files
+set exrc
+set secure
 
-" flow|babylon|typescript|css|less|scss|json|graphql|markdown
-let g:prettier#config#parser = 'babylon'
+" Dimming window
+let g:diminactive_use_colorcolumn = 1
+:hi ColorColumn ctermbg=0 guibg=#15191E
 
-" cli-override|file-override|prefer-file
-"let g:prettier#config#config_precedence = 'prefer-file'
-let g:prettier#config#config_precedence = 'file-override'
+" Goyo
+let g:goyo_width = 82
+noremap <leader>G :Goyo<cr>
 
-" always|never|preserve
-let g:prettier#config#prose_wrap = 'preserve'
+" FzF
+map <leader><space> <Esc><Esc>:BLines<CR>
 
-
-let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.js"
+" Vim comentary
+autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
