@@ -1,10 +1,19 @@
-#Set prefix to ctrl-f
-set -g prefix C-k
+# Bindings
 
-#Unbind system defined prefix
-unbind C-b
+# Set the prefix to ctr+a instead of ctrl+b
+#unbind C-b
+#set-option -g prefix C-a
+#bind-key C-a send-prefix
 
-#Fix bug with colors
+# Automatically set window title
+set-window-option -g automatic-rename on
+set-option -g set-titles on
+
+# Open ~/.tmux.conf in vim and reload settings on quit
+unbind e
+bind e new-window -n '~/.tmux.conf' "sh -c 'nvim ~/.tmux.conf && tmux source ~/.tmux.conf'"
+
+# Fix bug with colors
 set -g default-terminal "screen-256color"
 
 #source .tmux.conf file
@@ -14,20 +23,44 @@ bind r source-file ~/.tmux.conf \; display "Configuration Reloaded!"
 bind C-a send-prefix
 
 #Cool splitting
+#
 #vertical
 bind | split-window -h
+
 #horizontal
 bind - split-window -v
+
 #pane movement similar to vim
 bind h select-pane -L
 bind j select-pane -D
 bind k select-pane -U
 bind l select-pane -R
 
+# Switch betewen panes using alt + arrow
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# Use shift + arrow key to move between windows in a session
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+
 #Cycle through windows
 bind -r C-h select-window -t :-
 bind -r C-l select-window -t :+
 bind b previous-window
+
+# Use r to quickly reload tmux settings
+unbind r
+bind r \
+    source-file ~/.tmux.conf \;\
+    display 'Reloaded tmux config'
+
+ # Setup 'y' to yank (copy), just like Vim
+bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode-vi 'V' send -X select-line
+bind-key -T copy-mode-vi 'r' send -X rectangle-toggle
 
 #enable mouse
 setw -g mode-mouse on
@@ -35,17 +68,10 @@ setw -g mode-mouse on
 #enable vi mode
 setw -g mode-keys vi
 
-# remap copy paste keys
-unbind [
-bind y copy-mode
-unbind p
-bind p paste-buffer
-bind -t vi-copy 'v' begin-selection
-bind -t vi-copy 'y' copy-selection
-
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
 
 # copy to system clipboard
 bind C-c run "tmux save-buffer - | xclip -i -sel clipboard"
@@ -53,44 +79,84 @@ bind C-c run "tmux save-buffer - | xclip -i -sel clipboard"
 # paste from system clipboard
 bind C-v run "tmux set-buffer \"$(xclip -o -sel clipboard)\"; tmux paste-buffer"
 
-# status bar theme
-set -g status-bg 'colour235'
-set -g message-command-fg 'colour222'
-set -g status-justify 'centre'
-set -g status-left-length '100'
-set -g status 'on'
-set -g pane-active-border-fg 'colour154'
-set -g message-bg 'colour238'
-set -g status-right-length '100'
-set -g status-right-attr 'none'
-set -g message-fg 'colour222'
-set -g message-command-bg 'colour238'
-set -g status-attr 'none'
-set -g status-utf8 'on'
-set -g pane-border-fg 'colour238'
-set -g status-left-attr 'none'
-setw -g window-status-fg 'colour121'
-setw -g window-status-attr 'none'
-setw -g window-status-activity-bg 'colour235'
-setw -g window-status-activity-attr 'none'
-setw -g window-status-activity-fg 'colour154'
-setw -g window-status-separator ''
-setw -g window-status-bg 'colour235'
-set -g status-left '#[fg=colour232,bg=colour154] #S #[fg=colour154,bg=colour238,nobold,nounderscore,noitalics]#[fg=colour222,bg=colour238] #W #[fg=colour238,bg=colour235,nobold,nounderscore,noitalics]#[fg=colour121,bg=colour235] #(whoami)  #(uptime  | cut -d " " -f 1,2,3) #[fg=colour235,bg=colour235,nobold,nounderscore,noitalics]'
-set -g status-right '#[fg=colour235,bg=colour235,nobold,nounderscore,noitalics]#[fg=colour121,bg=colour235] %r  %a  %Y #[fg=colour238,bg=colour235,nobold,nounderscore,noitalics]#[fg=colour222,bg=colour238] #H #[fg=colour154,bg=colour238,nobold,nounderscore,noitalics]#[fg=colour232,bg=colour154] #(rainbarf --battery --remaining --no-rgb) '
-setw -g window-status-format '#[fg=colour235,bg=colour235,nobold,nounderscore,noitalics]#[default] #I  #W #[fg=colour235,bg=colour235,nobold,nounderscore,noitalics]'
-setw -g window-status-current-format '#[fg=colour235,bg=colour238,nobold,nounderscore,noitalics]#[fg=colour222,bg=colour238] #I  #W  #F #[fg=colour238,bg=colour235,nobold,nounderscore,noitalics]'
+# Start window and pane indices at 1.
+set -g base-index 1
+set -g pane-base-index 0
+
+# Theming
+
+# Default statusbar color
+set-option -g status-style fg=colour223 # bg=bg1, fg=fg1
+
+# Default window title colors
+set-window-option -g window-status-style bg=colour214,fg=colour237 # bg=yellow, fg=bg1
+
+# Default window with an activity alert
+set-window-option -g window-status-activity-style bg=colour237,fg=colour248 # bg=bg1, fg=fg3
+
+# Active window title colors
+set-window-option -g window-status-current-style bg=red,fg=colour237 # fg=bg1
+
+# Set active pane border color
+set-option -g pane-active-border-style fg=colour214
+
+# Set inactive pane border color
+set-option -g pane-border-style fg=colour239
+
+# Message info
+set-option -g message-style bg=colour239,fg=colour223 # bg=bg2, fg=fg1
+
+# Writing commands inactive
+set-option -g message-command-style bg=colour239,fg=colour223 # bg=fg3, fg=bg1
+
+# Pane number display
+set-option -g display-panes-active-colour colour1 #fg2
+set-option -g display-panes-colour colour237 #bg1
+
+# Clock
+set-window-option -g clock-mode-colour colour109 #blue
+
+# Bell
+set-window-option -g window-status-bell-style bg=colour167,fg=colour235 # bg=red, fg=bg
+
+set-option -g status-left "\
+#[fg=colour255, bg=#1D1F21]#{?client_prefix,#[bg=colour167],} λ #S \
+#[bg=#1D1F21] "
+
+set-option -g status-right "\
+#[fg=#595B5C, bg=#1d1f21] \
+#[fg=#595B5C, bg=#1d1f21] %b %d '%y\
+#[fg=#595B5C] | %H:%M \
+#[fg=#595B5C, bg=#1d1f21]"
+
+set-window-option -g window-status-current-format "\
+#[fg=#fccccc, bg=#1D1F21]\
+#[fg=#fccccc, bg=#1D1F21] #I\
+#[fg=#fccccc, bg=#1D1F21]:#W* \
+#[fg=#fccccc, bg=#1D1F21]"
+
+set-window-option -g window-status-format "\
+#[fg=#595B5C, bg=#1D1F21]\
+#[fg=#595B5C, bg=#1D1F21] #I\
+#[fg=#595B5C, bg=#1D1F21] #W \
+#[fg=#595B5C, bg=#1D1F21]"
+
+# Set the history limit so we get lots of scrollback.
+setw -g history-limit 50000000
 
 # Other examples:
 # set -g @plugin 'github_username/plugin_name'
 # set -g @plugin 'git@github.com/user/plugin'
 # set -g @plugin 'git@bitbucket.com/user/plugin'
 
-#Sessions
+# Sessions
 new -s Lorien
 neww -n vim
 neww -n terminal
 selectw -t 1
+
+# ESC delay solved
+set -sg escape-time 0
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
