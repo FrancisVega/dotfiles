@@ -170,6 +170,8 @@ Plug 'flazz/vim-colorschemes'
 Plug 'kassio/neoterm'
 Plug 'elixir-editors/vim-elixir'
 Plug 'agude/vim-eldar'
+Plug 'mhinz/vim-mix-format'
+Plug 'elixir-editors/vim-elixir'
 call plug#end()
 
 
@@ -394,7 +396,7 @@ map <silent>sr <Plug>(operator-surround-replace)
 " ----------------------------------------------------------------------------
 
 " cool fonts
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 
 " ebable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
@@ -436,6 +438,15 @@ map <leader><space> <Esc><Esc>:BLines<CR>
 " ----------------------------------------------------------------------------
 autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
 let g:gitgutter_sign_column_always = 1
+
+" Automatically format on saving
+let g:mix_format_on_save = 1
+" Set options for the formatter. See mix help format in the shell.
+let g:mix_format_options = '--check-equivalent'
+" By default this plugin opens a window containing the stacktrace on errors. With this option enabled, there will be just a short message in the command-line bar. The stacktrace can still be looked up via :messages.
+let g:mix_format_silent_errors = 1
+" If you're not using Elixir 1.6 in your project, but want to use the formatter anyway, you can specify the bin directory of an alternative Elixir installation:
+" let g:mix_format_elixir_bin_path = '~/repo/elixir/bin'
 
 " ----------------------------------------------------------------------------
 " Mappings
