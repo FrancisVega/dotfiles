@@ -172,6 +172,7 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'agude/vim-eldar'
 Plug 'mhinz/vim-mix-format'
 Plug 'elixir-editors/vim-elixir'
+"Plug 'itchyny/lightline.vim'
 call plug#end()
 
 
@@ -241,11 +242,11 @@ set history=700
 set autoread
 
 " Specify the behavior when switching between buffers
-try
-    set switchbuf=useopen,usetab,newtab
-    set stal=2
-catch
-endtry
+"try
+    "set switchbuf=useopen,usetab,newtab
+    "set stal=2
+"catch
+"endtry
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
@@ -311,13 +312,13 @@ set tm=500
 
 " set extra options when runnung in GUI Mode
 set t_Co=256
-if has("gui_running")
-    set guioptions-=T
-    set guioptions+=e
-    set guioptions=
-    set t_Co=256
-    set guitablabel=%M\ %t
-endif
+"if has("gui_running")
+    "set guioptions-=T
+    "set guioptions+=e
+    "set guioptions=
+    "set t_Co=256
+    "set guitablabel=%M\ %t
+"endif
 
 " Keep the error column always visible (jumpy when linter runs on input)
 :set signcolumn=yes
@@ -399,7 +400,7 @@ map <silent>sr <Plug>(operator-surround-replace)
 let g:airline_powerline_fonts = 0
 
 " ebable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 
 " show just the filename
 let g:airline#extensions#tabline#fnamemod = 1
@@ -409,12 +410,39 @@ let g:airline_theme='jellybeans'
 
 " remove the filetype part
 let g:airline_section_x=''
+let g:airline_section_y=''
+
+" Filename modifier
+let g:airline#extensions#tabline#fnamemod = '::s'
+let g:airline_section_c = '%t'
 
 " remove separators for empty sections
 let g:airline_skip_empty_sections = 1
 
 " CtrlPFunky
 let g:ctrlp_funky_syntax_highlight = 1
+
+" or copy paste the following into your vimrc for shortform text
+let g:airline_mode_map = {
+    \ '__'     : '-',
+    \ 'c'      : 'C',
+    \ 'i'      : 'I',
+    \ 'ic'     : 'I',
+    \ 'ix'     : 'I',
+    \ 'n'      : 'N',
+    \ 'multi'  : 'M',
+    \ 'ni'     : 'N',
+    \ 'no'     : 'N',
+    \ 'R'      : 'R',
+    \ 'Rv'     : 'R',
+    \ 's'      : 'S',
+    \ 'S'      : 'S',
+    \ ''     : 'S',
+    \ 't'      : 'T',
+    \ 'v'      : 'V',
+    \ 'V'      : 'V',
+    \ ''     : 'V',
+    \ }
 
 " CtrlSF (Search and Replace)
 noremap <leader>,r :CtrlSF
@@ -451,6 +479,10 @@ let g:mix_format_silent_errors = 1
 " ----------------------------------------------------------------------------
 " Mappings
 " ----------------------------------------------------------------------------
+
+" Close stuck floating pops
+nnoremap <leader>,c :call coc#float#close_all()<cr>
+
 
 nnoremap 0 ^
 nnoremap <leader>,b :bp\| bd #<cr>
@@ -592,3 +624,4 @@ set fillchars+=vert:\
 
 set background=dark
 set t_Co=256
+set noshowmode
