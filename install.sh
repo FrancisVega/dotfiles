@@ -6,7 +6,7 @@
 # Use:
 # curl https://raw.githubusercontent.com/FrancisVega/dotfiles/master/install.sh | bash
 
-files=(vimrc zshrc)
+files=(vimrc zshrc tmux.conf)
 github_url=https://raw.githubusercontent.com/FrancisVega/dotfiles/master
 
 download_dotfile () {
