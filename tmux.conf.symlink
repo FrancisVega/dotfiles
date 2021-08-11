@@ -1,10 +1,5 @@
 # Bindings
 
-# Set the prefix to ctr+a instead of ctrl+b
-#unbind C-b
-#set-option -g prefix C-a
-#bind-key C-a send-prefix
-
 # Automatically set window title
 set-window-option -g automatic-rename on
 set-option -g set-titles on
@@ -72,7 +67,9 @@ setw -g mode-keys vi
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'tmux-plugins/tmux-open'
+set -g @plugin 'robhurring/tmux-spotify'
 
 # copy to system clipboard
 bind C-c run "tmux save-buffer - | xclip -i -sel clipboard"
@@ -84,68 +81,13 @@ bind C-v run "tmux set-buffer \"$(xclip -o -sel clipboard)\"; tmux paste-buffer"
 set -g base-index 1
 set -g pane-base-index 0
 
-# Theming
-
-# Default statusbar color
-#set-option -g status-style bg=#16191F,fg=colour223 # bg=bg1, fg=fg1
-
-# Default window title colors
-#set-window-option -g window-status-style bg=colour214,fg=colour237 # bg=yellow, fg=bg1
-
-# Default window with an activity alert
-#set-window-option -g window-status-activity-style bg=colour27,fg=colour248 # bg=bg1, fg=fg3
-
-# Active window title colors
-#set-window-option -g window-status-current-style bg=red,fg=colour237 # fg=bg1
-
-# Set active pane border color
-#set-option -g pane-active-border-style fg=colour214
-
-# Set inactive pane border color
-#set-option -g pane-border-style fg=colour239
-
-# Message info
-#set-option -g message-style bg=colour239,fg=colour223 # bg=bg2, fg=fg1
-
-# Writing commands inactive
-#set-option -g message-command-style bg=colour239,fg=colour223 # bg=fg3, fg=bg1
-
-# Pane number display
-#set-option -g display-panes-active-colour colour1 #fg2
-#set-option -g display-panes-colour colour237 #bg1
-
-# Clock
-#set-window-option -g clock-mode-colour colour109 #blue
-
-# Bell
-#set-window-option -g window-status-bell-style bg=colour167,fg=colour235 # bg=red, fg=bg
-
-#set-option -g status-left "\
-[fg=colour255, bg=#16191e]#{?client_prefix,#[bg=colour167],} λ #S \
-[bg=#16191e] "
-
-set-option -g status-left "#{?client_prefix,#[bg=colour167],} λ #S"
-
-set-option -g status-right ""
-
-#set-window-option -g window-status-current-format "\
-#[fg=#fccccc, bg=#16191e]\
-#[fg=#fccccc, bg=#16191e] #I\
-#[fg=#fccccc, bg=#16191e]:#W* \
-#[fg=#fccccc, bg=#16191e]"
-
-#set-window-option -g window-status-format "\
-#[fg=#595B5C, bg=#16191e]\
-#[fg=#595B5C, bg=#16191e] #I\
-#[fg=#595B5C, bg=#16191e] #W \
-#[fg=#595B5C, bg=#16191e]"
-
+set-option -g status-left "#{?client_prefix,#[bg=colour167],} λ #S "
+set-option -g status-left-length 50
+set -g status-right "♫ #{music_status} #{artist}: #{track} 🤙"
 
 set-option -g status-style bg=default
 set -g status-fg white
 
-
-set-window-option -g window-status-current-bg red
 setw -g window-status-current-style fg=black,bg=white
 
 setw -g window-status-format ' #I #W '
@@ -154,15 +96,10 @@ setw -g window-status-current-format ' #W '
 # Set the history limit so we get lots of scrollback.
 setw -g history-limit 50000000
 
-# Other examples:
-# set -g @plugin 'github_username/plugin_name'
-# set -g @plugin 'git@github.com/user/plugin'
-# set -g @plugin 'git@bitbucket.com/user/plugin'
-
 # Sessions
 new -s Lorien
-neww -n vim
-neww -n terminal
+neww -n config
+neww -n dotfiles
 selectw -t 1
 
 # ESC delay solved

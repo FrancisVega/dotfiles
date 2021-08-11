@@ -1,0 +1,696 @@
+" .vimrc
+" Author: Francis Vega <hisconer@gmail.com>
+" Source: https://github.com/FrancisVega/dotfiles/blob/master/vimrc.symlink
+
+set nocompatible
+filetype off
+"set termguicolors
+let base16colorspace=256  " Access colors present in 256 colorspace
+
+" ----------------------------------------------------------------------------
+" coc
+" ----------------------------------------------------------------------------
+set hidden
+set nowritebackup
+set updatetime=300
+set shortmess+=c
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+    inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+augroup mygroup
+    autocmd!
+    " Setup formatexpr specified filetype(s).
+    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    " Update signature help on jump placeholder.
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Introduce function text object
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <TAB> for selections ranges.
+" NOTE: Requires 'textDocument/selectionRange' support from the language server.
+" coc-tsserver, coc-python are the examples of servers that support it.
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+let g:fzf_preview_window = []
+let g:fzf_layout = { 'down': '30%' }
+
+" Mappings using CoCList:
+" Show all diagnostics.
+"nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent> <c-space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+"nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+" coc extensions
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
+
+" ----------------------------------------------------------------------------
+" Plugins
+" ----------------------------------------------------------------------------
+
+call plug#begin()
+"Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+" Or build from source code by using yarn: https://yarnpkg.com
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+
+"Plug 'vim-scripts/utl.vim'
+"Plug 'mtth/taglist.vim'
+"Plug 'tpope/vim-speeddating'
+"Plug 'inkarkat/vim-SyntaxRange'
+"Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'tacahiroy/ctrlp-funky'
+"Plug 'gregsexton/MatchTag'
+"Plug 'alvan/vim-closetag'
+"Plug 'itchyny/lightline.vim'
+" ------------------
+"Plug 'prettier/vim-prettier'
+"Plug 'chriskempson/base16-vim'
+"Plug 'ayu-theme/ayu-vim'
+"Plug 'tpope/vim-commentary'
+"Plug 'morhetz/gruvbox'
+"Plug 'sainnhe/gruvbox-material'
+"Plug 'gruvbox-community/gruvbox'
+Plug 'flazz/vim-colorschemes'
+"Plug 'kassio/neoterm'
+"Plug 'glepnir/oceanic-material'
+"Plug 'majutsushi/tagbar'
+" ------------------
+"Plug 'ianks/vim-tsx'
+"Plug 'leafgarland/typescript-vim'
+"Plug 'mhinz/vim-mix-format'
+"Plug 'elixir-editors/vim-elixir'
+" ------------------
+"Plug 'tpope/vim-fugitive'
+"Plug 'tpope/vim-sensible'
+"Plug 'jxnblk/vim-mdx-js'
+"Plug 'airblade/vim-gitgutter'
+"Plug 'stephenway/postcss.vim'
+"Plug 'cakebaker/scss-syntax.vim'
+" ----------------
+Plug 'preservim/nerdtree'
+Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'dyng/ctrlsf.vim'
+Plug 'honza/vim-snippets'
+Plug 'isRuslan/vim-es6'
+Plug 'jiangmiao/auto-pairs'
+Plug 'jremmen/vim-ripgrep'
+Plug 'kana/vim-operator-user'
+Plug 'mxw/vim-jsx'
+Plug 'othree/html5.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'rhysd/vim-operator-surround'
+Plug 'scrooloose/nerdcommenter'
+Plug 'styled-components/vim-styled-components'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'w0ng/vim-hybrid'
+Plug 'xolox/vim-misc'
+Plug 'ayu-theme/ayu-vim' " or other package manager
+Plug 'ayu-theme/ayu-vim' " or other package manager
+Plug 'sindrets/diffview.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+
+" --- typescript
+Plug 'leafgarland/typescript-vim'
+call plug#end()
+
+" Source Vim configuration file and install plugins
+nnoremap <silent><leader>1 :source ~/.vimrc \| :PlugInstall<CR>
+
+" ----------------------------------------------------------------------------
+" General
+" ----------------------------------------------------------------------------
+
+" Bye bye fucking help page
+:nmap <F1> :echo<CR>
+:imap <F1> <C-o>:echo<CR>
+
+" Shell
+set shell=/bin/bash
+
+" Vim carga el .bash
+set shellcmdflag=-ic
+
+" Leader key
+let mapleader = ","
+let g:mapleader = ","
+
+" Persistent undo
+if has('persistent_undo')      "check if your vim version supports it
+    set undofile                 "turn on the feature
+    set undodir=~/.vim/undo  "directory where the undo files will be stored
+endif
+
+" utf8
+set encoding=utf8
+
+" Filesystem
+set ffs=unix,dos,mac
+set nrformats-=octal
+
+" Hide Toolbar in MacVim
+set guioptions=egmrt
+
+" Relative numbers
+set number
+set relativenumber
+set laststatus=2 " Always shows status bar
+
+" set trailing whitespace with · char
+if ("gui_running" == 0)
+    set listchars=trail:·,
+    set list
+endif
+
+" Better copy & paste
+set pastetoggle=<F2>
+set clipboard=unnamed
+
+" Mouse and backspace
+set mouse=a
+set bs=2
+
+" highlight the status bar when in insert mode
+"if version >= 700
+    "au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
+    "au InsertEnter * hi StatusLine ctermfg=240 ctermbg=12
+"endif
+
+" History
+set history=700
+
+" set auto read when a file is changed from the outside
+set autoread
+
+" Specify the behavior when switching between buffers
+"try
+    "set switchbuf=useopen,usetab,newtab
+    "set stal=2
+"catch
+"endtry
+
+" Return to last edit position when opening files
+autocmd BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \   exe "normal! g`\"" |
+            \ endif
+
+"set viminfo^=% " Remember info about open buffers on close
+set laststatus=0 " Always show the status line
+
+" Utils
+"let &t_EI = "\<esc>]50;CursorShape=0\x7"
+
+" Delete trailing white spcae on save
+func! DeleteTrailingWS()
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
+endfunc
+autocmd BufWrite *.py :call DeleteTrailingWS()
+
+" Files
+set nobackup
+set nowb
+set noswapfile
+set expandtab " Use spaces instead of tabs
+set smarttab " Be smrt when using tabs
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+
+" linebreak on 500 characters
+set lbr
+set tw=500
+set ai "Auto indent
+set si "Samrt indent
+set wrap "Wrap lines
+
+" set 3 lines to the cursor - when moving vertocally using j/k
+set so=3
+
+" Search related
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+
+"set whichwrap+=<,>,h,1
+set wildmenu " turn on the wild menu
+set ruler " always show current position
+set cmdheight=1 " height of command bar
+set backspace=eol,start,indent " Configure backspace so it acts as it shoud at
+set lazyredraw " Dont redraw when executing macros (good performance)
+set magic " For reg turn magic on
+set showmatch " matching brackets
+set mat=2 " how many tenths of a secnod to blink when matching brackets
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+" set extra options when runnung in GUI Mode
+set t_Co=256
+"if has("gui_running")
+    "set guioptions-=T
+    "set guioptions+=e
+    "set guioptions=
+    "set t_Co=256
+    "set guitablabel=%M\ %t
+"endif
+
+" Keep the error column always visible (jumpy when linter runs on input)
+:set signcolumn=yes
+
+
+" ----------------------------------------------------------------------------
+" Syntax, Color and Typography
+" ----------------------------------------------------------------------------
+
+syntax on
+
+set linespace=8
+
+set background=dark
+let g:hybrid_custom_term_colors = 1
+let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
+"colorscheme base16-gruvbox-dark-medium
+"colorscheme gruvbox
+colorscheme hybrid
+"colorscheme deep-space
+
+set termguicolors     " enable true colors support
+let ayucolor="light"  " for light version of theme
+let ayucolor="mirage" " for mirage version of theme
+"let ayucolor="dark"   " for dark version of theme
+"colorscheme ayu"
+
+
+" force jsx syntax to .jsx files
+" Or allow JSX in .js files
+let g:jsx_ext_required = 0
+
+" force scss syntax to css
+au BufRead,BufNewFile *.css set syntax=scss
+
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+
+" 2 tabs javascript
+autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
+
+" 2 tabs css, sass
+autocmd Filetype scss setlocal ts=2 sw=2 expandtab
+autocmd Filetype css setlocal ts=2 sw=2 expandtab
+
+" Html, Twig
+autocmd Filetype html setlocal tabstop=2 softtabstop=2 shiftwidth=2
+
+" ----------------------------------------------------------------------------
+" Vim-jsx
+" ----------------------------------------------------------------------------
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+"
+" ----------------------------------------------------------------------------
+" Netrw
+" ----------------------------------------------------------------------------
+"let g:netrw_banner = 0
+"let g:netrw_liststyle = 3
+"let g:netrw_browser_split = 4
+"let g:netrw_winsize = 20
+
+"let g:netrw_list_hide= '.*\.swp$,node_modules/*,^\.git'
+"let g:netrw_hide = 1
+
+"function! OpenToRight()
+    ":normal v
+    "let g:path=expand('%:p')
+    ":q!
+    "execute 'belowright vnew' g:path
+    ":normal <C-l>
+"endfunction
+
+"let g:NetrwIsOpen=0
+
+
+" Add your own mapping. For example:
+noremap <silent> <leader>y :call ToggleNetrw()<CR>
+"noremap <silent> <Leader>,y :e `dirname %`<CR>
+
+" or as a mapping
+map <Leader>,y :let @/=expand("%:t") <Bar> execute 'Explore' expand("%:h") <Bar> normal n<CR>
+
+" ----------------------------------------------------------------------------
+" NerdTree Plugin
+" ----------------------------------------------------------------------------
+
+"NerdTree ignore
+let NERDTreeIgnore=['node_modules', 'bower_components']
+let g:NERDTreeWinSize=30
+let NERDTreeMinimalUI=1
+
+"let NERDTreeDirArrowExpandable = "\u007C"
+"let NERDTreeDirArrowCollapsible = "\u005C"
+let NERDTreeDirArrowExpandable = "·"
+let NERDTreeDirArrowCollapsible = "·"
+
+
+" ignore compiled files
+set wildignore+=*.o,*~,*.pyc,*.a
+set wildignore+=*.bpm,*.gif,*.ico,*.jpg,*.png
+set wildignore+=.DS_Store,.git,.hg,.svn
+set wildignore+=*.swp,*.tmp
+set wildignore+=node_modules,bower_components,min/*,doc/*
+
+" ----------------------------------------------------------------------------
+" VimFilter Plugin
+" ----------------------------------------------------------------------------
+"let g:vimfiler_as_default_explorer = 1
+
+" ----------------------------------------------------------------------------
+" Operator Surround Plugin
+" ----------------------------------------------------------------------------
+
+" operator mappings
+map <silent>sa <Plug>(operator-surround-append)
+map <silent>sd <Plug>(operator-surround-delete)
+map <silent>sr <Plug>(operator-surround-replace)
+
+" ----------------------------------------------------------------------------
+" Airline Plugin
+" ----------------------------------------------------------------------------
+
+" cool fonts
+let g:airline_powerline_fonts = 0
+:set guifont=JetBrainsMonoNerdFontComplete-Regular:h18
+
+" file formater
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+" ebable the list of buffers
+let g:airline#extensions#tabline#enabled = 0
+
+" show just the filename
+let g:airline#extensions#tabline#fnamemod = 0
+
+" airlinetheme
+let g:airline_theme='jellybeans'
+
+" remove the filetype part
+let g:airline_section_x=''
+let g:airline_section_y=''
+
+" Filename modifier
+let g:airline#extensions#tabline#fnamemod = '::s'
+let g:airline_section_c = '%t'
+
+" remove separators for empty sections
+let g:airline_skip_empty_sections = 1
+
+" CtrlPFunky
+let g:ctrlp_funky_syntax_highlight = 1
+
+" or copy paste the following into your vimrc for shortform text
+let g:airline_mode_map = {
+    \ '__'     : '-',
+    \ 'c'      : 'C',
+    \ 'i'      : 'I',
+    \ 'ic'     : 'I',
+    \ 'ix'     : 'I',
+    \ 'n'      : 'N',
+    \ 'multi'  : 'M',
+    \ 'ni'     : 'N',
+    \ 'no'     : 'N',
+    \ 'R'      : 'R',
+    \ 'Rv'     : 'R',
+    \ 's'      : 'S',
+    \ 'S'      : 'S',
+    \ ''     : 'S',
+    \ 't'      : 'T',
+    \ 'v'      : 'V',
+    \ 'V'      : 'V',
+    \ ''     : 'V',
+    \ }
+
+" CtrlSF (Search and Replace)
+noremap <leader>,r :CtrlSF
+
+" ----------------------------------------------------------------------------
+" The Silver Searcher Plugin
+" ----------------------------------------------------------------------------
+
+if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor\ --ignore=node_modules
+endif
+
+" ----------------------------------------------------------------------------
+" FzF Plugin
+" ----------------------------------------------------------------------------
+map <leader><space> <Esc><Esc>:BLines<CR>
+
+" ----------------------------------------------------------------------------
+" Vim comentary Plugin
+" ----------------------------------------------------------------------------
+autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
+let g:gitgutter_sign_column_always = 1
+
+" Automatically format on saving
+let g:mix_format_on_save = 1
+" Set options for the formatter. See mix help format in the shell.
+let g:mix_format_options = '--check-equivalent'
+" By default this plugin opens a window containing the stacktrace on errors. With this option enabled, there will be just a short message in the command-line bar. The stacktrace can still be looked up via :messages.
+let g:mix_format_silent_errors = 1
+" If you're not using Elixir 1.6 in your project, but want to use the formatter anyway, you can specify the bin directory of an alternative Elixir installation:
+" let g:mix_format_elixir_bin_path = '~/repo/elixir/bin'
+
+" ----------------------------------------------------------------------------
+" Mappings
+" ----------------------------------------------------------------------------
+
+" Open DiffviewOpen
+nnoremap <leader>d :DiffviewOpen<cr>
+
+
+" Close stuck floating pops
+nnoremap <leader>,c :call coc#float#close_all()<cr>
+
+
+nnoremap 0 ^
+nnoremap <leader>,b :bp\| bd #<cr>
+nnoremap <c-j> }
+nnoremap <c-k> {
+
+" Folding
+nnoremap <leader>f za
+
+" Set norwap
+nnoremap <leader>W :set nowrap<cr>
+
+" Node REPL
+nnoremap <leader>,n :!node %<cr>
+
+" FZF Files
+nnoremap <leader><tab> :GFiles?<cr>
+nnoremap <silent> <tab> :Files<cr>
+nnoremap <silent> <s-tab> :Buffers<cr>
+
+" Griddo
+nnoremap <leader>c :Files ./src/components<cr>
+nnoremap <leader>m :Files ./src/modules<cr>
+nnoremap <leader>t :Files ./src/templates<cr>
+
+" Fast escape
+inoremap jj <esc>
+
+" Fast scape + write
+inoremap jjw <esc>:w<cr>
+inoremap <D-s> <esc>:w<cr>
+
+" hightlight trailing spaces in annoying red
+highlight ExtraWhiteSpace ctermbg=1 guibg=red
+match ExtraWhiteSpace /\s\+$/
+autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
+autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+" highlight current line
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+augroup END
+
+"buffer cycle
+noremap <c-l> :bnext<cr>
+noremap <c-h> :bprevious<cr>
+
+" Typos
+command! -bang Q q<bang>
+command! -bang W w<bang>
+
+noremap <Leader>y :NERDTreeToggle<CR>
+noremap <Leader>,y :NERDTreeFind<CR>
+nnoremap <leader>w :w!<cr>
+noremap <leader>e :e ~/dotfiles/vimrc.symlink<cr>
+noremap <space> /
+"noremap <c-space> ?
+
+" Mueve el cursor de línea en línea aunque sea un párrafo 'wrapeado'
+noremap j gj
+noremap k gk
+
+" Centra el cursor en la pantalla
+nnoremap G Gzz
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap { {zz
+nnoremap } }zz
+
+" Remove hightlight
+noremap <Leader>, :nohl<CR>
+vnoremap <Leader>, :nohl<CR>
+inoremap <Leader>, :nohl<CR>
+
+" Switch CWD to the directory of the open buffer
+noremap <leader>cd :cd<space>%:h<cr>:pwd<cr>
+
+:cnoremap <C-a>  <Home>
+:cnoremap <C-b>  <Left>
+:cnoremap <C-f>  <Right>
+:cnoremap <C-d>  <Delete>
+:cnoremap <M-b>  <S-Left>
+:cnoremap <M-f>  <S-Right>
+:cnoremap <M-d>  <S-right><Delete>
+:cnoremap <Esc>b <S-Left>
+:cnoremap <Esc>f <S-Right>
+:cnoremap <Esc>d <S-right><Delete>
+:cnoremap <C-g>  <C-c>
+
+" Short message to avoid Press Enter to Continue
+:set shortmess=a
+
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" Use <C-l> for trigger snippet expand.
+imap <C-0> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
+" Folding
+set foldmethod=syntax
+let javascript_fold=1
+
+autocmd Syntax json,javascript.jsx,javascriptreact,javascript setlocal foldmethod=syntax
+autocmd Syntax json,javascript.jsx,javascriptreact,javascript normal zR
+
+
+" Fix kitty background issues
+let &t_ut=''
+
+" remove vertical separator
+set fillchars+=vert:\ 
+
+set background=dark
+set t_Co=256
+set noshowmode
+
+au CursorHold,CursorHoldI * checktime
