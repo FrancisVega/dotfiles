@@ -4,7 +4,7 @@
 
 set nocompatible
 filetype off
-"set termguicolors
+set termguicolors
 let base16colorspace=256  " Access colors present in 256 colorspace
 
 " ----------------------------------------------------------------------------
@@ -14,20 +14,6 @@ set hidden
 set nowritebackup
 set updatetime=300
 set shortmess+=c
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
@@ -76,9 +62,6 @@ xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
@@ -231,10 +214,9 @@ set relativenumber
 set laststatus=2 " Always shows status bar
 
 " set trailing whitespace with · char
-if ("gui_running" == 0)
-    set listchars=trail:·,
-    set list
-endif
+
+set listchars=tab:··,trail:●
+set list
 
 " Better copy & paste
 set pastetoggle=<F2>
@@ -347,19 +329,17 @@ syntax on
 
 set linespace=8
 
+set termguicolors     " enable true colors support
 set background=dark
 let g:hybrid_custom_term_colors = 1
-let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
+" let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 "colorscheme base16-gruvbox-dark-medium
-"colorscheme gruvbox
-colorscheme hybrid
 "colorscheme deep-space
 
-set termguicolors     " enable true colors support
-let ayucolor="light"  " for light version of theme
-let ayucolor="mirage" " for mirage version of theme
-"let ayucolor="dark"   " for dark version of theme
-"colorscheme ayu"
+" let ayucolor="light"  " for light version of theme
+" let ayucolor="mirage" " for mirage version of theme
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu"
 
 
 " force jsx syntax to .jsx files
@@ -646,6 +626,8 @@ noremap <leader>cd :cd<space>%:h<cr>:pwd<cr>
 :set shortmess=a
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+let g:prettier#autoformat_config_files = [".prettierrc.json"]
+let g:prettier#exec_cmd_async = 1
 
 " Use <C-l> for trigger snippet expand.
 imap <C-0> <Plug>(coc-snippets-expand)
@@ -662,24 +644,8 @@ let g:coc_snippet_prev = '<c-k>'
 " Use <C-j> for both expand and jump (make expand higher priority.)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
 let g:coc_snippet_next = '<tab>'
 
-" Folding
-set foldmethod=syntax
-let javascript_fold=1
-
-autocmd Syntax json,javascript.jsx,javascriptreact,javascript setlocal foldmethod=syntax
 autocmd Syntax json,javascript.jsx,javascriptreact,javascript normal zR
 
 
@@ -694,3 +660,5 @@ set t_Co=256
 set noshowmode
 
 au CursorHold,CursorHoldI * checktime
+
+inoremap <silent><expr> <c-i> coc#refresh()

@@ -2,6 +2,8 @@
 export ZSH=/Users/hisco/.oh-my-zsh
 
 ZSH_THEME=robbyrussell
+# ZSH_THEME=af-magic
+# ZSH_THEME=pure
 
 plugins=(git zsh-nvm git-open)
 
@@ -33,10 +35,9 @@ alias rac="code . & yarn start"
 alias sbk="code . & yarn sb"
 alias devycss="npm run dev:nojs"
 alias yarny="yarn start"
-alias gsync='git commit -m "sync"'
-alias wip='git add . && git commit -m "WIP"'
 alias t='python3 /Users/hisco/repos/@hisco/t/t.py --task-dir /googledrive/tasks --list tasks'
 alias kill3000='kill -kill `lsof -t -i tcp:3000`'
+alias killdev='kill -9 $(lsof -t -i:4000) && kill -9 $(lsof -t -i:3000)'
 alias ls='exa'
 alias fuckdstore='find . -name ".DS_Store" -type f -delete'
 alias vs='v & yarn sb'
@@ -48,6 +49,25 @@ alias ns="npm start"
 alias y="yarn"
 alias ys="yarn start"
 alias v="nvim"
+alias vi="nvim"
+alias vim="nvim"
+alias bim="nvim -u NONE"
+alias lg="lazygit"
+alias vv="/Applications/nvim-osx64/bin/nvim"
+
+# Griddo
+alias gcx="rm -rf packages/griddo-cx/.cache packages/griddo-cx/apiCache packages/griddo-cx/public packages/griddo-cx/dist && y cx:build && y cx:serve"
+alias gcx2="y cx:build && y cx:serve"
+alias gu="yarn add @griddo/{core,ax,cx} -E"
+
+# Thesaurus
+alias tcx="rm -rf node_modules/@griddo/cx/apiCache node_modules/@griddo/cx/.cache node_modules/@griddo/cx/assets node_modules/@griddo/cx/public node_modules/@griddo/cx/dist exports && yarn build:cx"
+
+# Starter
+alias se yarn start:editor
+alias ss yarn sync-schemas
+
+
 export VISUAL="nvim"
 
 
@@ -64,10 +84,30 @@ function keycode() {
     pbcopy
 }
 
+
 source ~/.nvm/nvm.sh
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$HOME/griddo/griddo-dx-starter/scripts:$PATH"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$HOME/griddo/griddo-dx-starter/scripts:$HOME/.cargo/bin:$PATH"
+
+# Pure theme
+# autoload -U promptinit; promptinit
+# prompt pure
+
+# eval "$(starship init zsh)"
+
+# source ~/.zplug/init.zsh
+
+# zplug 'wfxr/forgit'
+
+export PATH="$HOME/.poetry/bin:$PATH"
+
+# bun completions
+[ -s "/Users/hisco/.bun/_bun" ] && source "/Users/hisco/.bun/_bun"
+
+# Bun
+export BUN_INSTALL="/Users/hisco/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
