@@ -12,6 +12,10 @@ export FZF_DEFAULT_COMMAND='rg --files --follow --no-ignore-vcs --hidden -g "!{n
 export FZF_DEFAULT_OPTS="--layout=default  --inline-info --keep-right"
 source $ZSH/oh-my-zsh.sh
 
+source ~/.zplug/init.zsh
+zplug 'wfxr/forgit'
+
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -28,48 +32,33 @@ alias kp="fkill()"
 alias skp="sfkill()"
 alias gs="git status"
 alias c="code ."
-alias ci="code-insiders ."
-alias kk="ls -la"
-alias devy="npm run dev"
-alias rac="code . & yarn start"
-alias sbk="code . & yarn sb"
-alias devycss="npm run dev:nojs"
-alias yarny="yarn start"
 alias t='python3 /Users/hisco/repos/@hisco/t/t.py --task-dir /googledrive/tasks --list tasks'
 alias kill3000='kill -kill `lsof -t -i tcp:3000`'
 alias killdev='kill -9 $(lsof -t -i:4000) && kill -9 $(lsof -t -i:3000)'
 alias ls='exa'
 alias fuckdstore='find . -name ".DS_Store" -type f -delete'
-alias vs='v & yarn sb'
 alias tmux="TERM=screen-256color-bce tmux"
 alias tm="tmux attach"
 alias gundo="git reset --soft HEAD~1"
 alias n="npm"
-alias ns="npm start"
 alias y="yarn"
-alias ys="yarn start"
 alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
 alias bim="nvim -u NONE"
 alias lg="lazygit"
-alias vv="/Applications/nvim-osx64/bin/nvim"
+alias coredist="sh ~/scripts/inject-griddo-core.sh"
+alias cxdist="sh ~/scripts/inject-griddo-cx.sh"
+alias s="fzfnpm"
 
 # Griddo
-alias gcx="rm -rf packages/griddo-cx/.cache packages/griddo-cx/apiCache packages/griddo-cx/public packages/griddo-cx/dist && y cx:build && y cx:serve"
-alias gcx2="y cx:build && y cx:serve"
+alias gcx="rm -rf packages/griddo-cx/.cache packages/griddo-cx/apiCache packages/griddo-cx/public packages/griddo-cx/dist && y cx:build"
 alias gu="yarn add @griddo/{core,ax,cx} -E"
 
 # Thesaurus
 alias tcx="rm -rf node_modules/@griddo/cx/apiCache node_modules/@griddo/cx/.cache node_modules/@griddo/cx/assets node_modules/@griddo/cx/public node_modules/@griddo/cx/dist exports && yarn build:cx"
 
-# Starter
-alias se yarn start:editor
-alias ss yarn sync-schemas
-
-
 export VISUAL="nvim"
-
 
 # highlight
 # args: 1: size, 2: lang
@@ -93,21 +82,7 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$HOME/griddo/griddo-dx-starter/scripts:$HOME/.cargo/bin:$PATH"
 
-# Pure theme
-# autoload -U promptinit; promptinit
-# prompt pure
-
-# eval "$(starship init zsh)"
-
-# source ~/.zplug/init.zsh
-
-# zplug 'wfxr/forgit'
 
 export PATH="$HOME/.poetry/bin:$PATH"
-
-# bun completions
-[ -s "/Users/hisco/.bun/_bun" ] && source "/Users/hisco/.bun/_bun"
-
-# Bun
-export BUN_INSTALL="/Users/hisco/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+# after `forgit` was loaded
+export PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
