@@ -14,7 +14,7 @@ function nfix {
 }
 
 # Merging, quick merge.
-function qm {
+function git_merge {
   [[ -z $1 ]] && echo "Error: You must supply a branch name" && return
   local CURRENT_BRANCH=$(git current-branch)
   git switch $1 && git pull && git merge $CURRENT_BRANCH -m "Merge branch \`$CURRENT_BRANCH\` into \`$1\`"
@@ -22,33 +22,30 @@ function qm {
   git push && git switch $CURRENT_BRANCH
 }
 
-# Quick merge to master branch
-alias "gmm"='qm $(git mb)'
+# function git_merge_and_delete {
+#   [[ -z $1 ]] && echo "Error: You must supply a branch name" && return
 
-function qmd {
-  [[ -z $1 ]] && echo "Error: You must supply a branch name" && return
+#   local CURRENT_BRANCH=$(git current-branch)
 
-  local CURRENT_BRANCH=$(git current-branch)
-
-  qm $1 && git switch $1 && gdb $CURRENT_BRANCH
-}
+#   qm $1 && git switch $1 && gdb $CURRENT_BRANCH
+# }
 
 # Quick merge to main/master and delete the source branch.
-# alias qmmd='qmd $(git mb)'
+# alias qmmd='git_merge_and_delete $(git mb)'
 
 # Deleting. Delete a branch.
-function gdb {
-  [[ -z $1 ]] && echo "Error: You must supply a branch name" && return
+# function gdb {
+#   [[ -z $1 ]] && echo "Error: You must supply a branch name" && return
 
-  git branch -D $1 && git push origin --delete $1 2>/dev/null
-}
+#   git branch -D $1 && git push origin --delete $1 2>/dev/null
+# }
 
 # Delete the current branch and switch to main/master
-function gqdb {
-  local CURRENT_BRANCH=$(git current-branch)
+# function gqdb {
+#   local CURRENT_BRANCH=$(git current-branch)
 
-  git switch $(git mb) && gdb $CURRENT_BRANCH
-}
+#   git switch $(git mb) && gdb $CURRENT_BRANCH
+# }
 
 # Check if merged
 git-is-merged() {
@@ -66,12 +63,6 @@ git-is-merged() {
   fi
 }
 
-# develop, staging main/aster
-alias isind='git-is-merged develop $(git current-branch)'
-alias isins='git-is-merged staging $(git current-branch)'
-alias isinm='git-is-merged $(git mb) $(git current-branch)'
-alias ism='isind; isins; isinm'
-
 # Getting branch info
 function __getNewBranchName {
   if [[ -z $1 ]]; then
@@ -82,3 +73,14 @@ function __getNewBranchName {
 
   echo $new_branch_name | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z
 }
+
+# Aliases
+
+alias ",gm"='git_merge $1'
+alias ",gmm"='git_merge $(git mb)'
+
+# develop, staging main/aster
+alias isind='git-is-merged develop $(git current-branch)'
+alias isins='git-is-merged staging $(git current-branch)'
+alias isinm='git-is-merged $(git mb) $(git current-branch)'
+alias ism='isind; isins; isinm'
