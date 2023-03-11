@@ -6,7 +6,6 @@ alias lg="lazygit"
 alias g="git"
 alias gs="git status"
 alias gundo="git reset --soft HEAD~1"
-alias add="git add"
 alias gb="git branch"
 alias gc="git checkout"
 alias gcb="git checkout -b"
@@ -17,6 +16,9 @@ alias push="git push"
 alias pp='git pull && git push'
 alias sync="gitup ."
 alias syncall="gitup"
+# Start to use lead key
 alias ",gcm"="git commit -m $1"
 alias ",ga"="git add ."
+alias ",gs"="git status"
+alias ",gc"="git checkout"
 
