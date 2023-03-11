@@ -17,3 +17,6 @@ alias push="git push"
 alias pp='git pull && git push'
 alias sync="gitup ."
 alias syncall="gitup"
+alias ",gcm"="git commit -m $1"
+alias ",ga"="git add ."
+
