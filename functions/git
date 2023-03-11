@@ -23,7 +23,7 @@ function qm {
 }
 
 # Quick merge to master branch
-# alias qmm='qm $(git mb)'
+alias "gmm"='qm $(git mb)'
 
 function qmd {
   [[ -z $1 ]] && echo "Error: You must supply a branch name" && return

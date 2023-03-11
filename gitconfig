@@ -1,0 +1,83 @@
+[user]
+	name = FrancisVega
+	email = hisconer@gmail.com
+
+[alias]
+    hist = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    co = checkout
+    ci = commit
+
+	a = add
+	b = branch
+	bd = branch -d
+	bD = branch -D
+	bn = rev-parse --abbrev-ref HEAD
+	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+	c = commit
+	cm = commit -m
+	cam = commit -am
+	cb = checkout -b
+	clb = !git branch --merged $(git mb) | grep -v \"master\" | grep -v \"main\" | grep -v \"develop\" | grep -v \"staging\" | xargs git branch -D
+	cp = cherry-pick
+	d = diff
+	f = fetch
+	fp = fetch --prune
+	fix = commit --amend --no-edit
+	im = "!f() { git is-merged $1 $(git bn); }; f"
+	l = log --date=local
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	mb = !git branch -l master main | sed 's/^* //'
+	root = rev-parse --show-toplevel
+	s = switch -q
+	st = status -sb
+	sh = show
+	sz = "!f() { if [[ -z $1 ]]; then git branch | fzf --reverse | sed 's/^* //' | cut -f1 | xargs -n1 git switch -q; else git switch -q $1; fi; }; f"
+	undo = reset --soft HEAD~1
+	who = shortlog -sn
+	ignore = update-index --assume-unchanged
+	unignore = update-index --no-assume-unchanged
+	list-ignored = !git ls-files -v | grep "^[[:lower:]]" | cut -c 3-
+	current-branch = bn
+	nfeat = "!f() { git checkout -b feature/$1 $(git mb); }; f"
+	nfix = "!f() { git checkout -b bugfix/$1 $(git mb); }; f"
+
+
+[core]
+    editor = /usr/local/bin/nvim
+	excludesfile = /Users/hisco/.gitignore_global
+
+[push]
+    default = current
+    autoSetupRemote = true
+[diff]
+    tool = vimdiff
+[merge]
+    tool = vimdiff
+    ff = false
+[difftool]
+    prompt = false
+[pull]
+    ff = true
+[init]
+    defaultBranch = main
+[delta]
+    features = decorations
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax
+[credential]
+	helper = osxkeychain
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[commit]
+	template = /Users/hisco/.stCommitMsg
