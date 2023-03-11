@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+export PATH="/usr/local/bin:/Users/hisco/.node/bin:/usr/bin:/usr/local/bin:/bin:/usr/sbin:/sbin:/Users/hisco/dotfiles:/usr/local/git/bin:/Users/hisco/.zprezto:"
+export FZF_DEFAULT_COMMAND='rg --files --follow --no-ignore-vcs --hidden -g "!{node_modules/*,.git/*}"'
+export FZF_DEFAULT_OPTS="--layout=default  --inline-info --keep-right"
+export VISUAL="nvim"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$HOME/griddo/griddo-dx-starter/scripts:$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.poetry/bin:$PATH"

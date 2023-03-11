@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+# Git
+alias lg="lazygit"
+
+alias g="git"
+alias gs="git status"
+alias gundo="git reset --soft HEAD~1"
+alias add="git add"
+alias gb="git branch"
+alias gc="git checkout"
+alias gcb="git checkout -b"
+alias gd="git diff"
+alias gdd="git diff|delta"
+alias pull="git pull"
+alias push="git push"
+alias pp='git pull && git push'
+alias sync="gitup ."
+alias syncall="gitup"
