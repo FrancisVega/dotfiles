@@ -3,6 +3,9 @@ local opt = vim.opt -- for conciseness
 -- preview changes
 -- opt.inccommand = "nosplit"
 
+-- vim.o.completeopt = vim.o.completeopt:gsub("preview,", "")
+vim.o.completeopt = "menuone,noselect"
+
 -- line numbers
 opt.relativenumber = true
 opt.number = true

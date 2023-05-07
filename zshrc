@@ -1,8 +1,8 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/hisco/.oh-my-zsh
 
-# ZSH_THEME=robbyrussell
-ZSH_THEME=af-magic
+ZSH_THEME=robbyrussell
+# ZSH_THEME=af-magic
 
 # Plugins
 plugins=(zsh-nvm git-open)
@@ -24,6 +24,7 @@ source $ZSH/oh-my-zsh.sh
 source ~/dotfiles/functions/misc
 source ~/dotfiles/aliases/dev
 source ~/dotfiles/aliases/git
+source ~/dotfiles/aliases/griddo
 
 
 # Import nvm
@@ -33,3 +34,7 @@ source ~/.nvm/nvm.sh
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+export PATH=/Users/hisco/.local/bin:$PATH
+
+
+eval "$(zoxide init zsh)"

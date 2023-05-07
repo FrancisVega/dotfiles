@@ -1,9 +1,17 @@
 -- auto install packer if not installed
 local ensure_packer = function()
 	local fn = vim.fn
-	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+	local install_path = fn.stdpath("data")
+		.. "/site/pack/packer/start/packer.nvim"
 	if fn.empty(fn.glob(install_path)) > 0 then
-		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+		fn.system({
+			"git",
+			"clone",
+			"--depth",
+			"1",
+			"https://github.com/wbthomason/packer.nvim",
+			install_path,
+		})
 		vim.cmd([[packadd packer.nvim]])
 		return true
 	end
@@ -31,22 +39,6 @@ return packer.startup(function(use)
 	-- packer can manage itself
 	use("wbthomason/packer.nvim")
 
-	use("vim-scripts/phd")
-	use("fneu/breezy")
-	use("sharkdp/fd")
-	use("whatyouhide/vim-gotham")
-	use("nanotech/jellybeans.vim")
-	use("mrjones2014/lighthaus.nvim")
-	use("pedrominicz/focus")
-	use("fenetikm/falcon")
-
-	-- use({
-	-- 	"ggandor/leap.nvim",
-	-- 	config = function()
-	-- 		require("leap").add_default_mappings()
-	-- 	end,
-	-- })
-
 	-- which key
 	use({
 		"folke/which-key.nvim",
@@ -71,13 +63,6 @@ return packer.startup(function(use)
 	})
 
 	use({
-		"tanvirtin/vgit.nvim",
-		requires = {
-			"nvim-lua/plenary.nvim",
-		},
-	})
-
-	use({
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v2.x",
 		requires = {
@@ -86,6 +71,14 @@ return packer.startup(function(use)
 			"MunifTanjim/nui.nvim",
 		},
 		config = function()
+			-- desactivar los iconos en Neotree
+			vim.g.neo_tree_disable_nerdtree_compat = 1
+			vim.g.neo_tree_show_icons = {
+				git = 0,
+				folders = 0,
+				files = 0,
+				folder_arrows = 0,
+			}
 			filesystem = {
 				follow_current_file = true, -- This will find and focus the file in the active buffer every
 				hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
@@ -93,30 +86,11 @@ return packer.startup(function(use)
 		end,
 	})
 
-	use("tom-anders/telescope-vim-bookmarks.nvim")
-
 	use("terryma/vim-multiple-cursors")
 
 	use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
 
-	use({ "romgrk/barbar.nvim", wants = "nvim-web-devicons" })
-
-	use("folke/tokyonight.nvim")
-	use("w0ng/vim-hybrid")
-
-	-- use({
-	-- 	"rose-pine/neovim",
-	-- 	as = "rose-pine",
-	-- 	config = function()
-	-- 		vim.cmd("colorscheme rose-pine")
-	-- 	end,
-	-- })
-
 	use("nvim-lua/plenary.nvim") -- lua functions that many plugins use
-
-	-- use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
-
-	use("szw/vim-maximizer") -- maximizes and restores current window
 
 	-- essential plugins
 	use("tpope/vim-surround") -- add, delete, change surroundings (it's awesome)
@@ -128,12 +102,26 @@ return packer.startup(function(use)
 	-- vs-code like icons
 	use("nvim-tree/nvim-web-devicons")
 
-	-- statusline
-	-- use("nvim-lualine/lualine.nvim")
-
-	-- fuzzy finding w/ telescope
-	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
-	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x" }) -- fuzzy finder
+	-- CTRLP
+	vim.o.wildignore = vim.o.wildignore
+		.. ",*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*,*/.yardoc/*,*.exe,*.so,*.dat"
+	vim.g.ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+	vim.g.ctrlp_use_caching = 0
+	vim.g.ctrlp_map = "<tab>"
+	vim.g.ctrlp_cmd = "CtrlPCurWD"
+	vim.g.ctrlp_show_hidden = 1
+	use({
+		"ctrlpvim/ctrlp.vim",
+		requires = { "ctrlpvim/ctrlp.vim" },
+		config = function()
+			-- vim.api.nvim_set_keymap(
+			-- 	"n",
+			-- 	"<Tab>",
+			-- 	":CtrlPCurWD<CR>",
+			-- 	{ noremap = true, silent = true }
+			-- )
+		end,
+	})
 
 	-- autocompletion
 	use("hrsh7th/nvim-cmp") -- completion plugin
@@ -177,17 +165,45 @@ return packer.startup(function(use)
 
 	--
 	use("jose-elias-alvarez/typescript.nvim") -- additional functionality for typescript server (e.g. rename file & update imports)
-	use("onsails/lspkind.nvim") -- vs-code like icons for autocompletion
 
 	-- formatting & linting
 	use("jose-elias-alvarez/null-ls.nvim") -- configure formatters & linters
 	use("jayp0521/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
+	use({
+		"MunifTanjim/eslint.nvim",
+		config = function()
+			require("eslint").setup({
+				bin = "eslint_d", -- or `eslint_d`
+				code_actions = {
+					enable = true,
+					apply_on_save = {
+						enable = true,
+						types = {
+							"directive",
+							"problem",
+							"suggestion",
+							"layout",
+						},
+					},
+					disable_rule_comment = {
+						enable = true,
+						location = "separate_line", -- or `same_line`
+					},
+				},
+				diagnostics = {
+					enable = true,
+					report_unused_disable_directives = false,
+					run_on = "type", -- or `save`
+				},
+			})
+		end,
+	})
 
-	-- treesitter configuration
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		run = function()
-			local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
+			local ts_update =
+				require("nvim-treesitter.install").update({ with_sync = true })
 			ts_update()
 		end,
 	})

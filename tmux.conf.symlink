@@ -69,6 +69,7 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'tmux-plugins/tmux-open'
+set -g @plugin 'tmux-plugins/tmux-faces'
 # set -g @plugin 'kristijanhusak/tmux-simple-git-status'
 
 # copy to system clipboard

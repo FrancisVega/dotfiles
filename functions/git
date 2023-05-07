@@ -76,7 +76,11 @@ function __getNewBranchName {
 
 # Aliases
 
+# git merge
 alias ",gm"='git_merge $1'
+# git merge to develop
+alias ",gmm"=',gm develop'
+# git merge to master
 alias ",gmm"='git_merge $(git mb)'
 
 # develop, staging main/aster

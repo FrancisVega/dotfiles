@@ -1,16 +1,13 @@
 #!/usr/bin/env zsh
 
-# Kill ports
 alias kp="kill_port $1"
 alias k3="kp 3000"
 alias k4="kp 4000"
 
-# Misc
 alias gs="git status"
 alias gundo="git reset --soft HEAD~1"
 alias lg="lazygit"
 
-alias s="fzfnpm"
 alias c="code ."
 alias ls='exa'
 alias fuckdstore='find . -name ".DS_Store" -type f -delete'
@@ -21,3 +18,10 @@ alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
 alias bim="nvim -u NONE"
+alias ",tk"="tmux kill-server"
+
+# lead alias
+alias list_alias="" # show an alias list
+alias ",s"="fzfnpm #launch fzfnpm"
+
+alias ",sa"='echo -e "Hisco <leader> aliases\n"; alias | grep -E "^,"'

@@ -84,17 +84,6 @@ _G.packer_plugins = {
     path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
-  ["barbar.nvim"] = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/barbar.nvim",
-    url = "https://github.com/romgrk/barbar.nvim",
-    wants = { "nvim-web-devicons" }
-  },
-  breezy = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/breezy",
-    url = "https://github.com/fneu/breezy"
-  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -115,25 +104,22 @@ _G.packer_plugins = {
     path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["ctrlp.vim"] = {
+    config = { "\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0" },
+    loaded = true,
+    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/ctrlp.vim",
+    url = "https://github.com/ctrlpvim/ctrlp.vim"
+  },
   ["diffview.nvim"] = {
     loaded = true,
     path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/diffview.nvim",
     url = "https://github.com/sindrets/diffview.nvim"
   },
-  falcon = {
+  ["eslint.nvim"] = {
+    config = { "\27LJ\2\nÀ\2\0\0\6\0\14\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0005\4\5\0005\5\6\0=\5\a\4=\4\b\0035\4\t\0=\4\n\3=\3\v\0025\3\f\0=\3\r\2B\0\2\1K\0\1\0\16diagnostics\1\0\3\venable\2\vrun_on\ttype%report_unused_disable_directives\1\17code_actions\25disable_rule_comment\1\0\2\rlocation\18separate_line\venable\2\18apply_on_save\ntypes\1\5\0\0\14directive\fproblem\15suggestion\vlayout\1\0\1\venable\2\1\0\1\venable\2\1\0\1\bbin\reslint_d\nsetup\veslint\frequire\0" },
     loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/falcon",
-    url = "https://github.com/fenetikm/falcon"
-  },
-  fd = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/fd",
-    url = "https://github.com/sharkdp/fd"
-  },
-  focus = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/focus",
-    url = "https://github.com/pedrominicz/focus"
+    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/eslint.nvim",
+    url = "https://github.com/MunifTanjim/eslint.nvim"
   },
   ["friendly-snippets"] = {
     loaded = true,
@@ -150,21 +136,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
-  },
-  ["jellybeans.vim"] = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/jellybeans.vim",
-    url = "https://github.com/nanotech/jellybeans.vim"
-  },
-  ["lighthaus.nvim"] = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/lighthaus.nvim",
-    url = "https://github.com/mrjones2014/lighthaus.nvim"
-  },
-  ["lspkind.nvim"] = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/lspkind.nvim",
-    url = "https://github.com/onsails/lspkind.nvim"
   },
   ["lspsaga.nvim"] = {
     config = { "\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\flspsaga\frequire\0" },
@@ -188,7 +159,7 @@ _G.packer_plugins = {
     url = "https://github.com/williamboman/mason.nvim"
   },
   ["neo-tree.nvim"] = {
-    config = { "\27LJ\2\nY\0\0\1\0\2\0\0035\0\0\0007\0\1\0K\0\1\0\15filesystem\1\0\2\24follow_current_file\2\26hijack_netrw_behavior\17open_default\0" },
+    config = { "\27LJ\2\nﬂ\1\0\0\2\0\a\0\v6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0005\1\4\0=\1\3\0005\0\5\0007\0\6\0K\0\1\0\15filesystem\1\0\2\26hijack_netrw_behavior\17open_default\24follow_current_file\2\1\0\4\bgit\3\0\ffolders\3\0\nfiles\3\0\18folder_arrows\3\0\24neo_tree_show_icons%neo_tree_disable_nerdtree_compat\6g\bvim\0" },
     loaded = true,
     path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/neo-tree.nvim",
     url = "https://github.com/nvim-neo-tree/neo-tree.nvim"
@@ -235,65 +206,20 @@ _G.packer_plugins = {
     path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
   },
-  phd = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/phd",
-    url = "https://github.com/vim-scripts/phd"
-  },
   ["plenary.nvim"] = {
     loaded = true,
     path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
-  },
-  ["telescope-fzf-native.nvim"] = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
-    url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
-  },
-  ["telescope-vim-bookmarks.nvim"] = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/telescope-vim-bookmarks.nvim",
-    url = "https://github.com/tom-anders/telescope-vim-bookmarks.nvim"
-  },
-  ["telescope.nvim"] = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/telescope.nvim",
-    url = "https://github.com/nvim-telescope/telescope.nvim"
-  },
-  ["tokyonight.nvim"] = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
-    url = "https://github.com/folke/tokyonight.nvim"
   },
   ["typescript.nvim"] = {
     loaded = true,
     path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/typescript.nvim",
     url = "https://github.com/jose-elias-alvarez/typescript.nvim"
   },
-  ["vgit.nvim"] = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/vgit.nvim",
-    url = "https://github.com/tanvirtin/vgit.nvim"
-  },
   ["vim-ReplaceWithRegister"] = {
     loaded = true,
     path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/vim-ReplaceWithRegister",
     url = "https://github.com/inkarkat/vim-ReplaceWithRegister"
-  },
-  ["vim-gotham"] = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/vim-gotham",
-    url = "https://github.com/whatyouhide/vim-gotham"
-  },
-  ["vim-hybrid"] = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/vim-hybrid",
-    url = "https://github.com/w0ng/vim-hybrid"
-  },
-  ["vim-maximizer"] = {
-    loaded = true,
-    path = "/Users/hisco/.local/share/nvim/site/pack/packer/start/vim-maximizer",
-    url = "https://github.com/szw/vim-maximizer"
   },
   ["vim-multiple-cursors"] = {
     loaded = true,
@@ -314,14 +240,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: neo-tree.nvim
-time([[Config for neo-tree.nvim]], true)
-try_loadstring("\27LJ\2\nY\0\0\1\0\2\0\0035\0\0\0007\0\1\0K\0\1\0\15filesystem\1\0\2\24follow_current_file\2\26hijack_netrw_behavior\17open_default\0", "config", "neo-tree.nvim")
-time([[Config for neo-tree.nvim]], false)
--- Config for: git-conflict.nvim
-time([[Config for git-conflict.nvim]], true)
-try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\17git-conflict\frequire\0", "config", "git-conflict.nvim")
-time([[Config for git-conflict.nvim]], false)
 -- Config for: which-key.nvim
 time([[Config for which-key.nvim]], true)
 try_loadstring("\27LJ\2\nt\0\0\3\0\a\0\0156\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\0\0009\0\1\0)\1,\1=\1\3\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\15timeoutlen\ftimeout\6o\bvim\0", "config", "which-key.nvim")
@@ -330,6 +248,22 @@ time([[Config for which-key.nvim]], false)
 time([[Config for lspsaga.nvim]], true)
 try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\flspsaga\frequire\0", "config", "lspsaga.nvim")
 time([[Config for lspsaga.nvim]], false)
+-- Config for: neo-tree.nvim
+time([[Config for neo-tree.nvim]], true)
+try_loadstring("\27LJ\2\nﬂ\1\0\0\2\0\a\0\v6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0005\1\4\0=\1\3\0005\0\5\0007\0\6\0K\0\1\0\15filesystem\1\0\2\26hijack_netrw_behavior\17open_default\24follow_current_file\2\1\0\4\bgit\3\0\ffolders\3\0\nfiles\3\0\18folder_arrows\3\0\24neo_tree_show_icons%neo_tree_disable_nerdtree_compat\6g\bvim\0", "config", "neo-tree.nvim")
+time([[Config for neo-tree.nvim]], false)
+-- Config for: eslint.nvim
+time([[Config for eslint.nvim]], true)
+try_loadstring("\27LJ\2\nÀ\2\0\0\6\0\14\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0005\4\5\0005\5\6\0=\5\a\4=\4\b\0035\4\t\0=\4\n\3=\3\v\0025\3\f\0=\3\r\2B\0\2\1K\0\1\0\16diagnostics\1\0\3\venable\2\vrun_on\ttype%report_unused_disable_directives\1\17code_actions\25disable_rule_comment\1\0\2\rlocation\18separate_line\venable\2\18apply_on_save\ntypes\1\5\0\0\14directive\fproblem\15suggestion\vlayout\1\0\1\venable\2\1\0\1\venable\2\1\0\1\bbin\reslint_d\nsetup\veslint\frequire\0", "config", "eslint.nvim")
+time([[Config for eslint.nvim]], false)
+-- Config for: ctrlp.vim
+time([[Config for ctrlp.vim]], true)
+try_loadstring("\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0", "config", "ctrlp.vim")
+time([[Config for ctrlp.vim]], false)
+-- Config for: git-conflict.nvim
+time([[Config for git-conflict.nvim]], true)
+try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\17git-conflict\frequire\0", "config", "git-conflict.nvim")
+time([[Config for git-conflict.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd nvim-treesitter ]]

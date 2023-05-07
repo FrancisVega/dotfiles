@@ -4,3 +4,10 @@ alias coredist="sh ~/scripts/inject-griddo-core.sh"
 alias cxdist="sh ~/scripts/inject-griddo-cx.sh"
 alias gcx="yarn clean; yarn export"
 alias gu="yarn add @griddo/{core,ax,cx} -E"
+alias plotsize='curl -s $1|grep "KB"'
+
+# tooling
+# copy .env from cx to root of the monorepo
+alias ',gcenv'='cp packages/griddo-cx/.env . && echo griddo-cx/.env copied'
+alias ',gexport'='npx env-cmd node packages/griddo-cx/index.js'
+
