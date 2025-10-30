@@ -3,3 +3,7 @@
 case $- in
   *i*) [ -r "$HOME/.bashrc" ] && . "$HOME/.bashrc" ;;
  esac
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+
