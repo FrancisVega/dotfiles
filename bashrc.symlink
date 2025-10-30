@@ -17,3 +17,23 @@ shopt -s checkwinsize
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Custom functions and aliases
+[ -f "/Users/hisco/repos/@hisco/dotfiles/functions.sh" ] && . "/Users/hisco/repos/@hisco/dotfiles/functions.sh"
+[ -f "/Users/hisco/repos/@hisco/dotfiles/alias.sh" ] && . "/Users/hisco/repos/@hisco/dotfiles/alias.sh"
+# --- Funciones para el Prompt de Bash ---
+
+# Función para la rama de Git (en color dimmed/gris tenue)
+git_prompt_branch() {
+    # Obtiene el nombre de la rama actual (silenciando errores si no estamos en un repo)
+    local branch=$(git branch --show-current 2>/dev/null) 
+    
+    # Si la variable 'branch' no está vacía (-n), imprime el nombre con formato
+    if [ -n "$branch" ]; then
+        # Código de color: \[\e[2m\] (Dim/Tenue), luego \[\e[0m\] para resetear
+        echo -n " \[\e[2m\]<$branch>\[\e[0m\]"
+    fi
+}
+
+# Formato: user@host folderName <gitBranch> $
+export PS1='\W \[\e[2m\]$(branch=$(git branch --show-current 2>/dev/null); [ -n "$branch" ] && echo "<$branch>")\[\e[0m\] \$ '

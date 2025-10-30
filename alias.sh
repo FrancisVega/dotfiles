@@ -3,6 +3,7 @@
 alias kp="kill_port $1"
 alias gs="git status"
 alias lg="lazygit"
+alias l="ls -la"
 alias c="code ."
 alias k="cursor ."
 alias fuckdstore='find . -name ".DS_Store" -type f -delete'

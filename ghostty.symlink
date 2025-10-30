@@ -6,7 +6,7 @@ adjust-cell-height = 10%
 
 # font
 font-family = Iosevka Term
-font-size = 18
+font-size = 24
 
 # window
 window-width = 10000
