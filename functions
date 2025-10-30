@@ -1,4 +1,8 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
+
+kill_port() {
+    lsof -i :$1 | awk 'NR!=1 {print $2}' | xargs kill -9
+}
 
 # Git flow
 function nfeat {
@@ -74,10 +78,30 @@ function __getNewBranchName {
   echo $new_branch_name | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z
 }
 
+squash_merge() {
+  if [ -z "$1" ]; then
+    echo "Uso: sm <rama_origen>"
+    return 1
+  fi
+
+  rama_origen="$1"
+
+  # Obtiene la rama actual (main)
+  rama_destino=$(git branch --show-current)
+
+  # Realiza el squash merge
+  git merge --squash --ff "$rama_origen"
+
+  # Crea el commit con el mensaje predeterminado
+  git commit -m "Merge $rama_origen into $rama_destino"
+
+  echo "Squash merge de $rama_origen en $rama_destino completado."
+}
+
 # Aliases
 
 # git merge
-alias ",gm"='git_merge $1'
+alias ",gm"='git_merge'
 # git merge to develop
 alias ",gmm"=',gm develop'
 # git merge to master
@@ -88,3 +112,9 @@ alias isind='git-is-merged develop $(git current-branch)'
 alias isins='git-is-merged staging $(git current-branch)'
 alias isinm='git-is-merged $(git mb) $(git current-branch)'
 alias ism='isind; isins; isinm'
+
+# Quick switch with fzf
+alias ",gb"='git switch $(git branch | fzf --exact)'
+
+# Squash merge
+alias ",sm"='squash_merge'

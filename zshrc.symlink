@@ -1,0 +1,89 @@
+# Path to your oh-my-zsh installation.
+export ZSH=/Users/hisco/.oh-my-zsh
+
+ZSH_THEME=af-magic
+ZSH_THEME=robbyrussell
+
+function node_version_prompt {
+  if command -v node &> /dev/null; then
+    echo "%F{yellow}node $(node -v)%f"
+  else
+    echo "%F{red}node not found%f"
+  fi
+}
+
+# Plugins
+plugins=(zsh-nvm z)
+
+# Init zplug
+source ~/.zplug/init.zsh
+zplug 'wfxr/forgit'
+
+# Functions
+source ~/repos/@hisco/dotfiles/functions/git
+
+# Exports
+source ~/repos/@hisco/dotfiles/exports/exports
+
+# OHMYZSH
+source $ZSH/oh-my-zsh.sh
+
+# Aliases
+source ~/repos/@hisco/dotfiles/functions/misc
+source ~/repos/@hisco/dotfiles/aliases/dev
+source ~/repos/@hisco/dotfiles/aliases/git
+source ~/repos/@hisco/dotfiles/aliases/griddo
+
+# Import nvm
+source ~/.nvm/nvm.sh
+
+# Completions
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export PATH="/Users/hisco/.local/bin:/opt/homebrew/bin:~/.config/emacs/bin:~/.config/emacs/bin/doom:/Users/hisco/go/bin/gow:$PATH"
+export PATH="${HOME}/.pyenv/shims:${PATH}"
+
+echo "✧♡(◕‿◕✿)"
+# bun completions
+[ -s "/Users/hisco/.bun/_bun" ] && source "/Users/hisco/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# fnm
+export PATH="/Users/hisco/Library/Application Support/fnm:$PATH"
+eval "`fnm env`"
+
+# golang
+export GOPATH="$HOME/go"
+export PATH=$GOPATH:$PATH:$GOPATH/bin
+
+# PROMPT='$(node_version_prompt) $(git_prompt_info)%1d '
+#export GPG_TTY=`tty`
+export GPG_TTY=$(tty)
+
+# pnpm
+export PNPM_HOME="/Users/hisco/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Added by Windsurf
+export PATH="/Users/hisco/.codeium/windsurf/bin:$PATH"
+
+# [[ -f ~/.inshellisense/zsh/init.zsh ]] && source ~/.inshellisense/zsh/init.zsh
+#
+set -s escape-time 0
+set -g status-interval 0
+
+export PATH="$PATH:/Users/hisco/.modular/bin"export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
+
+export PATH="/Users/hisco/.nvm/versions/node/v20.19.2/bin:$PATH"
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

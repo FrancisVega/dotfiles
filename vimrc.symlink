@@ -7,141 +7,23 @@ filetype off
 set termguicolors
 let base16colorspace=256  " Access colors present in 256 colorspace
 
-" ----------------------------------------------------------------------------
-" coc
-" ----------------------------------------------------------------------------
 set hidden
 set nowritebackup
 set updatetime=300
 set shortmess+=c
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-if exists('*complete_info')
-    inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-augroup mygroup
-    autocmd!
-    " Setup formatexpr specified filetype(s).
-    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-    " Update signature help on jump placeholder.
-    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Introduce function text object
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
-
-" Use <TAB> for selections ranges.
-" NOTE: Requires 'textDocument/selectionRange' support from the language server.
-" coc-tsserver, coc-python are the examples of servers that support it.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
-
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-let g:fzf_preview_window = []
-let g:fzf_layout = { 'down': '30%' }
-
-" Mappings using CoCList:
-" Show all diagnostics.
-"nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands.
-nnoremap <silent> <c-space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document.
-"nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-" coc extensions
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
 
 " ----------------------------------------------------------------------------
 " Plugins
 " ----------------------------------------------------------------------------
 
 call plug#begin()
-"Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-" Or build from source code by using yarn: https://yarnpkg.com
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-
-"Plug 'vim-scripts/utl.vim'
-"Plug 'mtth/taglist.vim'
-"Plug 'tpope/vim-speeddating'
-"Plug 'inkarkat/vim-SyntaxRange'
-"Plug 'ctrlpvim/ctrlp.vim'
-"Plug 'tacahiroy/ctrlp-funky'
-"Plug 'gregsexton/MatchTag'
-"Plug 'alvan/vim-closetag'
-"Plug 'itchyny/lightline.vim'
-" ------------------
-"Plug 'prettier/vim-prettier'
-"Plug 'chriskempson/base16-vim'
-"Plug 'ayu-theme/ayu-vim'
-"Plug 'tpope/vim-commentary'
-"Plug 'morhetz/gruvbox'
-"Plug 'sainnhe/gruvbox-material'
-"Plug 'gruvbox-community/gruvbox'
-Plug 'flazz/vim-colorschemes'
-"Plug 'kassio/neoterm'
-"Plug 'glepnir/oceanic-material'
-"Plug 'majutsushi/tagbar'
-" ------------------
-"Plug 'ianks/vim-tsx'
-"Plug 'leafgarland/typescript-vim'
-"Plug 'mhinz/vim-mix-format'
-"Plug 'elixir-editors/vim-elixir'
-" ------------------
-"Plug 'tpope/vim-fugitive'
-"Plug 'tpope/vim-sensible'
-"Plug 'jxnblk/vim-mdx-js'
-"Plug 'airblade/vim-gitgutter'
-"Plug 'stephenway/postcss.vim'
-"Plug 'cakebaker/scss-syntax.vim'
-" ----------------
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tacahiroy/ctrlp-funky'
+Plug 'tpope/vim-commentary'
+Plug 'ianks/vim-tsx'
+Plug 'leafgarland/typescript-vim'
+Plug 'mhinz/vim-mix-format'
 Plug 'preservim/nerdtree'
-Plug 'tyrannicaltoucan/vim-deep-space'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'honza/vim-snippets'
 Plug 'isRuslan/vim-es6'
@@ -158,17 +40,14 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'w0ng/vim-hybrid'
-Plug 'xolox/vim-misc'
-Plug 'ayu-theme/ayu-vim' " or other package manager
-Plug 'ayu-theme/ayu-vim' " or other package manager
 Plug 'sindrets/diffview.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
+Plug 'tpope/vim-vinegar'
 
 " --- typescript
 Plug 'leafgarland/typescript-vim'
+
+" -- COCO AGAIN
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " Source Vim configuration file and install plugins
@@ -177,10 +56,6 @@ nnoremap <silent><leader>1 :source ~/.vimrc \| :PlugInstall<CR>
 " ----------------------------------------------------------------------------
 " General
 " ----------------------------------------------------------------------------
-
-" Bye bye fucking help page
-:nmap <F1> :echo<CR>
-:imap <F1> <C-o>:echo<CR>
 
 " Shell
 set shell=/bin/bash
@@ -205,18 +80,10 @@ set encoding=utf8
 set ffs=unix,dos,mac
 set nrformats-=octal
 
-" Hide Toolbar in MacVim
-set guioptions=egmrt
-
 " Relative numbers
-set number
-set relativenumber
+" set number
+" set relativenumber
 set laststatus=2 " Always shows status bar
-
-" set trailing whitespace with · char
-
-set listchars=tab:··,trail:●
-set list
 
 " Better copy & paste
 set pastetoggle=<F2>
@@ -226,24 +93,11 @@ set clipboard=unnamed
 set mouse=a
 set bs=2
 
-" highlight the status bar when in insert mode
-"if version >= 700
-    "au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
-    "au InsertEnter * hi StatusLine ctermfg=240 ctermbg=12
-"endif
-
 " History
 set history=700
 
 " set auto read when a file is changed from the outside
 set autoread
-
-" Specify the behavior when switching between buffers
-"try
-    "set switchbuf=useopen,usetab,newtab
-    "set stal=2
-"catch
-"endtry
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
@@ -253,9 +107,6 @@ autocmd BufReadPost *
 
 "set viminfo^=% " Remember info about open buffers on close
 set laststatus=0 " Always show the status line
-
-" Utils
-"let &t_EI = "\<esc>]50;CursorShape=0\x7"
 
 " Delete trailing white spcae on save
 func! DeleteTrailingWS()
@@ -309,17 +160,9 @@ set tm=500
 
 " set extra options when runnung in GUI Mode
 set t_Co=256
-"if has("gui_running")
-    "set guioptions-=T
-    "set guioptions+=e
-    "set guioptions=
-    "set t_Co=256
-    "set guitablabel=%M\ %t
-"endif
 
 " Keep the error column always visible (jumpy when linter runs on input)
 :set signcolumn=yes
-
 
 " ----------------------------------------------------------------------------
 " Syntax, Color and Typography
@@ -332,15 +175,14 @@ set linespace=8
 set termguicolors     " enable true colors support
 set background=dark
 let g:hybrid_custom_term_colors = 1
-" let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
-"colorscheme base16-gruvbox-dark-medium
-"colorscheme deep-space
+let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
+" colorscheme hybrid_material
+" colorscheme deep-space
 
 " let ayucolor="light"  " for light version of theme
 " let ayucolor="mirage" " for mirage version of theme
-let ayucolor="dark"   " for dark version of theme
-colorscheme ayu"
-
+"let ayucolor="dark"   " for dark version of theme
+" colorscheme ayu
 
 " force jsx syntax to .jsx files
 " Or allow JSX in .js files
@@ -365,28 +207,6 @@ autocmd Filetype html setlocal tabstop=2 softtabstop=2 shiftwidth=2
 " Vim-jsx
 " ----------------------------------------------------------------------------
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-"
-" ----------------------------------------------------------------------------
-" Netrw
-" ----------------------------------------------------------------------------
-"let g:netrw_banner = 0
-"let g:netrw_liststyle = 3
-"let g:netrw_browser_split = 4
-"let g:netrw_winsize = 20
-
-"let g:netrw_list_hide= '.*\.swp$,node_modules/*,^\.git'
-"let g:netrw_hide = 1
-
-"function! OpenToRight()
-    ":normal v
-    "let g:path=expand('%:p')
-    ":q!
-    "execute 'belowright vnew' g:path
-    ":normal <C-l>
-"endfunction
-
-"let g:NetrwIsOpen=0
-
 
 " Add your own mapping. For example:
 noremap <silent> <leader>y :call ToggleNetrw()<CR>
@@ -437,7 +257,7 @@ map <silent>sr <Plug>(operator-surround-replace)
 
 " cool fonts
 let g:airline_powerline_fonts = 0
-:set guifont=JetBrainsMonoNerdFontComplete-Regular:h18
+""":set guifont=JetBrainsMonoNerdFontComplete-Regular:h18
 
 " file formater
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
@@ -449,7 +269,7 @@ let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#fnamemod = 0
 
 " airlinetheme
-let g:airline_theme='jellybeans'
+"let g:airline_theme='jellybeans'
 
 " remove the filetype part
 let g:airline_section_x=''
@@ -462,8 +282,21 @@ let g:airline_section_c = '%t'
 " remove separators for empty sections
 let g:airline_skip_empty_sections = 1
 
+" Vim 9
+let g:airline_experimental = 1
+
 " CtrlPFunky
 let g:ctrlp_funky_syntax_highlight = 1
+
+" CTRLP
+" Ignorar archivos temporales y directorios de control de versiones
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|o|pyc)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \}"
+" usa rg
+let g:ctrlp_user_command = 'rg --files --hidden --glob "!.git/*" %s'
 
 " or copy paste the following into your vimrc for shortform text
 let g:airline_mode_map = {
@@ -500,11 +333,6 @@ if executable('ag')
 endif
 
 " ----------------------------------------------------------------------------
-" FzF Plugin
-" ----------------------------------------------------------------------------
-map <leader><space> <Esc><Esc>:BLines<CR>
-
-" ----------------------------------------------------------------------------
 " Vim comentary Plugin
 " ----------------------------------------------------------------------------
 autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
@@ -523,14 +351,6 @@ let g:mix_format_silent_errors = 1
 " Mappings
 " ----------------------------------------------------------------------------
 
-" Open DiffviewOpen
-nnoremap <leader>d :DiffviewOpen<cr>
-
-
-" Close stuck floating pops
-nnoremap <leader>,c :call coc#float#close_all()<cr>
-
-
 nnoremap 0 ^
 nnoremap <leader>,b :bp\| bd #<cr>
 nnoremap <c-j> }
@@ -544,16 +364,6 @@ nnoremap <leader>W :set nowrap<cr>
 
 " Node REPL
 nnoremap <leader>,n :!node %<cr>
-
-" FZF Files
-nnoremap <leader><tab> :GFiles?<cr>
-nnoremap <silent> <tab> :Files<cr>
-nnoremap <silent> <s-tab> :Buffers<cr>
-
-" Griddo
-nnoremap <leader>c :Files ./src/components<cr>
-nnoremap <leader>m :Files ./src/modules<cr>
-nnoremap <leader>t :Files ./src/templates<cr>
 
 " Fast escape
 inoremap jj <esc>
@@ -569,12 +379,6 @@ autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
 autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
-" highlight current line
-augroup CursorLine
-  au!
-  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  au WinLeave * setlocal nocursorline
-augroup END
 
 "buffer cycle
 noremap <c-l> :bnext<cr>
@@ -587,7 +391,7 @@ command! -bang W w<bang>
 noremap <Leader>y :NERDTreeToggle<CR>
 noremap <Leader>,y :NERDTreeFind<CR>
 nnoremap <leader>w :w!<cr>
-noremap <leader>e :e ~/dotfiles/vimrc.symlink<cr>
+noremap <leader>e :e ~/repos/@hisco/dotfiles/vimrc.symlink<cr>
 noremap <space> /
 "noremap <c-space> ?
 
@@ -625,29 +429,10 @@ noremap <leader>cd :cd<space>%:h<cr>:pwd<cr>
 " Short message to avoid Press Enter to Continue
 :set shortmess=a
 
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
 let g:prettier#autoformat_config_files = [".prettierrc.json"]
 let g:prettier#exec_cmd_async = 1
 
-" Use <C-l> for trigger snippet expand.
-imap <C-0> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-let g:coc_snippet_next = '<tab>'
-
 autocmd Syntax json,javascript.jsx,javascriptreact,javascript normal zR
-
 
 " Fix kitty background issues
 let &t_ut=''
@@ -658,7 +443,20 @@ set fillchars+=vert:\
 set background=dark
 set t_Co=256
 set noshowmode
+"colorscheme habamax
+"colorscheme desert
+colorscheme torte
 
 au CursorHold,CursorHoldI * checktime
 
-inoremap <silent><expr> <c-i> coc#refresh()
+set textwidth=0
+set signcolumn=no
+
+" COC
+" Mapeo para navegar a la definición (similar a cmd+click o F12 en VSCode)
+nmap <silent> gd <Plug>(coc-definition)
+
+" Mapeo para mostrar el tipo de una variable o información (hover)
+nmap <silent> K :call CocActionAsync('doHover')<CR>
+
+

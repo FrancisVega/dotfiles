@@ -1,0 +1,28 @@
+# general
+shell-integration=zsh
+# theme
+theme = dark:adventure,light:3024 day
+adjust-cell-height = 10%
+
+# font
+font-family = Iosevka Term
+font-size = 18
+
+# window
+window-width = 10000
+window-height = 10000
+mouse-hide-while-typing = true
+macos-titlebar-style = hidden
+window-padding-balance = true
+window-save-state = always
+window-colorspace = "display-p3"
+
+# clipboard
+clipboard-read=allow
+clipboard-write=allow
+copy-on-select=true
+
+# cursor
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor

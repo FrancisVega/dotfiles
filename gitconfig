@@ -1,7 +1,7 @@
 [user]
 	name = FrancisVega
 	email = hisconer@gmail.com
-
+	signingkey=825464DAAFFB0238
 [alias]
     hist = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     co = checkout
@@ -43,9 +43,8 @@
 
 
 [core]
-    editor = /usr/local/bin/nvim
+    editor = /usr/bin/vim
 	excludesfile = /Users/hisco/.gitignore_global
-
 [push]
     default = current
     autoSetupRemote = true
@@ -62,10 +61,8 @@
     defaultBranch = main
 [delta]
     features = decorations
-
 [delta "interactive"]
     keep-plus-minus-markers = false
-
 [delta "decorations"]
     commit-decoration-style = blue ol
     commit-style = raw
@@ -80,4 +77,9 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
 [commit]
-	template = /Users/hisco/.stCommitMsg
+	gpgsign = true
+[tag]
+    gpgSign = true
+[gpg]
+    # program = /usr/local/bin/gpg
+    program = /opt/homebrew/bin/gpg

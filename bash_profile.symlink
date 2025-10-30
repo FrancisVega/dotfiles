@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# ~/.bash_profile — delegate to ~/.bashrc for interactive shells
+case $- in
+  *i*) [ -r "$HOME/.bashrc" ] && . "$HOME/.bashrc" ;;
+ esac

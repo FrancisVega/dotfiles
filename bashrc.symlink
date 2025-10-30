@@ -1,60 +1,14 @@
-# If not running interactively, don't do anything
+# ~/.bashrc - configuración interactiva mínima y modular
+
+# Salir si no es interactivo
 [[ $- != *i* ]] && return
 
-alias ls='ls -G'
-#PS1='[\u@\h \W]\$ '
+# Prompt simple (ajústalo si usas starship)
+export PS1="\u@\h \w $ "
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
+# Historial básico
 HISTCONTROL=ignoreboth
-
-# append to the history file, dont overwrite it
+HISTSIZE=10000
+HISTFILESIZE=20000
 shopt -s histappend
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# git
-alias g=git
-alias gs="git status"
-
-# cd ..
-alias ..='cd ..'
-alias cd..='..'
-
-# clear screen
-alias cls='clear'
-
-# emacs
-# alias emacs='/usr/local/Cellar/emacs/HEAD/Emacs.app/Contents/MacOs/Emacs -nw'
-# vim
-alias vimconf='mvim ~/.vimrc'
-alias m='mvim'
-alias nv="nvim"
-
-# vim related
-alias nt='vim ~/repos/herwiki/notes.txt'
-alias lnt='less ~/repos/herwiki/notes.txt'
-
-# prompt
-#PS1='\[\e[1;30m\][\[\e[1;34m\]\u@\H\[\e[1;30m\]:\[\e[0;37m\]${SSH_TTY} \[\e[0;32m\]+${SHLVL}\[\e[1;30m\]] \[\e[1;37m\]\w\[\e[0;37m\] \n$ '
-export PATH="$HOME/.node/bin:$PATH"
-
-# Git branch in prompt.
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
-
-export PS1="\[\033[0;33m\]\u@\h \[\033[0;36m\]\w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-export EDITOR="vim"

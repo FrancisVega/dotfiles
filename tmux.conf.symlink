@@ -9,7 +9,10 @@ unbind e
 bind e new-window -n '~/.tmux.conf' "sh -c 'nvim ~/.tmux.conf && tmux source ~/.tmux.conf'"
 
 # Fix bug with colors
-set -g default-terminal "screen-256color"
+set-option -g default-terminal "screen-256color"
+set-option -g default-shell /bin/zsh
+set-option -g default-command /bin/zsh
+
 
 #source .tmux.conf file
 bind r source-file ~/.tmux.conf \; display "Configuration Reloaded!"
@@ -18,12 +21,12 @@ bind r source-file ~/.tmux.conf \; display "Configuration Reloaded!"
 bind C-a send-prefix
 
 #Cool splitting
-#
 #vertical
 bind | split-window -h
-
 #horizontal
 bind - split-window -v
+#even horizontal
+bind = select-layout even-horizontal
 
 #pane movement similar to vim
 bind h select-pane -L
@@ -46,21 +49,15 @@ bind -r C-h select-window -t :-
 bind -r C-l select-window -t :+
 bind b previous-window
 
-# Use r to quickly reload tmux settings
-unbind r
-bind r \
-    source-file ~/.tmux.conf \;\
-    display 'Reloaded tmux config'
-
- # Setup 'y' to yank (copy), just like Vim
+# Setup 'y' to yank (copy), just like Vim
 bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel "pbcopy"
 bind-key -T copy-mode-vi 'V' send -X select-line
 bind-key -T copy-mode-vi 'r' send -X rectangle-toggle
 
-#enable mouse
+# enable mouse
 set -g mouse on
 
-#enable vi mode
+# enable vi mode
 setw -g mode-keys vi
 
 # List of plugins
@@ -69,8 +66,7 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'tmux-plugins/tmux-open'
-set -g @plugin 'tmux-plugins/tmux-faces'
-# set -g @plugin 'kristijanhusak/tmux-simple-git-status'
+set -g @plugin 'wfxr/tmux-fzf-url'
 
 # copy to system clipboard
 bind C-c run "tmux save-buffer - | xclip -i -sel clipboard"
@@ -85,6 +81,7 @@ set -g pane-base-index 0
 set-option -g status-left "#{?client_prefix,#[bg=colour167],} λ #S "
 set-option -g status-left-length 50
 set-option -g status-right-length 50
+set -g status-right "🤍"
 # set -g status-right "ᛘ #{simple_git_status}"
 
 set-option -g status-style bg=default
@@ -107,5 +104,13 @@ selectw -t 1
 # ESC delay solved
 set -sg escape-time 0
 
+# Copy from tmux using reattach-to-user-namespace
+bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+bind-key -T copy-mode MouseDragEnd1Pane send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-run '~/.tmux/plugins/tpm/tpm'
+run "~/.tmux/plugins/tpm/tpm"
+
+unbind s
+bind s choose-session
+

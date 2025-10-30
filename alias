@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+alias kp="kill_port $1"
+alias gs="git status"
+alias lg="lazygit"
+alias c="code ."
+alias k="cursor ."
+alias fuckdstore='find . -name ".DS_Store" -type f -delete'
+alias tmux="TERM=screen-256color-bce tmux"
+alias tm="tmux attach"
+alias y="yarn"
+alias n="npm"
+alias ",tk"="tmux kill-server"
+alias ",s"="fzfnpm #launch fzfnpm"
+alias g="git"
+alias gs="git status"
+alias pull="git pull"
+alias push="git push"
+
+# Griddo
+alias rr="yarn render"
+alias coredist="sh ~/scripts/inject-griddo-core.sh"
+alias cpcoredist="sh ~/scripts/copy-core.sh"
+alias cxdist="sh ~/scripts/inject-griddo-cx.sh"
+alias gu="yarn add @griddo/{core,ax,cx} -E"
+alias plotsize='curl -s $1|grep "KB"'
